@@ -1,6 +1,6 @@
 use {
-    solana_core::validator::ValidatorConfig,
-    solana_sdk::exit::Exit,
+    xandeum_core::validator::ValidatorConfig,
+    xandeum_sdk::exit::Exit,
     std::sync::{Arc, RwLock},
 };
 

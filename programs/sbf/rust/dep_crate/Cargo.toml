@@ -1,6 +1,6 @@
 [package]
-name = "solana-sbf-rust-dep-crate"
-documentation = "https://docs.rs/solana-sbf-rust-dep-crate"
+name = "xandeum-sbf-rust-dep-crate"
+documentation = "https://docs.rs/xandeum-sbf-rust-dep-crate"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -12,8 +12,8 @@ edition = { workspace = true }
 [dependencies]
 byteorder = { workspace = true }
 # list of crates which must be buildable for bpf programs
-solana-address-lookup-table-program = { workspace = true }
-solana-program = { workspace = true }
+xandeum-address-lookup-table-program = { workspace = true }
+xandeum-program = { workspace = true }
 
 [lib]
 crate-type = ["cdylib"]

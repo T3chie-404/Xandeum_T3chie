@@ -6,8 +6,8 @@ use {
     crossbeam_channel::{unbounded, Receiver, Sender},
     log::*,
     lru::LruCache,
-    solana_measure::measure,
-    solana_sdk::{
+    xandeum_measure::measure,
+    xandeum_sdk::{
         clock::Slot, pubkey::Pubkey, saturating_add_assign, transaction::SanitizedTransaction,
     },
     std::{
@@ -398,7 +398,7 @@ mod tests {
             bank_forks::BankForks,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
         },
-        solana_sdk::{
+        xandeum_sdk::{
             compute_budget::ComputeBudgetInstruction,
             message::Message,
             pubkey::Pubkey,
@@ -466,7 +466,7 @@ mod tests {
 
     #[test]
     fn test_prioritization_fee_cache_update() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let write_account_a = Pubkey::new_unique();
         let write_account_b = Pubkey::new_unique();
         let write_account_c = Pubkey::new_unique();
@@ -557,7 +557,7 @@ mod tests {
 
     #[test]
     fn test_get_prioritization_fees() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let write_account_a = Pubkey::new_unique();
         let write_account_b = Pubkey::new_unique();
         let write_account_c = Pubkey::new_unique();
@@ -566,7 +566,7 @@ mod tests {
         let bank0 = Bank::new_for_benches(&genesis_config);
         let bank_forks = BankForks::new(bank0);
         let bank = bank_forks.working_bank();
-        let collector = solana_sdk::pubkey::new_rand();
+        let collector = xandeum_sdk::pubkey::new_rand();
         let bank1 = Arc::new(Bank::new_from_parent(&bank, &collector, 1));
         let bank2 = Arc::new(Bank::new_from_parent(&bank, &collector, 2));
         let bank3 = Arc::new(Bank::new_from_parent(&bank, &collector, 3));

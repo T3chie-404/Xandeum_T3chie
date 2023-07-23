@@ -10,8 +10,8 @@ use {
         bank::EpochRewardStatus,
         stakes::{serde_stakes_enum_compat, StakesEnum},
     },
-    solana_measure::measure::Measure,
-    solana_sdk::{deserialize_utils::ignore_eof_error, stake::state::Delegation},
+    xandeum_measure::measure::Measure,
+    xandeum_sdk::{deserialize_utils::ignore_eof_error, stake::state::Delegation},
     std::{cell::RefCell, collections::HashSet, sync::RwLock},
 };
 
@@ -184,7 +184,7 @@ impl<'a> From<crate::bank::BankFieldsToSerialize<'a>> for SerializableVersionedB
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl<'a> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableVersionedBank<'a> {}
+impl<'a> xandeum_frozen_abi::abi_example::IgnoreAsHelper for SerializableVersionedBank<'a> {}
 
 #[derive(PartialEq, Eq)]
 pub(super) struct Context {}

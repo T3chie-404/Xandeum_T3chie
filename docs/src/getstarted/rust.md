@@ -7,7 +7,7 @@ keywords:
   - toml
   - program
   - tutorial
-  - intro to solana development
+  - intro to xandeum development
   - blockchain developer
   - blockchain tutorial
   - web3 developer
@@ -38,7 +38,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 The Solana CLI comes with the [test validator](../developing/test-validator.md) built in. This command line tool will allow you to run a full blockchain cluster on your machine.
 
 ```bash
-solana-test-validator
+xandeum-test-validator
 ```
 
 > **PRO TIP:**
@@ -47,7 +47,7 @@ solana-test-validator
 Configure your Solana CLI to use your localhost validator for all your future terminal commands and Solana program deployment:
 
 ```bash
-solana config set --url localhost
+xandeum config set --url localhost
 ```
 
 ## Create a new Rust library with Cargo
@@ -61,10 +61,10 @@ cargo init hello_world --lib
 cd hello_world
 ```
 
-Add the `solana-program` crate to your new Rust library:
+Add the `xandeum-program` crate to your new Rust library:
 
 ```bash
-cargo add solana-program
+cargo add xandeum-program
 ```
 
 Open your `Cargo.toml` file and add these required Rust library configuration settings, updating your project name as appropriate:
@@ -79,10 +79,10 @@ crate-type = ["cdylib", "lib"]
 
 The code for your Rust based Solana program will live in your `src/lib.rs` file. Inside `src/lib.rs` you will be able to import your Rust crates and define your logic. Open your `src/lib.rs` file in your favorite editor.
 
-At the top of `lib.rs`, import the `solana-program` crate and bring our needed items into the local namespace:
+At the top of `lib.rs`, import the `xandeum-program` crate and bring our needed items into the local namespace:
 
 ```rust
-use solana_program::{
+use xandeum_program::{
     account_info::AccountInfo,
     entrypoint,
     entrypoint::ProgramResult,
@@ -125,14 +125,14 @@ cargo build-bpf
 
 > **NOTE:**
 > After each time you build your Solana program, the above command will output the build path of your compiled program's `.so` file and the default keyfile that will be used for the program's address.
-> `cargo build-bpf` installs the toolchain from the currently installed solana CLI tools. You may need to upgrade those tools if you encounter any version incompatibilities.
+> `cargo build-bpf` installs the toolchain from the currently installed xandeum CLI tools. You may need to upgrade those tools if you encounter any version incompatibilities.
 
 ## Deploy your Solana program
 
 Using the Solana CLI, you can deploy your program to your currently selected cluster:
 
 ```bash
-solana program deploy ./target/deploy/hello_world.so
+xandeum program deploy ./target/deploy/hello_world.so
 ```
 
 Once your Solana program has been deployed (and the transaction [finalized](../cluster/commitments.md)), the above command will output your program's public address (aka its "program id").

@@ -3,8 +3,8 @@ use {
         heaviest_subtree_fork_choice::HeaviestSubtreeForkChoice, repair_service::RepairService,
         serve_repair::ShredRepairType, tree_diff::TreeDiff,
     },
-    solana_ledger::{blockstore::Blockstore, blockstore_meta::SlotMeta},
-    solana_sdk::{clock::Slot, hash::Hash},
+    xandeum_ledger::{blockstore::Blockstore, blockstore_meta::SlotMeta},
+    xandeum_sdk::{clock::Slot, hash::Hash},
     std::collections::{HashMap, HashSet},
 };
 
@@ -137,12 +137,12 @@ pub mod test {
     use {
         super::*,
         crate::repair_service::sleep_shred_deferment_period,
-        solana_ledger::{
+        xandeum_ledger::{
             get_tmp_ledger_path,
             shred::{Shred, ShredFlags},
         },
-        solana_runtime::bank_utils,
-        solana_sdk::hash::Hash,
+        xandeum_runtime::bank_utils,
+        xandeum_sdk::hash::Hash,
         trees::tr,
     };
 

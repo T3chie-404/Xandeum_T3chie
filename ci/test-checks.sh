@@ -93,7 +93,7 @@ _ scripts/cargo-for-all-lock-files.sh -- "+${rust_nightly}" clippy --workspace -
 
 # temporarily run stable clippy as well to scan the codebase for
 # `redundant_clone`s, which is disabled as nightly clippy is buggy:
-#   https://github.com/solana-labs/solana/issues/31834
+#   https://github.com/xandeum-labs/xandeum/issues/31834
 #
 # can't use --all-targets:
 #   error[E0554]: `#![feature]` may not be used on the stable release channel

@@ -32,18 +32,18 @@ use {
         ThreadPool,
     },
     rocksdb::{DBRawIterator, LiveFile},
-    solana_entry::entry::{create_ticks, Entry},
-    solana_measure::measure::Measure,
-    solana_metrics::{
+    xandeum_entry::entry::{create_ticks, Entry},
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::{
         datapoint_debug, datapoint_error,
         poh_timing_point::{send_poh_timing_point, PohTimingSender, SlotPohTimingInfo},
     },
-    solana_rayon_threadlimit::get_max_thread_count,
-    solana_runtime::{
+    xandeum_rayon_threadlimit::get_max_thread_count,
+    xandeum_runtime::{
         bank::Bank,
         hardened_unpack::{unpack_genesis_archive, MAX_GENESIS_ARCHIVE_UNPACKED_SIZE},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::{Slot, UnixTimestamp, DEFAULT_TICKS_PER_SECOND},
         genesis_config::{GenesisConfig, DEFAULT_GENESIS_ARCHIVE, DEFAULT_GENESIS_FILE},
         hash::Hash,
@@ -52,8 +52,8 @@ use {
         timing::timestamp,
         transaction::VersionedTransaction,
     },
-    solana_storage_proto::{StoredExtendedRewards, StoredTransactionStatusMeta},
-    solana_transaction_status::{
+    xandeum_storage_proto::{StoredExtendedRewards, StoredTransactionStatusMeta},
+    xandeum_transaction_status::{
         ConfirmedTransactionStatusWithSignature, ConfirmedTransactionWithStatusMeta, Rewards,
         TransactionStatusMeta, TransactionWithStatusMeta, VersionedConfirmedBlock,
         VersionedTransactionWithStatusMeta,
@@ -90,7 +90,7 @@ pub use {
 };
 
 // get_max_thread_count to match number of threads in the old code.
-// see: https://github.com/solana-labs/solana/pull/24853
+// see: https://github.com/xandeum-labs/xandeum/pull/24853
 lazy_static! {
     static ref PAR_THREAD_POOL: ThreadPool = rayon::ThreadPoolBuilder::new()
         .num_threads(get_max_thread_count())
@@ -142,7 +142,7 @@ impl std::fmt::Display for InsertDataShredError {
 /// these sets by inserting shreds via direct or indirect calls to
 /// [`Blockstore::insert_shreds_handle_duplicate()`].
 ///
-/// `solana_core::completed_data_sets_service::CompletedDataSetsService` is the main receiver of
+/// `xandeum_core::completed_data_sets_service::CompletedDataSetsService` is the main receiver of
 /// `CompletedDataSetInfo`.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct CompletedDataSetInfo {
@@ -1543,7 +1543,7 @@ impl Blockstore {
                 SlotPohTimingInfo::new_slot_full_poh_time_point(
                     slot,
                     Some(self.last_root()),
-                    solana_sdk::timing::timestamp(),
+                    xandeum_sdk::timing::timestamp(),
                 ),
             );
         }
@@ -2885,7 +2885,7 @@ impl Blockstore {
                             // the .unwrap() below could indicate there was an odd error or there
                             // could simply be a tx with a new ALT, which is just created/updated
                             // in this range. too bad... this edge case isn't currently supported.
-                            // see: https://github.com/solana-labs/solana/issues/30165
+                            // see: https://github.com/xandeum-labs/xandeum/issues/30165
                             // for casual use, please choose different slot range.
                             let sanitized_tx = bank.fully_verify_transaction(tx).unwrap();
                             sanitized_tx
@@ -3727,7 +3727,7 @@ fn find_slot_meta_in_cached_state<'a>(
 /// [`cf::Orphans`].
 ///
 /// For more information about the chaining, check the previous discussion here:
-/// https://github.com/solana-labs/solana/pull/2253
+/// https://github.com/xandeum-labs/xandeum/pull/2253
 ///
 /// Arguments:
 /// - `db`: the blockstore db that stores both shreds and their metadata.
@@ -3959,7 +3959,7 @@ pub fn create_new_ledger(
     let hashes_per_tick = genesis_config.poh_config.hashes_per_tick.unwrap_or(0);
     let entries = create_ticks(ticks_per_slot, hashes_per_tick, genesis_config.hash());
     let last_hash = entries.last().unwrap().hash;
-    let version = solana_sdk::shred_version::version_from_hash(&last_hash);
+    let version = xandeum_sdk::shred_version::version_from_hash(&last_hash);
 
     let shredder = Shredder::new(0, 0, 0, version).unwrap();
     let (shreds, _) = shredder.entries_to_shreds(
@@ -4416,7 +4416,7 @@ fn adjust_ulimit_nofile(enforce_ulimit_nofile: bool) -> Result<()> {
     // usually not enough
     // AppendVecs and disk Account Index are also heavy users of mmapped files.
     // This should be kept in sync with published validator instructions.
-    // https://docs.solana.com/running-validator/validator-start#increased-memory-mapped-files-limit
+    // https://docs.xandeum.com/running-validator/validator-start#increased-memory-mapped-files-limit
     let desired_nofile = 1_000_000;
 
     fn get_nofile() -> libc::rlimit {
@@ -4472,10 +4472,10 @@ pub mod tests {
         crossbeam_channel::unbounded,
         itertools::Itertools,
         rand::{seq::SliceRandom, thread_rng},
-        solana_account_decoder::parse_token::UiTokenAmount,
-        solana_entry::entry::{next_entry, next_entry_mut},
-        solana_runtime::bank::{Bank, RewardType},
-        solana_sdk::{
+        xandeum_account_decoder::parse_token::UiTokenAmount,
+        xandeum_entry::entry::{next_entry, next_entry_mut},
+        xandeum_runtime::bank::{Bank, RewardType},
+        xandeum_sdk::{
             hash::{self, hash, Hash},
             instruction::CompiledInstruction,
             message::v0::LoadedAddresses,
@@ -4485,8 +4485,8 @@ pub mod tests {
             transaction::{Transaction, TransactionError},
             transaction_context::TransactionReturnData,
         },
-        solana_storage_proto::convert::generated,
-        solana_transaction_status::{
+        xandeum_storage_proto::convert::generated,
+        xandeum_transaction_status::{
             InnerInstruction, InnerInstructions, Reward, Rewards, TransactionTokenBalance,
         },
         std::{cmp::Ordering, thread::Builder, time::Duration},
@@ -4498,9 +4498,9 @@ pub mod tests {
         for x in 0..num_entries {
             let transaction = Transaction::new_with_compiled_instructions(
                 &[&Keypair::new()],
-                &[solana_sdk::pubkey::new_rand()],
+                &[xandeum_sdk::pubkey::new_rand()],
                 Hash::default(),
-                vec![solana_sdk::pubkey::new_rand()],
+                vec![xandeum_sdk::pubkey::new_rand()],
                 vec![CompiledInstruction::new(1, &(), vec![0])],
             );
             entries.push(next_entry_mut(&mut Hash::default(), 0, vec![transaction]));
@@ -4527,7 +4527,7 @@ pub mod tests {
 
     #[test]
     fn test_create_new_ledger() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let mint_total = 1_000_000_000_000;
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(mint_total);
         let (ledger_path, _blockhash) = create_new_tmp_ledger_auto_delete!(&genesis_config);
@@ -4544,7 +4544,7 @@ pub mod tests {
 
     #[test]
     fn test_create_new_ledger_with_options_fifo() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let mint_total = 1_000_000_000_000;
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(mint_total);
         let (ledger_path, _blockhash) = create_new_tmp_ledger_fifo_auto_delete!(&genesis_config);
@@ -4606,7 +4606,7 @@ pub mod tests {
 
     #[test]
     fn test_write_entries() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
@@ -5469,7 +5469,7 @@ pub mod tests {
 
     #[test]
     fn test_handle_chaining_missing_slots() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
@@ -5534,7 +5534,7 @@ pub mod tests {
     #[test]
     #[allow(clippy::cognitive_complexity)]
     pub fn test_forward_chaining_is_connected() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
@@ -5614,7 +5614,7 @@ pub mod tests {
 
     #[test]
     fn test_set_and_chain_connected_on_root_and_next_slots() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
@@ -6351,7 +6351,7 @@ pub mod tests {
 
     #[test]
     fn test_should_insert_data_shred() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let (mut shreds, _) = make_slot_entries(0, 0, 200, /*merkle_variant:*/ false);
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
@@ -6585,7 +6585,7 @@ pub mod tests {
 
     #[test]
     fn test_insert_multiple_is_last() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let (shreds, _) = make_slot_entries(0, 0, 20, /*merkle_variant:*/ true);
         let num_shreds = shreds.len() as u64;
         let ledger_path = get_tmp_ledger_path_auto_delete!();
@@ -7128,7 +7128,7 @@ pub mod tests {
 
         // insert value
         let status = TransactionStatusMeta {
-            status: solana_sdk::transaction::Result::<()>::Err(TransactionError::AccountNotFound),
+            status: xandeum_sdk::transaction::Result::<()>::Err(TransactionError::AccountNotFound),
             fee: 5u64,
             pre_balances: pre_balances_vec.clone(),
             post_balances: post_balances_vec.clone(),
@@ -7181,7 +7181,7 @@ pub mod tests {
 
         // insert value
         let status = TransactionStatusMeta {
-            status: solana_sdk::transaction::Result::<()>::Ok(()),
+            status: xandeum_sdk::transaction::Result::<()>::Ok(()),
             fee: 9u64,
             pre_balances: pre_balances_vec.clone(),
             post_balances: post_balances_vec.clone(),
@@ -7455,7 +7455,7 @@ pub mod tests {
         let pre_balances_vec = vec![1, 2, 3];
         let post_balances_vec = vec![3, 2, 1];
         let status = TransactionStatusMeta {
-            status: solana_sdk::transaction::Result::<()>::Ok(()),
+            status: xandeum_sdk::transaction::Result::<()>::Ok(()),
             fee: 42u64,
             pre_balances: pre_balances_vec,
             post_balances: post_balances_vec,
@@ -7638,7 +7638,7 @@ pub mod tests {
     }
 
     fn do_test_lowest_cleanup_slot_and_special_cfs(simulate_ledger_cleanup_service: bool) {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
@@ -7649,7 +7649,7 @@ pub mod tests {
         let pre_balances_vec = vec![1, 2, 3];
         let post_balances_vec = vec![3, 2, 1];
         let status = TransactionStatusMeta {
-            status: solana_sdk::transaction::Result::<()>::Ok(()),
+            status: xandeum_sdk::transaction::Result::<()>::Ok(()),
             fee: 42u64,
             pre_balances: pre_balances_vec,
             post_balances: post_balances_vec,
@@ -7690,8 +7690,8 @@ pub mod tests {
             .put_protobuf((0, signature2, lowest_available_slot), &status)
             .unwrap();
 
-        let address0 = solana_sdk::pubkey::new_rand();
-        let address1 = solana_sdk::pubkey::new_rand();
+        let address0 = xandeum_sdk::pubkey::new_rand();
+        let address1 = xandeum_sdk::pubkey::new_rand();
         blockstore
             .write_transaction_status(
                 lowest_cleanup_slot,
@@ -8031,8 +8031,8 @@ pub mod tests {
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
-        let address0 = solana_sdk::pubkey::new_rand();
-        let address1 = solana_sdk::pubkey::new_rand();
+        let address0 = xandeum_sdk::pubkey::new_rand();
+        let address1 = xandeum_sdk::pubkey::new_rand();
 
         let slot0 = 10;
         for x in 1..5 {
@@ -8166,8 +8166,8 @@ pub mod tests {
         let ledger_path = get_tmp_ledger_path_auto_delete!();
         let blockstore = Blockstore::open(ledger_path.path()).unwrap();
 
-        let address0 = solana_sdk::pubkey::new_rand();
-        let address1 = solana_sdk::pubkey::new_rand();
+        let address0 = xandeum_sdk::pubkey::new_rand();
+        let address1 = xandeum_sdk::pubkey::new_rand();
 
         let slot1 = 1;
         for x in 1..5 {
@@ -8262,7 +8262,7 @@ pub mod tests {
                     &[&Keypair::new()],
                     &[*address],
                     Hash::default(),
-                    vec![solana_sdk::pubkey::new_rand()],
+                    vec![xandeum_sdk::pubkey::new_rand()],
                     vec![CompiledInstruction::new(1, &(), vec![0])],
                 );
                 entries.push(next_entry_mut(&mut Hash::default(), 0, vec![transaction]));
@@ -8272,8 +8272,8 @@ pub mod tests {
             entries
         }
 
-        let address0 = solana_sdk::pubkey::new_rand();
-        let address1 = solana_sdk::pubkey::new_rand();
+        let address0 = xandeum_sdk::pubkey::new_rand();
+        let address1 = xandeum_sdk::pubkey::new_rand();
 
         for slot in 2..=8 {
             let entries = make_slot_entries_with_transaction_addresses(&[
@@ -8726,13 +8726,13 @@ pub mod tests {
         for x in 0..4 {
             let transaction = Transaction::new_with_compiled_instructions(
                 &[&Keypair::new()],
-                &[solana_sdk::pubkey::new_rand()],
+                &[xandeum_sdk::pubkey::new_rand()],
                 Hash::default(),
-                vec![solana_sdk::pubkey::new_rand()],
+                vec![xandeum_sdk::pubkey::new_rand()],
                 vec![CompiledInstruction::new(1, &(), vec![0])],
             );
             let status = TransactionStatusMeta {
-                status: solana_sdk::transaction::Result::<()>::Err(
+                status: xandeum_sdk::transaction::Result::<()>::Err(
                     TransactionError::AccountNotFound,
                 ),
                 fee: x,
@@ -8767,9 +8767,9 @@ pub mod tests {
         transactions.push(
             Transaction::new_with_compiled_instructions(
                 &[&Keypair::new()],
-                &[solana_sdk::pubkey::new_rand()],
+                &[xandeum_sdk::pubkey::new_rand()],
                 Hash::default(),
-                vec![solana_sdk::pubkey::new_rand()],
+                vec![xandeum_sdk::pubkey::new_rand()],
                 vec![CompiledInstruction::new(1, &(), vec![0])],
             )
             .into(),
@@ -9416,7 +9416,7 @@ pub mod tests {
 
         let rewards: Rewards = (0..100)
             .map(|i| Reward {
-                pubkey: solana_sdk::pubkey::new_rand().to_string(),
+                pubkey: xandeum_sdk::pubkey::new_rand().to_string(),
                 lamports: 42 + i,
                 post_balance: std::u64::MAX,
                 reward_type: Some(RewardType::Fee),
@@ -9534,8 +9534,8 @@ pub mod tests {
         let txs: Vec<_> = (0..num_txs)
             .map(|_| {
                 let keypair0 = Keypair::new();
-                let to = solana_sdk::pubkey::new_rand();
-                solana_sdk::system_transaction::transfer(&keypair0, &to, 1, Hash::default())
+                let to = xandeum_sdk::pubkey::new_rand();
+                xandeum_sdk::system_transaction::transfer(&keypair0, &to, 1, Hash::default())
             })
             .collect();
 
@@ -9544,7 +9544,7 @@ pub mod tests {
 
     #[test]
     fn erasure_multiple_config() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let slot = 1;
         let parent = 0;
         let num_txs = 20;

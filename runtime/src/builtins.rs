@@ -1,6 +1,6 @@
 use {
-    solana_program_runtime::invoke_context::ProcessInstructionWithContext,
-    solana_sdk::{
+    xandeum_program_runtime::invoke_context::ProcessInstructionWithContext,
+    xandeum_sdk::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, feature_set, pubkey::Pubkey,
     },
 };
@@ -24,10 +24,10 @@ impl std::fmt::Debug for BuiltinPrototype {
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl solana_frozen_abi::abi_example::AbiExample for BuiltinPrototype {
+impl xandeum_frozen_abi::abi_example::AbiExample for BuiltinPrototype {
     fn example() -> Self {
         // BuiltinPrototype isn't serializable by definition.
-        solana_program_runtime::declare_process_instruction!(entrypoint, 0, |_invoke_context| {
+        xandeum_program_runtime::declare_process_instruction!(entrypoint, 0, |_invoke_context| {
             // Do nothing
             Ok(())
         });
@@ -43,62 +43,62 @@ impl solana_frozen_abi::abi_example::AbiExample for BuiltinPrototype {
 pub static BUILTINS: &[BuiltinPrototype] = &[
     BuiltinPrototype {
         feature_id: None,
-        program_id: solana_system_program::id(),
+        program_id: xandeum_system_program::id(),
         name: "system_program",
-        entrypoint: solana_system_program::system_processor::process_instruction,
+        entrypoint: xandeum_system_program::system_processor::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
-        program_id: solana_vote_program::id(),
+        program_id: xandeum_vote_program::id(),
         name: "vote_program",
-        entrypoint: solana_vote_program::vote_processor::process_instruction,
+        entrypoint: xandeum_vote_program::vote_processor::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
-        program_id: solana_stake_program::id(),
+        program_id: xandeum_stake_program::id(),
         name: "stake_program",
-        entrypoint: solana_stake_program::stake_instruction::process_instruction,
+        entrypoint: xandeum_stake_program::stake_instruction::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
-        program_id: solana_config_program::id(),
+        program_id: xandeum_config_program::id(),
         name: "config_program",
-        entrypoint: solana_config_program::config_processor::process_instruction,
+        entrypoint: xandeum_config_program::config_processor::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
         program_id: bpf_loader_deprecated::id(),
-        name: "solana_bpf_loader_deprecated_program",
-        entrypoint: solana_bpf_loader_program::process_instruction,
+        name: "xandeum_bpf_loader_deprecated_program",
+        entrypoint: xandeum_bpf_loader_program::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
         program_id: bpf_loader::id(),
-        name: "solana_bpf_loader_program",
-        entrypoint: solana_bpf_loader_program::process_instruction,
+        name: "xandeum_bpf_loader_program",
+        entrypoint: xandeum_bpf_loader_program::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
         program_id: bpf_loader_upgradeable::id(),
-        name: "solana_bpf_loader_upgradeable_program",
-        entrypoint: solana_bpf_loader_program::process_instruction,
+        name: "xandeum_bpf_loader_upgradeable_program",
+        entrypoint: xandeum_bpf_loader_program::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
-        program_id: solana_sdk::compute_budget::id(),
+        program_id: xandeum_sdk::compute_budget::id(),
         name: "compute_budget_program",
-        entrypoint: solana_compute_budget_program::process_instruction,
+        entrypoint: xandeum_compute_budget_program::process_instruction,
     },
     BuiltinPrototype {
         feature_id: None,
-        program_id: solana_address_lookup_table_program::id(),
+        program_id: xandeum_address_lookup_table_program::id(),
         name: "address_lookup_table_program",
-        entrypoint: solana_address_lookup_table_program::processor::process_instruction,
+        entrypoint: xandeum_address_lookup_table_program::processor::process_instruction,
     },
     BuiltinPrototype {
         feature_id: Some(feature_set::zk_token_sdk_enabled::id()),
-        program_id: solana_zk_token_sdk::zk_token_proof_program::id(),
+        program_id: xandeum_zk_token_sdk::zk_token_proof_program::id(),
         name: "zk_token_proof_program",
-        entrypoint: solana_zk_token_proof_program::process_instruction,
+        entrypoint: xandeum_zk_token_proof_program::process_instruction,
     },
 ];

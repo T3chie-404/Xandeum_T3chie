@@ -25,23 +25,23 @@ if [[ $(uname) != Linux ]]; then
 fi
 
 if [[ -n $USE_INSTALL || ! -f "$SOLANA_ROOT"/Cargo.toml ]]; then
-  solana_program() {
+  xandeum_program() {
     declare program="$1"
     if [[ -z $program ]]; then
-      printf "solana"
+      printf "xandeum"
     else
-      printf "solana-%s" "$program"
+      printf "xandeum-%s" "$program"
     fi
   }
 else
-  solana_program() {
+  xandeum_program() {
     declare program="$1"
     declare crate="$program"
     if [[ -z $program ]]; then
       crate="cli"
-      program="solana"
+      program="xandeum"
     else
-      program="solana-$program"
+      program="xandeum-$program"
     fi
 
     if [[ -n $NDEBUG ]]; then
@@ -61,15 +61,15 @@ else
   }
 fi
 
-solana_bench_tps=$(solana_program bench-tps)
-solana_faucet=$(solana_program faucet)
-solana_validator=$(solana_program validator)
-solana_validator_cuda="$solana_validator --cuda"
-solana_genesis=$(solana_program genesis)
-solana_gossip=$(solana_program gossip)
-solana_keygen=$(solana_program keygen)
-solana_ledger_tool=$(solana_program ledger-tool)
-solana_cli=$(solana_program)
+xandeum_bench_tps=$(xandeum_program bench-tps)
+xandeum_faucet=$(xandeum_program faucet)
+xandeum_validator=$(xandeum_program validator)
+xandeum_validator_cuda="$xandeum_validator --cuda"
+xandeum_genesis=$(xandeum_program genesis)
+xandeum_gossip=$(xandeum_program gossip)
+xandeum_keygen=$(xandeum_program keygen)
+xandeum_ledger_tool=$(xandeum_program ledger-tool)
+xandeum_cli=$(xandeum_program)
 
 export RUST_BACKTRACE=1
 

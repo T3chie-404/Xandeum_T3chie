@@ -1,7 +1,7 @@
 [package]
-name = "solana-watchtower"
+name = "xandeum-watchtower"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-watchtower"
+documentation = "https://docs.rs/xandeum-watchtower"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,16 +13,16 @@ edition = { workspace = true }
 clap = { workspace = true }
 humantime = { workspace = true }
 log = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-logger = { workspace = true }
-solana-metrics = { workspace = true }
-solana-notifier = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-sdk = { workspace = true }
-solana-version = { workspace = true }
+xandeum-clap-utils = { workspace = true }
+xandeum-cli-config = { workspace = true }
+xandeum-cli-output = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-notifier = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-version = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

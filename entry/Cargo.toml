@@ -1,7 +1,7 @@
 [package]
-name = "solana-entry"
+name = "xandeum-entry"
 description = "Solana Entry"
-documentation = "https://docs.rs/solana-poh"
+documentation = "https://docs.rs/xandeum-poh"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,20 +19,20 @@ log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
 serde = { workspace = true }
-solana-measure = { workspace = true }
-solana-merkle-tree = { workspace = true }
-solana-metrics = { workspace = true }
-solana-perf = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-sdk = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-merkle-tree = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-perf = { workspace = true }
+xandeum-rayon-threadlimit = { workspace = true }
+xandeum-sdk = { workspace = true }
 
 [dev-dependencies]
 matches = { workspace = true }
-solana-logger = { workspace = true }
+xandeum-logger = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_entry"
+name = "xandeum_entry"
 
 [[bench]]
 name = "entry_sigverify"

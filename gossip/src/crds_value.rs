@@ -10,8 +10,8 @@ use {
     bincode::{serialize, serialized_size},
     rand::{CryptoRng, Rng},
     serde::de::{Deserialize, Deserializer},
-    solana_runtime::vote_parser,
-    solana_sdk::{
+    xandeum_runtime::vote_parser,
+    xandeum_sdk::{
         clock::Slot,
         hash::Hash,
         pubkey::{self, Pubkey},
@@ -198,7 +198,7 @@ impl AccountsHashes {
         let num_hashes = rng.gen_range(0, MAX_LEGACY_SNAPSHOT_HASHES) + 1;
         let hashes = std::iter::repeat_with(|| {
             let slot = 47825632 + rng.gen_range(0, 512);
-            let hash = solana_sdk::hash::new_rand(rng);
+            let hash = xandeum_sdk::hash::new_rand(rng);
             (slot, hash)
         })
         .take(num_hashes)
@@ -364,7 +364,7 @@ impl<'de> Deserialize<'de> for Vote {
 pub struct LegacyVersion {
     pub from: Pubkey,
     pub wallclock: u64,
-    pub version: solana_version::LegacyVersion1,
+    pub version: xandeum_version::LegacyVersion1,
 }
 
 impl Sanitize for LegacyVersion {
@@ -379,7 +379,7 @@ impl Sanitize for LegacyVersion {
 pub struct Version {
     pub from: Pubkey,
     pub wallclock: u64,
-    pub version: solana_version::LegacyVersion2,
+    pub version: xandeum_version::LegacyVersion2,
 }
 
 impl Sanitize for Version {
@@ -395,7 +395,7 @@ impl Version {
         Self {
             from,
             wallclock: timestamp(),
-            version: solana_version::LegacyVersion2::default(),
+            version: xandeum_version::LegacyVersion2::default(),
         }
     }
 
@@ -404,7 +404,7 @@ impl Version {
         Self {
             from: pubkey.unwrap_or_else(pubkey::new_rand),
             wallclock: new_rand_timestamp(rng),
-            version: solana_version::LegacyVersion2 {
+            version: xandeum_version::LegacyVersion2 {
                 major: rng.gen(),
                 minor: rng.gen(),
                 patch: rng.gen(),
@@ -705,12 +705,12 @@ mod test {
         bincode::{deserialize, Options},
         rand::SeedableRng,
         rand_chacha::ChaChaRng,
-        solana_perf::test_tx::new_test_vote_tx,
-        solana_sdk::{
+        xandeum_perf::test_tx::new_test_vote_tx,
+        xandeum_sdk::{
             signature::{Keypair, Signer},
             timing::timestamp,
         },
-        solana_vote_program::{vote_instruction, vote_state},
+        xandeum_vote_program::{vote_instruction, vote_state},
         std::{cmp::Ordering, iter::repeat_with},
     };
 
@@ -802,7 +802,7 @@ mod test {
         let mut rng = rand::thread_rng();
         let vote = vote_state::Vote::new(
             vec![1, 3, 7], // slots
-            solana_sdk::hash::new_rand(&mut rng),
+            xandeum_sdk::hash::new_rand(&mut rng),
         );
         let ix = vote_instruction::vote(
             &Pubkey::new_unique(), // vote_pubkey

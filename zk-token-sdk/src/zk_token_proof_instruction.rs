@@ -4,7 +4,7 @@ use {
     bytemuck::bytes_of,
     num_derive::{FromPrimitive, ToPrimitive},
     num_traits::{FromPrimitive, ToPrimitive},
-    solana_program::{
+    xandeum_program::{
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,
     },

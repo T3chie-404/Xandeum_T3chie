@@ -28,8 +28,8 @@ A voting validator can earn SOL through 2 methods:
 
 The following links are community provided resources that discuss the economics of running a validator:
 
-- Michael Hubbard wrote an [article](https://laine-sa.medium.com/solana-staking-rewards-validator-economics-how-does-it-work-6718e4cccc4e) that explains the economics of Solana in more depth for stakers and for validators.
-- Congent Crypto has written a [blog post](https://medium.com/@Cogent_Crypto/how-to-become-a-validator-on-solana-9dc4288107b7) that discusses economics and getting started.
+- Michael Hubbard wrote an [article](https://laine-sa.medium.com/xandeum-staking-rewards-validator-economics-how-does-it-work-6718e4cccc4e) that explains the economics of Solana in more depth for stakers and for validators.
+- Congent Crypto has written a [blog post](https://medium.com/@Cogent_Crypto/how-to-become-a-validator-on-xandeum-9dc4288107b7) that discusses economics and getting started.
 - Cogent Crypto also provides a [validator profit calculator](https://cogentcrypto.io/ValidatorProfitCalculator)
 
 ## RPC Nodes

@@ -1,4 +1,4 @@
-use {super::*, spl_token_2022::solana_program::pubkey::Pubkey};
+use {super::*, spl_token_2022::xandeum_program::pubkey::Pubkey};
 
 pub(in crate::parse_token) fn parse_initialize_permanent_delegate_instruction(
     delegate: Pubkey,
@@ -20,8 +20,8 @@ mod test {
     use {
         super::*,
         crate::parse_token::test::*,
-        solana_sdk::pubkey::Pubkey,
-        spl_token_2022::{instruction::*, solana_program::message::Message},
+        xandeum_sdk::pubkey::Pubkey,
+        spl_token_2022::{instruction::*, xandeum_program::message::Message},
     };
 
     #[test]

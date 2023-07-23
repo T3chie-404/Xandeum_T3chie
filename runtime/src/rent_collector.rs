@@ -1,5 +1,5 @@
 //! calculate and collect rent from Accounts
-use solana_sdk::{
+use xandeum_sdk::{
     account::{AccountSharedData, ReadableAccount, WritableAccount},
     clock::Epoch,
     epoch_schedule::EpochSchedule,
@@ -216,7 +216,7 @@ impl std::ops::AddAssign for CollectedInfo {
 mod tests {
     use {
         super::*,
-        solana_sdk::{account::Account, sysvar},
+        xandeum_sdk::{account::Account, sysvar},
     };
 
     fn default_rent_collector_clone_with_epoch(epoch: Epoch) -> RentCollector {
@@ -313,7 +313,7 @@ mod tests {
             }
 
             // try a few combinations of rent collector rent epoch and collecting rent with and without filler accounts specified (but we aren't a filler)
-            let filler_account = solana_sdk::pubkey::new_rand();
+            let filler_account = xandeum_sdk::pubkey::new_rand();
 
             for filler_accounts in [None, Some(&filler_account)] {
                 for (rent_epoch, rent_due_expected) in [(2, 2), (3, 5)] {
@@ -451,7 +451,7 @@ mod tests {
 
             // collect rent on a newly-created account
             let collected = rent_collector.collect_from_created_account(
-                &solana_sdk::pubkey::new_rand(),
+                &xandeum_sdk::pubkey::new_rand(),
                 &mut created_account,
                 set_exempt_rent_epoch_max,
             );
@@ -465,7 +465,7 @@ mod tests {
 
             // collect rent on a already-existing account
             let collected = rent_collector.collect_from_existing_account(
-                &solana_sdk::pubkey::new_rand(),
+                &xandeum_sdk::pubkey::new_rand(),
                 &mut existing_account,
                 None, // filler_account_suffix
                 set_exempt_rent_epoch_max,
@@ -492,7 +492,7 @@ mod tests {
                 let epoch = 3;
                 let huge_lamports = 123_456_789_012;
                 let tiny_lamports = 789_012;
-                let pubkey = solana_sdk::pubkey::new_rand();
+                let pubkey = xandeum_sdk::pubkey::new_rand();
 
                 assert_eq!(account.rent_epoch(), 0);
 
@@ -539,7 +539,7 @@ mod tests {
             account.set_owner(sysvar::id());
             account.set_lamports(tiny_lamports);
 
-            let pubkey = solana_sdk::pubkey::new_rand();
+            let pubkey = xandeum_sdk::pubkey::new_rand();
 
             assert_eq!(account.rent_epoch(), 0);
 
@@ -561,7 +561,7 @@ mod tests {
     #[test]
     fn test_collect_cleans_up_account() {
         for set_exempt_rent_epoch_max in [false, true] {
-            solana_logger::setup();
+            xandeum_logger::setup();
             let account_lamports = 1; // must be *below* rent amount
             let account_data_len = 567;
             let account_rent_epoch = 11;

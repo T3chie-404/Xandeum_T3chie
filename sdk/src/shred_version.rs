@@ -1,10 +1,10 @@
 //! Calculation of [shred] versions.
 //!
-//! [shred]: https://docs.solana.com/terminology#shred
+//! [shred]: https://docs.xandeum.com/terminology#shred
 
 #![cfg(feature = "full")]
 
-use solana_sdk::{
+use xandeum_sdk::{
     hard_forks::HardForks,
     hash::{extend_and_hash, Hash},
 };

@@ -1,8 +1,8 @@
 use {
     super::*,
-    solana_entry::entry::Entry,
-    solana_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
-    solana_sdk::{hash::Hash, signature::Keypair},
+    xandeum_entry::entry::Entry,
+    xandeum_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
+    xandeum_sdk::{hash::Hash, signature::Keypair},
 };
 
 #[derive(Clone)]
@@ -161,9 +161,9 @@ impl BroadcastRun for BroadcastFakeShredsRun {
 mod tests {
     use {
         super::*,
-        solana_gossip::contact_info::ContactInfo,
-        solana_sdk::signature::Signer,
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_gossip::contact_info::ContactInfo,
+        xandeum_sdk::signature::Signer,
+        xandeum_streamer::socket::SocketAddrSpace,
         std::net::{IpAddr, Ipv4Addr, SocketAddr},
     };
 

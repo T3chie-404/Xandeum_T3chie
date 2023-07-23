@@ -102,7 +102,7 @@ where
     }
 }
 
-fn test_solana_package(
+fn test_xandeum_package(
     config: &Config,
     target_directory: &Path,
     package: &cargo_metadata::Package,
@@ -155,7 +155,7 @@ fn test_solana_package(
         config.generate_child_script_on_failure,
     );
 
-    // Pass --sbf-out-dir along to the solana-program-test crate
+    // Pass --sbf-out-dir along to the xandeum-program-test crate
     env::set_var("SBF_OUT_DIR", sbf_out_dir);
 
     cargo_args.insert(0, "test");
@@ -195,7 +195,7 @@ fn test_solana_package(
     );
 }
 
-fn test_solana(config: Config, manifest_path: Option<PathBuf>) {
+fn test_xandeum(config: Config, manifest_path: Option<PathBuf>) {
     let mut metadata_command = cargo_metadata::MetadataCommand::new();
     if let Some(manifest_path) = manifest_path.as_ref() {
         metadata_command.manifest_path(manifest_path);
@@ -218,7 +218,7 @@ fn test_solana(config: Config, manifest_path: Option<PathBuf>) {
                     .any(|p| root_package.id.repr.contains(p)))
         {
             debug!("test root package {:?}", root_package.id);
-            test_solana_package(&config, metadata.target_directory.as_ref(), root_package);
+            test_xandeum_package(&config, metadata.target_directory.as_ref(), root_package);
             return;
         }
     }
@@ -242,13 +242,13 @@ fn test_solana(config: Config, manifest_path: Option<PathBuf>) {
         if config.packages.is_empty() || config.packages.iter().any(|p| package.id.repr.contains(p))
         {
             debug!("test package {:?}", package.id);
-            test_solana_package(&config, metadata.target_directory.as_ref(), package);
+            test_xandeum_package(&config, metadata.target_directory.as_ref(), package);
         }
     }
 }
 
 fn main() {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let mut args = env::args().collect::<Vec<_>>();
     // When run as a cargo subcommand, the first program argument is the subcommand name.
     // Remove it
@@ -420,5 +420,5 @@ fn main() {
     }
 
     let manifest_path: Option<PathBuf> = matches.value_of_t("manifest_path").ok();
-    test_solana(config, manifest_path);
+    test_xandeum(config, manifest_path);
 }

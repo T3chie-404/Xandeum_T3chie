@@ -18,12 +18,12 @@ use {
     bip39::{Language, Mnemonic, Seed},
     clap::ArgMatches,
     rpassword::prompt_password,
-    solana_remote_wallet::{
+    xandeum_remote_wallet::{
         locator::{Locator as RemoteWalletLocator, LocatorError as RemoteWalletLocatorError},
         remote_keypair::generate_remote_keypair,
         remote_wallet::{maybe_wallet_manager, RemoteWalletError, RemoteWalletManager},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         derivation_path::{DerivationPath, DerivationPathError},
         hash::Hash,
         message::Message,
@@ -34,7 +34,7 @@ use {
             Signature, Signer,
         },
     },
-    solana_zk_token_sdk::encryption::{auth_encryption::AeKey, elgamal::ElGamalKeypair},
+    xandeum_zk_token_sdk::encryption::{auth_encryption::AeKey, elgamal::ElGamalKeypair},
     std::{
         cell::RefCell,
         convert::TryFrom,
@@ -136,8 +136,8 @@ impl DefaultSigner {
     ///
     /// ```no_run
     /// use clap::{Arg, Command};
-    /// use solana_clap_v3_utils::keypair::DefaultSigner;
-    /// use solana_clap_v3_utils::offline::OfflineArgs;
+    /// use xandeum_clap_v3_utils::keypair::DefaultSigner;
+    /// use xandeum_clap_v3_utils::offline::OfflineArgs;
     ///
     /// let clap_app = Command::new("my-program")
     ///     // The argument we'll parse as a signer "path"
@@ -178,7 +178,7 @@ impl DefaultSigner {
                     std::io::Error::new(
                         std::io::ErrorKind::Other,
                         format!(
-                        "No default signer found, run \"solana-keygen new -o {}\" to create a new one",
+                        "No default signer found, run \"xandeum-keygen new -o {}\" to create a new one",
                         self.path
                     ),
                     )
@@ -206,9 +206,9 @@ impl DefaultSigner {
     ///
     /// ```no_run
     /// use clap::{Arg, Command};
-    /// use solana_clap_v3_utils::keypair::{DefaultSigner, signer_from_path};
-    /// use solana_clap_v3_utils::offline::OfflineArgs;
-    /// use solana_sdk::signer::Signer;
+    /// use xandeum_clap_v3_utils::keypair::{DefaultSigner, signer_from_path};
+    /// use xandeum_clap_v3_utils::offline::OfflineArgs;
+    /// use xandeum_sdk::signer::Signer;
     ///
     /// let clap_app = Command::new("my-program")
     ///     // The argument we'll parse as a signer "path"
@@ -281,8 +281,8 @@ impl DefaultSigner {
     ///
     /// ```no_run
     /// use clap::{Arg, Command};
-    /// use solana_clap_v3_utils::keypair::DefaultSigner;
-    /// use solana_clap_v3_utils::offline::OfflineArgs;
+    /// use xandeum_clap_v3_utils::keypair::DefaultSigner;
+    /// use xandeum_clap_v3_utils::offline::OfflineArgs;
     ///
     /// let clap_app = Command::new("my-program")
     ///     // The argument we'll parse as a signer "path"
@@ -328,8 +328,8 @@ impl DefaultSigner {
     ///
     /// ```no_run
     /// use clap::{Arg, Command};
-    /// use solana_clap_v3_utils::keypair::{SignerFromPathConfig, DefaultSigner};
-    /// use solana_clap_v3_utils::offline::OfflineArgs;
+    /// use xandeum_clap_v3_utils::keypair::{SignerFromPathConfig, DefaultSigner};
+    /// use xandeum_clap_v3_utils::offline::OfflineArgs;
     ///
     /// let clap_app = Command::new("my-program")
     ///     // The argument we'll parse as a signer "path"
@@ -662,8 +662,8 @@ pub struct SignerFromPathConfig {
 ///
 /// ```no_run
 /// use clap::{Arg, Command};
-/// use solana_clap_v3_utils::keypair::signer_from_path;
-/// use solana_clap_v3_utils::offline::OfflineArgs;
+/// use xandeum_clap_v3_utils::keypair::signer_from_path;
+/// use xandeum_clap_v3_utils::offline::OfflineArgs;
 ///
 /// let clap_app = Command::new("my-program")
 ///     // The argument we'll parse as a signer "path"
@@ -722,8 +722,8 @@ pub fn signer_from_path(
 ///
 /// ```no_run
 /// use clap::{Arg, Command};
-/// use solana_clap_v3_utils::keypair::{signer_from_path_with_config, SignerFromPathConfig};
-/// use solana_clap_v3_utils::offline::OfflineArgs;
+/// use xandeum_clap_v3_utils::keypair::{signer_from_path_with_config, SignerFromPathConfig};
+/// use xandeum_clap_v3_utils::offline::OfflineArgs;
 ///
 /// let clap_app = Command::new("my-program")
 ///     // The argument we'll parse as a signer "path"
@@ -776,7 +776,7 @@ pub fn signer_from_path_with_config(
         SignerSourceKind::Filepath(path) => match read_keypair_file(&path) {
             Err(e) => Err(std::io::Error::new(
                 std::io::ErrorKind::Other,
-                format!("could not read keypair file \"{path}\". Run \"solana-keygen new\" to create a keypair file: {e}"),
+                format!("could not read keypair file \"{path}\". Run \"xandeum-keygen new\" to create a keypair file: {e}"),
             )
             .into()),
             Ok(file) => Ok(Box::new(file)),
@@ -839,7 +839,7 @@ pub fn signer_from_path_with_config(
 ///
 /// ```no_run
 /// use clap::{Arg, Command};
-/// use solana_clap_v3_utils::keypair::pubkey_from_path;
+/// use xandeum_clap_v3_utils::keypair::pubkey_from_path;
 ///
 /// let clap_app = Command::new("my-program")
 ///     // The argument we'll parse as a signer "path"
@@ -901,7 +901,7 @@ pub fn resolve_signer_from_path(
                 std::io::ErrorKind::Other,
                 format!(
                     "could not read keypair file \"{path}\". \
-                    Run \"solana-keygen new\" to create a keypair file: {e}"
+                    Run \"xandeum-keygen new\" to create a keypair file: {e}"
                 ),
             )
             .into()),
@@ -978,7 +978,7 @@ pub fn prompt_passphrase(prompt: &str) -> Result<String, Box<dyn error::Error>> 
 ///
 /// ```no_run
 /// use clap::{Arg, Command};
-/// use solana_clap_v3_utils::keypair::keypair_from_path;
+/// use xandeum_clap_v3_utils::keypair::keypair_from_path;
 ///
 /// let clap_app = Command::new("my-program")
 ///     // The argument we'll parse as a signer "path"
@@ -1025,7 +1025,7 @@ pub fn keypair_from_path(
 ///
 /// ```no_run`
 /// use clap::{Arg, Command};
-/// use solana_clap_v3_utils::keypair::elgamal_keypair_from_path;
+/// use xandeum_clap_v3_utils::keypair::elgamal_keypair_from_path;
 ///
 /// let clap_app = Command::new("my-program")
 ///     // The argument we'll parse as a signer "path"
@@ -1081,7 +1081,7 @@ fn confirm_encodable_keypair_pubkey<K: EncodableKeypair>(keypair: &K, pubkey_lab
 ///
 /// ```no_run`
 /// use clap::{Arg, Command};
-/// use solana_clap_v3_utils::keypair::ae_key_from_path;
+/// use xandeum_clap_v3_utils::keypair::ae_key_from_path;
 ///
 /// let clap_app = Command::new("my-program")
 ///     // The argument we'll parse as a signer "path"
@@ -1132,7 +1132,7 @@ fn encodable_key_from_path<K: EncodableKey + SeedDerivable>(
                 std::io::ErrorKind::Other,
                 format!(
                     "could not read keypair file \"{path}\". \
-                    Run \"solana-keygen new\" to create a keypair file: {e}"
+                    Run \"xandeum-keygen new\" to create a keypair file: {e}"
                 ),
             )
             .into()),
@@ -1267,8 +1267,8 @@ mod tests {
         super::*,
         crate::offline::OfflineArgs,
         clap::{Arg, Command},
-        solana_remote_wallet::{locator::Manufacturer, remote_wallet::initialize_wallet_manager},
-        solana_sdk::{signer::keypair::write_keypair_file, system_instruction},
+        xandeum_remote_wallet::{locator::Manufacturer, remote_wallet::initialize_wallet_manager},
+        xandeum_sdk::{signer::keypair::write_keypair_file, system_instruction},
         tempfile::{NamedTempFile, TempDir},
     };
 

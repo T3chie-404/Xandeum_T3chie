@@ -6,9 +6,9 @@ use {
         latest_validator_votes_for_frozen_banks::LatestValidatorVotesForFrozenBanks,
         progress_map::ProgressMap, tree_diff::TreeDiff,
     },
-    solana_measure::measure::Measure,
-    solana_runtime::{bank::Bank, bank_forks::BankForks, epoch_stakes::EpochStakes},
-    solana_sdk::{
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::{bank::Bank, bank_forks::BankForks, epoch_stakes::EpochStakes},
+    xandeum_sdk::{
         clock::{Epoch, Slot},
         epoch_schedule::EpochSchedule,
         hash::Hash,
@@ -1235,8 +1235,8 @@ mod test {
         super::*,
         crate::vote_simulator::VoteSimulator,
         itertools::Itertools,
-        solana_runtime::{bank::Bank, bank_utils},
-        solana_sdk::{hash::Hash, slot_history::SlotHistory},
+        xandeum_runtime::{bank::Bank, bank_utils},
+        xandeum_sdk::{hash::Hash, slot_history::SlotHistory},
         std::{collections::HashSet, ops::Range},
         trees::tr,
     };

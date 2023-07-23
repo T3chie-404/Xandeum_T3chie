@@ -1,23 +1,23 @@
 use {
     clap::{crate_description, crate_name, App, Arg, ArgMatches},
-    solana_clap_utils::{
+    xandeum_clap_utils::{
         hidden_unless_forced,
         input_validators::{is_keypair, is_url, is_url_or_moniker, is_within_range},
     },
-    solana_cli_config::{ConfigInput, CONFIG_FILE},
-    solana_sdk::{
+    xandeum_cli_config::{ConfigInput, CONFIG_FILE},
+    xandeum_sdk::{
         fee_calculator::FeeRateGovernor,
         pubkey::Pubkey,
         signature::{read_keypair_file, Keypair},
     },
-    solana_tpu_client::tpu_client::{DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_USE_QUIC},
+    xandeum_tpu_client::tpu_client::{DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_USE_QUIC},
     std::{
         net::{IpAddr, Ipv4Addr, SocketAddr},
         time::Duration,
     },
 };
 
-const NUM_LAMPORTS_PER_ACCOUNT_DEFAULT: u64 = solana_sdk::native_token::LAMPORTS_PER_SOL;
+const NUM_LAMPORTS_PER_ACCOUNT_DEFAULT: u64 = xandeum_sdk::native_token::LAMPORTS_PER_SOL;
 
 #[derive(Eq, PartialEq, Debug)]
 pub enum ExternalClientType {
@@ -151,7 +151,7 @@ pub fn build_args<'a>(version: &'_ str) -> App<'a, '_> {
                 .takes_value(true)
                 .global(true)
                 .validator(is_url)
-                .help("WebSocket URL for the solana cluster"),
+                .help("WebSocket URL for the xandeum cluster"),
         )
         .arg(
             Arg::with_name("rpc_addr")
@@ -369,7 +369,7 @@ pub fn build_args<'a>(version: &'_ str) -> App<'a, '_> {
                 .long("bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .requires("client_node_id")
                 .help("IP address to use with connection cache"),
         )
@@ -389,9 +389,9 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
     let mut args = Config::default();
 
     let config = if let Some(config_file) = matches.value_of("config_file") {
-        solana_cli_config::Config::load(config_file).unwrap_or_default()
+        xandeum_cli_config::Config::load(config_file).unwrap_or_default()
     } else {
-        solana_cli_config::Config::default()
+        xandeum_cli_config::Config::default()
     };
     let (_, json_rpc_url) = ConfigInput::compute_json_rpc_url_setting(
         matches.value_of("json_rpc_url").unwrap_or(""),
@@ -435,7 +435,7 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
     }
 
     if let Some(addr) = matches.value_of("entrypoint") {
-        args.entrypoint_addr = solana_net_utils::parse_host_port(addr)
+        args.entrypoint_addr = xandeum_net_utils::parse_host_port(addr)
             .map_err(|_| "failed to parse entrypoint address")?;
     }
 
@@ -548,7 +548,7 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
 
     if let Some(addr) = matches.value_of("bind_address") {
         args.bind_address =
-            solana_net_utils::parse_host(addr).map_err(|_| "Failed to parse bind-address")?;
+            xandeum_net_utils::parse_host(addr).map_err(|_| "Failed to parse bind-address")?;
     }
 
     if let Some(client_node_id_filename) = matches.value_of("client_node_id") {
@@ -564,7 +564,7 @@ pub fn parse_args(matches: &ArgMatches) -> Result<Config, &'static str> {
 mod tests {
     use {
         super::*,
-        solana_sdk::signature::{read_keypair_file, write_keypair_file, Keypair, Signer},
+        xandeum_sdk::signature::{read_keypair_file, write_keypair_file, Keypair, Signer},
         std::{
             net::{IpAddr, Ipv4Addr, SocketAddr},
             time::Duration,
@@ -594,7 +594,7 @@ mod tests {
         // parse provided rpc address, check that default ws address is correct
         // always specify identity in these tests because otherwise a random one will be used
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "xandeum-bench-tps",
             "--identity",
             &keypair_file_name,
             "-u",
@@ -614,7 +614,7 @@ mod tests {
         // parse cli args typical for private cluster tests
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "xandeum-bench-tps",
             "--identity",
             &keypair_file_name,
             "-u",
@@ -649,7 +649,7 @@ mod tests {
         // select different client type
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "xandeum-bench-tps",
             "--identity",
             &keypair_file_name,
             "-u",
@@ -672,7 +672,7 @@ mod tests {
         let keypair = read_keypair_file(&keypair_file_name).unwrap();
         let (client_id, client_id_file_name) = write_tmp_keypair(&out_dir);
         let matches = build_args("1.0.0").get_matches_from(vec![
-            "solana-bench-tps",
+            "xandeum-bench-tps",
             "--identity",
             &keypair_file_name,
             "-u",

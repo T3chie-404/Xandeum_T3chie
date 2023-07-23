@@ -1,6 +1,6 @@
 #![allow(clippy::integer_arithmetic)]
 
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "xandeum")]
 #[macro_use]
 extern crate matches;
 

@@ -2,7 +2,7 @@
 //!
 //! This module is a simple wrapper of the `Aes128GcmSiv` implementation specialized for SPL
 //! token-2022 where the plaintext is always `u64`.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 use {
     aes_gcm_siv::{
         aead::{Aead, NewAead},
@@ -15,7 +15,7 @@ use {
     arrayref::{array_ref, array_refs},
     base64::{prelude::BASE64_STANDARD, Engine},
     sha3::{Digest, Sha3_512},
-    solana_sdk::{
+    xandeum_sdk::{
         derivation_path::DerivationPath,
         signature::Signature,
         signer::{
@@ -45,14 +45,14 @@ impl AuthenticatedEncryption {
     /// Generates an authenticated encryption key.
     ///
     /// This function is randomized. It internally samples a 128-bit key using `OsRng`.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     fn keygen() -> AeKey {
         AeKey(OsRng.gen::<[u8; 16]>())
     }
 
     /// On input of an authenticated encryption key and an amount, the function returns a
     /// corresponding authenticated encryption ciphertext.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     fn encrypt(key: &AeKey, balance: u64) -> AeCiphertext {
         let mut plaintext = balance.to_le_bytes();
         let nonce: Nonce = OsRng.gen::<[u8; 12]>();
@@ -72,7 +72,7 @@ impl AuthenticatedEncryption {
 
     /// On input of an authenticated encryption key and a ciphertext, the function returns the
     /// originally encrypted amount.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     fn decrypt(key: &AeKey, ciphertext: &AeCiphertext) -> Option<u64> {
         let plaintext = Aes128GcmSiv::new(&key.0.into())
             .decrypt(&ciphertext.nonce.into(), ciphertext.ciphertext.as_ref());
@@ -238,7 +238,7 @@ impl fmt::Display for AeCiphertext {
 mod tests {
     use {
         super::*,
-        solana_sdk::{pubkey::Pubkey, signature::Keypair, signer::null_signer::NullSigner},
+        xandeum_sdk::{pubkey::Pubkey, signature::Keypair, signer::null_signer::NullSigner},
     };
 
     #[test]

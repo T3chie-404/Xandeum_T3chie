@@ -1,4 +1,4 @@
-use {solana_client::connection_cache::Protocol, std::net::SocketAddr};
+use {xandeum_client::connection_cache::Protocol, std::net::SocketAddr};
 
 pub trait TpuInfo {
     fn refresh_recent_peers(&mut self);

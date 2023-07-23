@@ -2,11 +2,11 @@
 use {
     bincode::deserialize,
     log::debug,
-    solana_banks_client::BanksClient,
-    solana_program_test::{
+    xandeum_banks_client::BanksClient,
+    xandeum_program_test::{
         processor, ProgramTest, ProgramTestBanksClientExt, ProgramTestContext, ProgramTestError,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::Account,
         account_info::{next_account_info, AccountInfo},
         clock::Clock,
@@ -28,8 +28,8 @@ use {
         },
         transaction::{Transaction, TransactionError},
     },
-    solana_stake_program::stake_state,
-    solana_vote_program::{
+    xandeum_stake_program::stake_state,
+    xandeum_vote_program::{
         vote_instruction,
         vote_state::{self, VoteInit, VoteState},
     },

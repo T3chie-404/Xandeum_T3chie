@@ -1,4 +1,4 @@
-//! The solana-program-test provides a BanksClient-based test framework SBF programs
+//! The xandeum-program-test provides a BanksClient-based test framework SBF programs
 #![allow(clippy::integer_arithmetic)]
 
 // Export tokio for test clients
@@ -8,14 +8,14 @@ use {
     base64::{prelude::BASE64_STANDARD, Engine},
     chrono_humanize::{Accuracy, HumanTime, Tense},
     log::*,
-    solana_banks_client::start_client,
-    solana_banks_server::banks_server::start_local_server,
-    solana_bpf_loader_program::serialization::serialize_parameters,
-    solana_program_runtime::{
+    xandeum_banks_client::start_client,
+    xandeum_banks_server::banks_server::start_local_server,
+    xandeum_bpf_loader_program::serialization::serialize_parameters,
+    xandeum_program_runtime::{
         compute_budget::ComputeBudget, ic_msg, invoke_context::ProcessInstructionWithContext,
         loaded_programs::LoadedProgram, stable_log, timings::ExecuteTimings,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         accounts_background_service::{AbsRequestSender, SnapshotRequestType},
         bank::Bank,
         bank_forks::BankForks,
@@ -24,7 +24,7 @@ use {
         genesis_utils::{create_genesis_config_with_leader_ex, GenesisConfigInfo},
         runtime_config::RuntimeConfig,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::{Account, AccountSharedData},
         account_info::AccountInfo,
         clock::Slot,
@@ -43,7 +43,7 @@ use {
         stable_layout::stable_instruction::StableInstruction,
         sysvar::{Sysvar, SysvarId},
     },
-    solana_vote_program::vote_state::{self, VoteState, VoteStateVersions},
+    xandeum_vote_program::vote_state::{self, VoteState, VoteStateVersions},
     std::{
         cell::RefCell,
         collections::{HashMap, HashSet},
@@ -61,12 +61,12 @@ use {
     thiserror::Error,
     tokio::task::JoinHandle,
 };
-// Export types so test clients can limit their solana crate dependencies
+// Export types so test clients can limit their xandeum crate dependencies
 pub use {
-    solana_banks_client::{BanksClient, BanksClientError},
-    solana_banks_interface::BanksTransactionResultWithMetadata,
-    solana_program_runtime::invoke_context::InvokeContext,
-    solana_sdk::transaction_context::IndexOfAccount,
+    xandeum_banks_client::{BanksClient, BanksClientError},
+    xandeum_banks_interface::BanksTransactionResultWithMetadata,
+    xandeum_program_runtime::invoke_context::InvokeContext,
+    xandeum_sdk::transaction_context::IndexOfAccount,
 };
 
 pub mod programs;
@@ -95,7 +95,7 @@ fn get_invoke_context<'a, 'b>() -> &'a mut InvokeContext<'b> {
 }
 
 pub fn builtin_process_instruction(
-    process_instruction: solana_sdk::entrypoint::ProcessInstruction,
+    process_instruction: xandeum_sdk::entrypoint::ProcessInstruction,
     invoke_context: &mut InvokeContext,
 ) -> Result<(), Box<dyn std::error::Error>> {
     set_invoke_context(invoke_context);
@@ -173,7 +173,7 @@ pub fn builtin_process_instruction(
     Ok(())
 }
 
-/// Converts a `solana-program`-style entrypoint into the runtime's entrypoint style, for
+/// Converts a `xandeum-program`-style entrypoint into the runtime's entrypoint style, for
 /// use with `ProgramTest::add_program`
 #[macro_export]
 macro_rules! processor {
@@ -210,7 +210,7 @@ fn get_sysvar<T: Default + Sysvar + Sized + serde::de::DeserializeOwned + Clone>
 }
 
 struct SyscallStubs {}
-impl solana_sdk::program_stubs::SyscallStubs for SyscallStubs {
+impl xandeum_sdk::program_stubs::SyscallStubs for SyscallStubs {
     fn sol_log(&self, message: &str) {
         let invoke_context = get_invoke_context();
         ic_msg!(invoke_context, "Program log: {}", message);
@@ -455,11 +455,11 @@ impl Default for ProgramTest {
     /// * the current working directory
     ///
     fn default() -> Self {
-        solana_logger::setup_with_default(
-            "solana_rbpf::vm=debug,\
-             solana_runtime::message_processor=debug,\
-             solana_runtime::system_instruction_processor=trace,\
-             solana_program_test=info",
+        xandeum_logger::setup_with_default(
+            "xandeum_rbpf::vm=debug,\
+             xandeum_runtime::message_processor=debug,\
+             xandeum_runtime::system_instruction_processor=trace,\
+             xandeum_program_test=info",
         );
         let prefer_bpf =
             std::env::var("BPF_OUT_DIR").is_ok() || std::env::var("SBF_OUT_DIR").is_ok();
@@ -467,7 +467,7 @@ impl Default for ProgramTest {
         // deactivate feature `native_program_consume_cu` to continue support existing mock/test
         // programs that do not consume units.
         let deactivate_feature_set =
-            HashSet::from([solana_sdk::feature_set::native_programs_consume_cu::id()]);
+            HashSet::from([xandeum_sdk::feature_set::native_programs_consume_cu::id()]);
 
         Self {
             accounts: vec![],
@@ -613,7 +613,7 @@ impl ProgramTest {
                 Account {
                     lamports: Rent::default().minimum_balance(data.len()).max(1),
                     data,
-                    owner: solana_sdk::bpf_loader::id(),
+                    owner: xandeum_sdk::bpf_loader::id(),
                     executable: true,
                     rent_epoch: 0,
                 },
@@ -719,7 +719,7 @@ impl ProgramTest {
             static ONCE: Once = Once::new();
 
             ONCE.call_once(|| {
-                solana_sdk::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
+                xandeum_sdk::program_stubs::set_syscall_stubs(Box::new(SyscallStubs {}));
             });
         }
 
@@ -1102,7 +1102,7 @@ impl ProgramTestContext {
                 &Pubkey::default(),
                 pre_warp_slot,
                 // some warping tests cannot use the append vecs because of the sequence of adding roots and flushing
-                solana_runtime::accounts_db::CalcAccountsHashDataSource::IndexForTests,
+                xandeum_runtime::accounts_db::CalcAccountsHashDataSource::IndexForTests,
             ))
         };
 

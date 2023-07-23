@@ -1,6 +1,6 @@
 [package]
-name = "solana-sbf-rust-upgradeable"
-documentation = "https://docs.rs/solana-sbf-rust-upgradeable"
+name = "xandeum-sbf-rust-upgradeable"
+documentation = "https://docs.rs/xandeum-sbf-rust-upgradeable"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -10,10 +10,10 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [dependencies]
-solana-program = { workspace = true }
+xandeum-program = { workspace = true }
 
 [lib]
-name = "solana_sbf_rust_upgradeable"
+name = "xandeum_sbf_rust_upgradeable"
 crate-type = ["cdylib"]
 
 [package.metadata.docs.rs]

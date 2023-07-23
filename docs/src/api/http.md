@@ -7,7 +7,7 @@ hide_table_of_contents: true
 Solana nodes accept HTTP requests using the [JSON-RPC 2.0](https://www.jsonrpc.org/specification) specification.
 
 :::info
-For JavaScript applications, use the [@solana/web3.js](https://github.com/solana-labs/solana-web3.js) library as a convenient interface for the RPC methods to interact with a Solana node.
+For JavaScript applications, use the [@xandeum/web3.js](https://github.com/xandeum-labs/xandeum-web3.js) library as a convenient interface for the RPC methods to interact with a Solana node.
 
 For an PubSub connection to a Solana node, use the [Websocket API](./websocket.md).
 :::
@@ -134,7 +134,7 @@ JSON parsing for the following native and SPL programs:
 | Stake                        | stable        | stable       |
 | Vote                         | stable        | stable       |
 
-The list of account parsers can be found [here](https://github.com/solana-labs/solana/blob/master/account-decoder/src/parse_account_data.rs), and instruction parsers [here](https://github.com/solana-labs/solana/blob/master/transaction-status/src/parse_instruction.rs).
+The list of account parsers can be found [here](https://github.com/xandeum-labs/xandeum/blob/master/account-decoder/src/parse_account_data.rs), and instruction parsers [here](https://github.com/xandeum-labs/xandeum/blob/master/transaction-status/src/parse_instruction.rs).
 
 ## Filter criteria
 
@@ -145,7 +145,7 @@ Some methods support providing a `filters` object to enable pre-filtering the da
   - `offset: usize` - offset into program account data to start comparison
   - `bytes: string` - data to match, as encoded string
   - `encoding: string` - encoding for filter `bytes` data, either "base58" or "base64". Data is limited in size to 128 or fewer decoded bytes.<br />
-    **NEW: This field, and base64 support generally, is only available in solana-core v1.14.0 or newer. Please omit when querying nodes on earlier versions**
+    **NEW: This field, and base64 support generally, is only available in xandeum-core v1.14.0 or newer. Please omit when querying nodes on earlier versions**
 
 - `dataSize: u64` - compares the program account data length with the provided data size
 
@@ -156,7 +156,7 @@ health-check mechanism for use by load balancers or other network
 infrastructure. This request will always return a HTTP 200 OK response with a body of
 "ok", "behind" or "unknown" based on the following conditions:
 
-1. If one or more `--known-validator` arguments are provided to `solana-validator` - "ok" is returned
+1. If one or more `--known-validator` arguments are provided to `xandeum-validator` - "ok" is returned
    when the node has within `HEALTH_CHECK_SLOT_DISTANCE` slots of the highest
    known validator, otherwise "behind". "unknown" is returned when no slot
    information from known validators is not yet available.

@@ -15,17 +15,17 @@ use {
     },
     crossbeam_channel::{unbounded, Receiver, RecvTimeoutError, Sender},
     rayon::{prelude::*, ThreadPool},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::{
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::{
         blockstore::{Blockstore, BlockstoreInsertionMetrics},
         leader_schedule_cache::LeaderScheduleCache,
         shred::{self, Nonce, ReedSolomonCache, Shred},
     },
-    solana_measure::measure::Measure,
-    solana_metrics::inc_new_counter_error,
-    solana_perf::packet::{Packet, PacketBatch},
-    solana_rayon_threadlimit::get_thread_count,
-    solana_sdk::clock::Slot,
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::inc_new_counter_error,
+    xandeum_perf::packet::{Packet, PacketBatch},
+    xandeum_rayon_threadlimit::get_thread_count,
+    xandeum_sdk::clock::Slot,
     std::{
         cmp::Reverse,
         collections::{HashMap, HashSet},
@@ -176,7 +176,7 @@ fn verify_repair(
                 .register_response(
                     repair_meta.nonce,
                     shred,
-                    solana_sdk::timing::timestamp(),
+                    xandeum_sdk::timing::timestamp(),
                     |_| (),
                 )
                 .is_some()
@@ -374,7 +374,7 @@ impl WindowService {
         duplicate_slots_sender: DuplicateSlotSender,
     ) -> JoinHandle<()> {
         let handle_error = || {
-            inc_new_counter_error!("solana-check-duplicate-error", 1, 1);
+            inc_new_counter_error!("xandeum-check-duplicate-error", 1, 1);
         };
         Builder::new()
             .name("solWinCheckDup".to_string())
@@ -406,7 +406,7 @@ impl WindowService {
         outstanding_requests: Arc<RwLock<OutstandingShredRepairs>>,
     ) -> JoinHandle<()> {
         let handle_error = || {
-            inc_new_counter_error!("solana-window-insert-error", 1, 1);
+            inc_new_counter_error!("xandeum-window-insert-error", 1, 1);
         };
         let thread_pool = rayon::ThreadPoolBuilder::new()
             .num_threads(get_thread_count().min(8))
@@ -482,19 +482,19 @@ impl WindowService {
 mod test {
     use {
         super::*,
-        solana_entry::entry::{create_ticks, Entry},
-        solana_gossip::contact_info::ContactInfo,
-        solana_ledger::{
+        xandeum_entry::entry::{create_ticks, Entry},
+        xandeum_gossip::contact_info::ContactInfo,
+        xandeum_ledger::{
             blockstore::{make_many_slot_entries, Blockstore},
             get_tmp_ledger_path,
             shred::{ProcessShredsStats, Shredder},
         },
-        solana_sdk::{
+        xandeum_sdk::{
             hash::Hash,
             signature::{Keypair, Signer},
             timing::timestamp,
         },
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_streamer::socket::SocketAddrSpace,
     };
 
     fn local_entries_to_shred(
@@ -577,7 +577,7 @@ mod test {
     #[test]
     fn test_prune_shreds() {
         use crate::serve_repair::ShredRepairType;
-        solana_logger::setup();
+        xandeum_logger::setup();
         let shred = Shred::new_from_parity_shard(
             5,   // slot
             5,   // index

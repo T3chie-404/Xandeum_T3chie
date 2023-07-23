@@ -9,16 +9,16 @@ use {
     jsonrpc_server_utils::tokio,
     log::*,
     serde::{de::Deserializer, Deserialize, Serialize},
-    solana_core::{
+    xandeum_core::{
         admin_rpc_post_init::AdminRpcRequestMetadataPostInit, consensus::Tower,
         tower_storage::TowerStorage, validator::ValidatorStartProgress,
     },
-    solana_geyser_plugin_manager::GeyserPluginManagerRequest,
-    solana_gossip::contact_info::{ContactInfo, Protocol},
-    solana_rpc::rpc::verify_pubkey,
-    solana_rpc_client_api::{config::RpcAccountIndex, custom_error::RpcCustomError},
-    solana_runtime::accounts_index::AccountIndex,
-    solana_sdk::{
+    xandeum_geyser_plugin_manager::GeyserPluginManagerRequest,
+    xandeum_gossip::contact_info::{ContactInfo, Protocol},
+    xandeum_rpc::rpc::verify_pubkey,
+    xandeum_rpc_client_api::{config::RpcAccountIndex, custom_error::RpcCustomError},
+    xandeum_runtime::accounts_index::AccountIndex,
+    xandeum_sdk::{
         exit::Exit,
         pubkey::Pubkey,
         signature::{read_keypair_file, Keypair, Signer},
@@ -398,7 +398,7 @@ impl AdminRpc for AdminRpcImpl {
 
     fn set_log_filter(&self, filter: String) -> Result<()> {
         debug!("set_log_filter admin rpc request received");
-        solana_logger::setup_with(&filter);
+        xandeum_logger::setup_with(&filter);
         Ok(())
     }
 
@@ -722,7 +722,7 @@ impl AdminRpcImpl {
                     })?;
             }
 
-            solana_metrics::set_host_id(identity_keypair.pubkey().to_string());
+            xandeum_metrics::set_host_id(identity_keypair.pubkey().to_string());
             post_init
                 .cluster_info
                 .set_keypair(Arc::new(identity_keypair));
@@ -868,25 +868,25 @@ mod tests {
         super::*,
         rand::{distributions::Uniform, thread_rng, Rng},
         serde_json::Value,
-        solana_core::tower_storage::NullTowerStorage,
-        solana_gossip::cluster_info::ClusterInfo,
-        solana_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
-        solana_rpc::rpc::create_validator_exit,
-        solana_runtime::{
+        xandeum_core::tower_storage::NullTowerStorage,
+        xandeum_gossip::cluster_info::ClusterInfo,
+        xandeum_ledger::genesis_utils::{create_genesis_config, GenesisConfigInfo},
+        xandeum_rpc::rpc::create_validator_exit,
+        xandeum_runtime::{
             accounts_index::AccountSecondaryIndexes,
             bank::{Bank, BankTestConfig},
             bank_forks::BankForks,
             inline_spl_token,
             secondary_index::MAX_NUM_LARGEST_INDEX_KEYS_RETURNED,
         },
-        solana_sdk::{
+        xandeum_sdk::{
             account::{Account, AccountSharedData},
             pubkey::Pubkey,
             system_program,
         },
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_streamer::socket::SocketAddrSpace,
         spl_token_2022::{
-            solana_program::{program_option::COption, program_pack::Pack},
+            xandeum_program::{program_option::COption, program_pack::Pack},
             state::{Account as TokenAccount, AccountState as TokenAccountState, Mint},
         },
         std::{collections::HashSet, str::FromStr, sync::atomic::AtomicBool},
@@ -913,7 +913,7 @@ mod tests {
             let cluster_info = Arc::new(ClusterInfo::new(
                 ContactInfo::new(
                     keypair.pubkey(),
-                    solana_sdk::timing::timestamp(), // wallclock
+                    xandeum_sdk::timing::timestamp(), // wallclock
                     0u16,                            // shred_version
                 ),
                 keypair,

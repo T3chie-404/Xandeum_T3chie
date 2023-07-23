@@ -1,7 +1,7 @@
 //! The `tpu` module implements the Transaction Processing Unit, a
 //! multi-stage transaction processing pipeline in software.
 
-pub use solana_sdk::net::DEFAULT_TPU_COALESCE;
+pub use xandeum_sdk::net::DEFAULT_TPU_COALESCE;
 use {
     crate::{
         banking_stage::BankingStage,
@@ -19,24 +19,24 @@ use {
         validator::GeneratorConfig,
     },
     crossbeam_channel::{unbounded, Receiver},
-    solana_client::connection_cache::{ConnectionCache, Protocol},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::{
+    xandeum_client::connection_cache::{ConnectionCache, Protocol},
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::{
         blockstore::Blockstore, blockstore_processor::TransactionStatusSender,
         entry_notifier_service::EntryNotifierSender,
     },
-    solana_poh::poh_recorder::{PohRecorder, WorkingBankEntry},
-    solana_rpc::{
+    xandeum_poh::poh_recorder::{PohRecorder, WorkingBankEntry},
+    xandeum_rpc::{
         optimistically_confirmed_bank_tracker::BankNotificationSender,
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         bank_forks::BankForks,
         prioritization_fee_cache::PrioritizationFeeCache,
         vote_sender_types::{ReplayVoteReceiver, ReplayVoteSender},
     },
-    solana_sdk::{pubkey::Pubkey, signature::Keypair},
-    solana_streamer::{
+    xandeum_sdk::{pubkey::Pubkey, signature::Keypair},
+    xandeum_streamer::{
         nonblocking::quic::DEFAULT_WAIT_FOR_CHUNK_TIMEOUT,
         quic::{spawn_server, MAX_STAKED_CONNECTIONS, MAX_UNSTAKED_CONNECTIONS},
         streamer::StakedNodes,

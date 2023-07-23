@@ -8,14 +8,14 @@ use {
     console::style,
     crossbeam_channel::unbounded,
     serde::{Deserialize, Serialize},
-    solana_clap_utils::{
+    xandeum_clap_utils::{
         compute_unit_price::{compute_unit_price_arg, COMPUTE_UNIT_PRICE_ARG},
         input_parsers::*,
         input_validators::*,
         keypair::DefaultSigner,
         offline::{blockhash_arg, BLOCKHASH_ARG},
     },
-    solana_cli_output::{
+    xandeum_cli_output::{
         cli_version::CliVersion,
         display::{
             build_balance_message, format_labeled_address, new_spinner_progress_bar,
@@ -23,10 +23,10 @@ use {
         },
         *,
     },
-    solana_pubsub_client::pubsub_client::PubsubClient,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
-    solana_rpc_client_api::{
+    xandeum_pubsub_client::pubsub_client::PubsubClient,
+    xandeum_remote_wallet::remote_wallet::RemoteWalletManager,
+    xandeum_rpc_client::rpc_client::{GetConfirmedSignaturesForAddress2Config, RpcClient},
+    xandeum_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
         config::{
             RpcAccountInfoConfig, RpcBlockConfig, RpcGetVoteAccountsConfig,
@@ -37,7 +37,7 @@ use {
         request::DELINQUENT_VALIDATOR_SLOT_DISTANCE,
         response::SlotInfo,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::from_account,
         account_utils::StateMut,
         clock::{self, Clock, Slot},
@@ -61,10 +61,10 @@ use {
         },
         transaction::Transaction,
     },
-    solana_transaction_status::{
+    xandeum_transaction_status::{
         EncodableWithMeta, EncodedConfirmedTransactionWithStatusMeta, UiTransactionEncoding,
     },
-    solana_vote_program::vote_state::VoteState,
+    xandeum_vote_program::vote_state::VoteState,
     std::{
         collections::{BTreeMap, HashMap, VecDeque},
         fmt,
@@ -845,7 +845,7 @@ pub fn process_catchup(
     let mut total_sleep_interval = 0;
     loop {
         // humbly retry; the reference node (rpc_client) could be spotty,
-        // especially if pointing to api.meinnet-beta.solana.com at times
+        // especially if pointing to api.meinnet-beta.xandeum.com at times
         let rpc_slot = get_slot_while_retrying(rpc_client)?;
         let node_slot = get_slot_while_retrying(&node_client)?;
         if !follow && node_slot > std::cmp::min(previous_rpc_slot, rpc_slot) {
@@ -1756,7 +1756,7 @@ pub fn process_show_stakes(
 
     let mut program_accounts_config = RpcProgramAccountsConfig {
         account_config: RpcAccountInfoConfig {
-            encoding: Some(solana_account_decoder::UiAccountEncoding::Base64),
+            encoding: Some(xandeum_account_decoder::UiAccountEncoding::Base64),
             ..RpcAccountInfoConfig::default()
         },
         ..RpcProgramAccountsConfig::default()
@@ -2203,7 +2203,7 @@ mod tests {
     use {
         super::*,
         crate::{clap_app::get_clap_app, cli::parse_command},
-        solana_sdk::signature::{write_keypair, Keypair},
+        xandeum_sdk::signature::{write_keypair, Keypair},
         std::str::FromStr,
         tempfile::NamedTempFile,
     };

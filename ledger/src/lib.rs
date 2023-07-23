@@ -30,7 +30,7 @@ mod staking_utils;
 pub mod token_balances;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate xandeum_metrics;
 
 #[macro_use]
 extern crate log;
@@ -39,4 +39,4 @@ extern crate log;
 extern crate lazy_static;
 
 #[macro_use]
-extern crate solana_frozen_abi_macro;
+extern crate xandeum_frozen_abi_macro;

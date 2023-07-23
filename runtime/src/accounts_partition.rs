@@ -2,7 +2,7 @@
 use {
     itertools::Itertools,
     log::trace,
-    solana_sdk::{
+    xandeum_sdk::{
         clock::{Slot, SlotCount, SlotIndex},
         pubkey::Pubkey,
         stake_history::Epoch,
@@ -444,7 +444,7 @@ pub(crate) mod tests {
     #[test]
     fn test_rent_pubkey_range_max() {
         // start==end && start != 0 is curious behavior. Verifying it here.
-        solana_logger::setup();
+        xandeum_logger::setup();
         let range = pubkey_range_from_partition((1, 1, 3));
         let p = partition_from_pubkey(range.start(), 3);
         assert_eq!(p, 2);
@@ -585,7 +585,7 @@ pub(crate) mod tests {
     fn map_to_test_bad_range() -> std::collections::BTreeMap<Pubkey, i8> {
         let mut map = std::collections::BTreeMap::new();
         // when empty, std::collections::BTreeMap doesn't sanitize given range...
-        map.insert(solana_sdk::pubkey::new_rand(), 1);
+        map.insert(xandeum_sdk::pubkey::new_rand(), 1);
         map
     }
 
@@ -649,7 +649,7 @@ pub(crate) mod tests {
 
     #[test]
     fn test_rent_eager_pubkey_range_not_dividable() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let test_map = map_to_test_bad_range();
         let range = pubkey_range_from_partition((0, 0, 3));
@@ -699,7 +699,7 @@ pub(crate) mod tests {
 
     #[test]
     fn test_rent_eager_pubkey_range_gap() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let test_map = map_to_test_bad_range();
         let range = pubkey_range_from_partition((120, 1023, 12345));

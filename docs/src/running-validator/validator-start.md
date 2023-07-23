@@ -4,11 +4,11 @@ title: Starting a Validator
 
 ## Configure Solana CLI
 
-The solana cli includes `get` and `set` configuration commands to automatically
+The xandeum cli includes `get` and `set` configuration commands to automatically
 set the `--url` argument for cli commands. For example:
 
 ```bash
-solana config set --url http://api.devnet.solana.com
+xandeum config set --url http://api.devnet.xandeum.com
 ```
 
 While this section demonstrates how to connect to the Devnet cluster, the steps
@@ -20,19 +20,19 @@ Before attaching a validator node, sanity check that the cluster is accessible
 to your machine by fetching the transaction count:
 
 ```bash
-solana transaction-count
+xandeum transaction-count
 ```
 
-View the [metrics dashboard](https://metrics.solana.com:3000/d/monitor/cluster-telemetry) for more
+View the [metrics dashboard](https://metrics.xandeum.com:3000/d/monitor/cluster-telemetry) for more
 detail on cluster activity.
 
 ## Enabling CUDA
 
 If your machine has a GPU with CUDA installed \(Linux-only currently\), include
-the `--cuda` argument to `solana-validator`.
+the `--cuda` argument to `xandeum-validator`.
 
 When your validator is started look for the following log message to indicate
-that CUDA is enabled: `"[<timestamp> solana::validator] CUDA is enabled"`
+that CUDA is enabled: `"[<timestamp> xandeum::validator] CUDA is enabled"`
 
 ## System Tuning
 
@@ -44,7 +44,7 @@ the following commands.
 #### **Optimize sysctl knobs**
 
 ```bash
-sudo bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
+sudo bash -c "cat >/etc/sysctl.d/21-xandeum-validator.conf <<EOF
 # Increase UDP buffer sizes
 net.core.rmem_default = 134217728
 net.core.rmem_max = 134217728
@@ -60,7 +60,7 @@ EOF"
 ```
 
 ```bash
-sudo sysctl -p /etc/sysctl.d/21-solana-validator.conf
+sudo sysctl -p /etc/sysctl.d/21-xandeum-validator.conf
 ```
 
 #### **Increase systemd and session file limits**
@@ -85,7 +85,7 @@ sudo systemctl daemon-reload
 ```
 
 ```bash
-sudo bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
+sudo bash -c "cat >/etc/security/limits.d/90-xandeum-nofiles.conf <<EOF
 # Increase process file descriptor count limit
 * - nofile 1000000
 EOF"
@@ -110,13 +110,13 @@ Operators commonly use an ntp server to maintain an accurate system clock.
 Create an identity keypair for your validator by running:
 
 ```bash
-solana-keygen new -o ~/validator-keypair.json
+xandeum-keygen new -o ~/validator-keypair.json
 ```
 
 The identity public key can now be viewed by running:
 
 ```bash
-solana-keygen pubkey ~/validator-keypair.json
+xandeum-keygen pubkey ~/validator-keypair.json
 ```
 
 > Note: The "validator-keypair.json” file is also your \(ed25519\) private key.
@@ -127,13 +127,13 @@ You can create a paper wallet for your identity file instead of writing the
 keypair file to disk with:
 
 ```bash
-solana-keygen new --no-outfile
+xandeum-keygen new --no-outfile
 ```
 
 The corresponding identity public key can now be viewed by running:
 
 ```bash
-solana-keygen pubkey ASK
+xandeum-keygen pubkey ASK
 ```
 
 and then entering your seed phrase.
@@ -144,10 +144,10 @@ See [Paper Wallet Usage](../wallet-guide/paper-wallet.md) for more info.
 
 ### Vanity Keypair
 
-You can generate a custom vanity keypair using solana-keygen. For instance:
+You can generate a custom vanity keypair using xandeum-keygen. For instance:
 
 ```bash
-solana-keygen grind --starts-with e1v1s:1
+xandeum-keygen grind --starts-with e1v1s:1
 ```
 
 You may request that the generated vanity keypair be expressed as a seed phrase
@@ -156,7 +156,7 @@ supplied passphrase (note that this is significantly slower than grinding withou
 a mnemonic):
 
 ```bash
-solana-keygen grind --use-mnemonic --starts-with e1v1s:1
+xandeum-keygen grind --use-mnemonic --starts-with e1v1s:1
 ```
 
 Depending on the string requested, it may take days to find a match...
@@ -175,20 +175,20 @@ To back-up your validator identify keypair, **back-up your
 
 ## More Solana CLI Configuration
 
-Now that you have a keypair, set the solana configuration to use your validator
+Now that you have a keypair, set the xandeum configuration to use your validator
 keypair for all following commands:
 
 ```bash
-solana config set --keypair ~/validator-keypair.json
+xandeum config set --keypair ~/validator-keypair.json
 ```
 
 You should see the following output:
 
 ```text
-Config File: /home/solana/.config/solana/cli/config.yml
-RPC URL: http://api.devnet.solana.com
-WebSocket URL: ws://api.devnet.solana.com/ (computed)
-Keypair Path: /home/solana/validator-keypair.json
+Config File: /home/xandeum/.config/xandeum/cli/config.yml
+RPC URL: http://api.devnet.xandeum.com
+WebSocket URL: ws://api.devnet.xandeum.com/ (computed)
+Keypair Path: /home/xandeum/validator-keypair.json
 Commitment: confirmed
 ```
 
@@ -197,7 +197,7 @@ Commitment: confirmed
 Airdrop yourself some SOL to get started:
 
 ```bash
-solana airdrop 1
+xandeum airdrop 1
 ```
 
 Note that airdrops are only available on Devnet and Testnet. Both are limited
@@ -206,13 +206,13 @@ to 1 SOL per request.
 To view your current balance:
 
 ```text
-solana balance
+xandeum balance
 ```
 
 Or to see in finer detail:
 
 ```text
-solana balance --lamports
+xandeum balance --lamports
 ```
 
 Read more about the [difference between SOL and lamports here](../introduction.md#what-are-sols).
@@ -231,7 +231,7 @@ stored anywhere from where it could be accessed by unauthorized parties. To
 create your authorized-withdrawer keypair:
 
 ```bash
-solana-keygen new -o ~/authorized-withdrawer-keypair.json
+xandeum-keygen new -o ~/authorized-withdrawer-keypair.json
 ```
 
 ## Create Vote Account
@@ -241,14 +241,14 @@ vote account on the network. If you have completed this step, you should see the
 “vote-account-keypair.json” in your Solana runtime directory:
 
 ```bash
-solana-keygen new -o ~/vote-account-keypair.json
+xandeum-keygen new -o ~/vote-account-keypair.json
 ```
 
 The following command can be used to create your vote account on the blockchain
 with all the default options:
 
 ```bash
-solana create-vote-account ~/vote-account-keypair.json ~/validator-keypair.json ~/authorized-withdrawer-keypair.json
+xandeum create-vote-account ~/vote-account-keypair.json ~/validator-keypair.json ~/authorized-withdrawer-keypair.json
 ```
 
 Remember to move your authorized withdrawer keypair into a very secure location after running the above command.
@@ -258,7 +258,7 @@ Read more about [creating and managing a vote account](vote-accounts.md).
 ## Known validators
 
 If you know and respect other validator operators, you can specify this on the command line with the `--known-validator <PUBKEY>`
-argument to `solana-validator`. You can specify multiple ones by repeating the argument `--known-validator <PUBKEY1> --known-validator <PUBKEY2>`.
+argument to `xandeum-validator`. You can specify multiple ones by repeating the argument `--known-validator <PUBKEY1> --known-validator <PUBKEY2>`.
 This has two effects, one is when the validator is booting with `--only-known-rpc`, it will only ask that set of
 known nodes for downloading genesis and snapshot data. Another is that in combination with the `--halt-on-known-validators-accounts-hash-mismatch` option,
 it will monitor the merkle root hash of the entire accounts state of other known nodes on gossip and if the hashes produce any mismatch,
@@ -274,13 +274,13 @@ account state divergence.
 Connect to the cluster by running:
 
 ```bash
-solana-validator \
+xandeum-validator \
   --identity ~/validator-keypair.json \
   --vote-account ~/vote-account-keypair.json \
   --rpc-port 8899 \
-  --entrypoint entrypoint.devnet.solana.com:8001 \
+  --entrypoint entrypoint.devnet.xandeum.com:8001 \
   --limit-ledger-size \
-  --log ~/solana-validator.log
+  --log ~/xandeum-validator.log
 ```
 
 To force validator logging to the console add a `--log -` argument, otherwise
@@ -293,14 +293,14 @@ The ledger will be placed in the `ledger/` directory by default, use the
 > [paper wallet seed phrase](../wallet-guide/paper-wallet.md)
 > for your `--identity` and/or
 > `--authorized-voter` keypairs. To use these, pass the respective argument as
-> `solana-validator --identity ASK ... --authorized-voter ASK ...`
+> `xandeum-validator --identity ASK ... --authorized-voter ASK ...`
 > and you will be prompted to enter your seed phrases and optional passphrase.
 
 Confirm your validator is connected to the network by opening a new terminal and
 running:
 
 ```bash
-solana gossip
+xandeum gossip
 ```
 
 If your validator is connected, its public key and IP address will appear in the list.
@@ -309,7 +309,7 @@ If your validator is connected, its public key and IP address will appear in the
 
 By default the validator will dynamically select available network ports in the
 8000-10000 range, and may be overridden with `--dynamic-port-range`. For
-example, `solana-validator --dynamic-port-range 11000-11020 ...` will restrict
+example, `xandeum-validator --dynamic-port-range 11000-11020 ...` will restrict
 the validator to ports 11000-11020.
 
 ### Limiting ledger size to conserve disk space
@@ -325,7 +325,7 @@ The default value attempts to keep the blockstore (data within the rocksdb
 directory) disk usage under 500 GB. More or less disk usage may be requested
 by adding an argument to `--limit-ledger-size` if desired. More information
 about selecting a custom limit value is [available
-here](https://github.com/solana-labs/solana/blob/aa72aa87790277619d12c27f1ebc864d23739557/core/src/ledger_cleanup_service.rs#L26-L37).
+here](https://github.com/xandeum-labs/xandeum/blob/aa72aa87790277619d12c27f1ebc864d23739557/core/src/ledger_cleanup_service.rs#L26-L37).
 
 Note that the above target of 500 GB does not account for other items that
 may reside in the `ledger` directory, depending on validator configuration.
@@ -355,7 +355,7 @@ RestartSec=1
 User=sol
 LimitNOFILE=1000000
 LogRateLimitIntervalSec=0
-Environment="PATH=/bin:/usr/bin:/home/sol/.local/share/solana/install/active_release/bin"
+Environment="PATH=/bin:/usr/bin:/home/sol/.local/share/xandeum/install/active_release/bin"
 ExecStart=/home/sol/bin/validator.sh
 
 [Install]
@@ -363,8 +363,8 @@ WantedBy=multi-user.target
 ```
 
 Now create `/home/sol/bin/validator.sh` to include the desired
-`solana-validator` command-line. Ensure that the 'exec' command is used to
-start the validator process (i.e. "exec solana-validator ..."). This is
+`xandeum-validator` command-line. Ensure that the 'exec' command is used to
+start the validator process (i.e. "exec xandeum-validator ..."). This is
 important because without it, logrotate will end up killing the validator
 every time the logs are rotated.
 
@@ -391,14 +391,14 @@ to be reverted and the issue reproduced before help can be provided.
 
 #### Log rotation
 
-The validator log file, as specified by `--log ~/solana-validator.log`, can get
+The validator log file, as specified by `--log ~/xandeum-validator.log`, can get
 very large over time and it's recommended that log rotation be configured.
 
 The validator will re-open its log file when it receives the `USR1` signal, which is the
 basic primitive that enables log rotation.
 
 If the validator is being started by a wrapper shell script, it is important to
-launch the process with `exec` (`exec solana-validator ...`) when using logrotate.
+launch the process with `exec` (`exec xandeum-validator ...`) when using logrotate.
 This will prevent the `USR1` signal from being sent to the script's process
 instead of the validator's, which will kill them both.
 
@@ -406,13 +406,13 @@ instead of the validator's, which will kill them both.
 
 An example setup for the `logrotate`, which assumes that the validator is
 running as a systemd service called `sol.service` and writes a log file at
-/home/sol/solana-validator.log:
+/home/sol/xandeum-validator.log:
 
 ```bash
 # Setup log rotation
 
 cat > logrotate.sol <<EOF
-/home/sol/solana-validator.log {
+/home/sol/xandeum-validator.log {
   rotate 7
   daily
   missingok
@@ -426,8 +426,8 @@ systemctl restart logrotate.service
 ```
 
 As mentioned earlier, be sure that if you use logrotate, any script you create
-which starts the solana validator process uses "exec" to do so (example: "exec
-solana-validator ..."); otherwise, when logrotate sends its signal to the
+which starts the xandeum validator process uses "exec" to do so (example: "exec
+xandeum-validator ..."); otherwise, when logrotate sends its signal to the
 validator, the enclosing script will die and take the validator process with
 it.
 
@@ -445,9 +445,9 @@ partition.
 
 Example configuration:
 
-1. `sudo mkdir /mnt/solana-accounts`
-2. Add a 300GB tmpfs parition by adding a new line containing `tmpfs /mnt/solana-accounts tmpfs rw,size=300G,user=sol 0 0` to `/etc/fstab`
-   (assuming your validator is running under the user "sol"). **CAREFUL: If you
+1. `sudo mkdir /mnt/xandeum-accounts`
+2. Add a 300GB tmpfs parition by adding a new line containing `tmpfs /mnt/xandeum-accounts tmpfs rw,size=300G,user=sol 0 0` to `/etc/fstab`
+   (assuming your validator is running under the user "xand"). **CAREFUL: If you
    incorrectly edit /etc/fstab your machine may no longer boot**
 3. Create at least 250GB of swap space
 
@@ -459,10 +459,10 @@ Example configuration:
 - Format the device for usage as swap with `sudo mkswap SWAPDEV`
 
 4. Add the swap file to `/etc/fstab` with a new line containing `SWAPDEV swap swap defaults 0 0`
-5. Enable swap with `sudo swapon -a` and mount the tmpfs with `sudo mount /mnt/solana-accounts/`
+5. Enable swap with `sudo swapon -a` and mount the tmpfs with `sudo mount /mnt/xandeum-accounts/`
 6. Confirm swap is active with `free -g` and the tmpfs is mounted with `mount`
 
-Now add the `--accounts /mnt/solana-accounts` argument to your `solana-validator`
+Now add the `--accounts /mnt/xandeum-accounts` argument to your `xandeum-validator`
 command-line arguments and restart the validator.
 
 ### Account indexing

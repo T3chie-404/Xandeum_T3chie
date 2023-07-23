@@ -2,7 +2,7 @@
 //!
 //! For more information, see:
 //!
-//! <https://docs.solana.com/implemented-proposals/persistent-account-storage>
+//! <https://docs.xandeum.com/implemented-proposals/persistent-account-storage>
 
 use {
     crate::{
@@ -16,7 +16,7 @@ use {
     },
     log::*,
     memmap2::MmapMut,
-    solana_sdk::{
+    xandeum_sdk::{
         account::{Account, AccountSharedData, ReadableAccount},
         clock::Slot,
         hash::Hash,
@@ -558,7 +558,7 @@ impl AppendVec {
     pub fn get_account_test(
         &self,
         offset: usize,
-    ) -> Option<(StoredMeta, solana_sdk::account::AccountSharedData)> {
+    ) -> Option<(StoredMeta, xandeum_sdk::account::AccountSharedData)> {
         let (stored_account, _) = self.get_account(offset)?;
         let meta = stored_account.meta().clone();
         Some((meta, stored_account.clone_account()))
@@ -672,7 +672,7 @@ pub mod tests {
         assert_matches::assert_matches,
         memoffset::offset_of,
         rand::{thread_rng, Rng},
-        solana_sdk::{
+        xandeum_sdk::{
             account::{accounts_equal, Account, AccountSharedData, WritableAccount},
             timing::duration_as_ms,
         },
@@ -1114,14 +1114,14 @@ pub mod tests {
         // So, the sanitizing on load behavior can be tested by capturing [u8] that would be created if such a write was possible (as it used to be).
         // The contents of [u8] written by an append vec cannot easily or reasonably change frequently since it has released a long time.
         /*
-            solana_logger::setup();
+            xandeum_logger::setup();
             // uncomment this code to generate the invalid append vec that will fail on load
             let file = get_append_vec_path("test_append");
             let path = &file.path;
             let mut av = AppendVec::new(path, true, 256);
             av.set_no_remove_on_drop();
 
-            let pubkey = solana_sdk::pubkey::new_rand();
+            let pubkey = xandeum_sdk::pubkey::new_rand();
             let owner = Pubkey::default();
             let data_len = 3_u64;
             let mut account = AccountSharedData::new(0, data_len as usize, &owner);

@@ -8,12 +8,12 @@ use {
         serve_repair::ShredRepairType,
         tree_diff::TreeDiff,
     },
-    solana_ledger::{
+    xandeum_ledger::{
         ancestor_iterator::AncestorIterator, blockstore::Blockstore, blockstore_meta::SlotMeta,
     },
-    solana_measure::measure::Measure,
-    solana_runtime::epoch_stakes::EpochStakes,
-    solana_sdk::{
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::epoch_stakes::EpochStakes,
+    xandeum_sdk::{
         clock::Slot,
         epoch_schedule::{Epoch, EpochSchedule},
         hash::Hash,
@@ -977,12 +977,12 @@ mod test {
     use {
         super::*,
         itertools::Itertools,
-        solana_ledger::{
+        xandeum_ledger::{
             blockstore::{make_chaining_slot_entries, Blockstore},
             get_tmp_ledger_path,
         },
-        solana_runtime::{bank::Bank, bank_utils, contains::Contains},
-        solana_sdk::hash::Hash,
+        xandeum_runtime::{bank::Bank, bank_utils, contains::Contains},
+        xandeum_sdk::hash::Hash,
         trees::tr,
     };
 

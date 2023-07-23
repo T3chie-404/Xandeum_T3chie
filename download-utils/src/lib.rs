@@ -3,12 +3,12 @@ use {
     console::Emoji,
     indicatif::{ProgressBar, ProgressStyle},
     log::*,
-    solana_runtime::{
+    xandeum_runtime::{
         snapshot_hash::SnapshotHash,
         snapshot_package::SnapshotType,
         snapshot_utils::{self, ArchiveFormat},
     },
-    solana_sdk::{clock::Slot, genesis_config::DEFAULT_GENESIS_ARCHIVE},
+    xandeum_sdk::{clock::Slot, genesis_config::DEFAULT_GENESIS_ARCHIVE},
     std::{
         fs::{self, File},
         io::{self, Read},
@@ -288,7 +288,7 @@ pub fn download_snapshot_archive(
         ArchiveFormat::TarGzip,
         ArchiveFormat::TarBzip2,
         ArchiveFormat::TarLz4,
-        ArchiveFormat::Tar, // `solana-test-validator` creates uncompressed snapshots
+        ArchiveFormat::Tar, // `xandeum-test-validator` creates uncompressed snapshots
     ] {
         let destination_path = match snapshot_type {
             SnapshotType::FullSnapshot => snapshot_utils::build_full_snapshot_archive_path(

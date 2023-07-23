@@ -1,12 +1,12 @@
 #![allow(clippy::integer_arithmetic)]
 use {
-    solana_runtime::{
+    xandeum_runtime::{
         bank::Bank,
         bank_client::BankClient,
         epoch_accounts_hash::EpochAccountsHash,
         genesis_utils::{create_genesis_config_with_leader, GenesisConfigInfo},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::from_account,
         account_utils::StateMut,
         client::SyncClient,
@@ -21,8 +21,8 @@ use {
         },
         sysvar::{self, stake_history::StakeHistory},
     },
-    solana_stake_program::stake_state,
-    solana_vote_program::{
+    xandeum_stake_program::stake_state,
+    xandeum_vote_program::{
         vote_instruction,
         vote_state::{Vote, VoteInit, VoteState, VoteStateVersions},
     },
@@ -105,7 +105,7 @@ fn get_staked(bank: &Bank, stake_pubkey: &Pubkey) -> u64 {
 
 #[test]
 fn test_stake_create_and_split_single_signature() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -113,7 +113,7 @@ fn test_stake_create_and_split_single_signature() {
         ..
     } = create_genesis_config_with_leader(
         100_000_000_000,
-        &solana_sdk::pubkey::new_rand(),
+        &xandeum_sdk::pubkey::new_rand(),
         1_000_000,
     );
 
@@ -130,7 +130,7 @@ fn test_stake_create_and_split_single_signature() {
     let lamports = {
         let rent = &bank.rent_collector().rent;
         let rent_exempt_reserve = rent.minimum_balance(StakeState::size_of());
-        let minimum_delegation = solana_stake_program::get_minimum_delegation(&bank.feature_set);
+        let minimum_delegation = xandeum_stake_program::get_minimum_delegation(&bank.feature_set);
         2 * (rent_exempt_reserve + minimum_delegation)
     };
 
@@ -181,7 +181,7 @@ fn test_stake_create_and_split_to_existing_system_account() {
     // Ensure stake-split allows the user to promote an existing system account into
     // a stake account.
 
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -189,7 +189,7 @@ fn test_stake_create_and_split_to_existing_system_account() {
         ..
     } = create_genesis_config_with_leader(
         100_000_000_000,
-        &solana_sdk::pubkey::new_rand(),
+        &xandeum_sdk::pubkey::new_rand(),
         1_000_000,
     );
 
@@ -206,7 +206,7 @@ fn test_stake_create_and_split_to_existing_system_account() {
     let lamports = {
         let rent = &bank.rent_collector().rent;
         let rent_exempt_reserve = rent.minimum_balance(StakeState::size_of());
-        let minimum_delegation = solana_stake_program::get_minimum_delegation(&bank.feature_set);
+        let minimum_delegation = xandeum_stake_program::get_minimum_delegation(&bank.feature_set);
         2 * (rent_exempt_reserve + minimum_delegation)
     };
 
@@ -277,7 +277,7 @@ fn test_stake_account_lifetime() {
         ..
     } = create_genesis_config_with_leader(
         100_000_000_000,
-        &solana_sdk::pubkey::new_rand(),
+        &xandeum_sdk::pubkey::new_rand(),
         2_000_000_000,
     );
     genesis_config.rent = Rent::default();
@@ -298,7 +298,7 @@ fn test_stake_account_lifetime() {
         (
             rent.minimum_balance(VoteState::size_of()),
             rent.minimum_balance(StakeState::size_of()),
-            solana_stake_program::get_minimum_delegation(&bank.feature_set),
+            xandeum_stake_program::get_minimum_delegation(&bank.feature_set),
         )
     };
 
@@ -361,7 +361,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &stake_pubkey,
             &stake_pubkey,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             1,
             None,
         )],
@@ -467,7 +467,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             split_starting_delegation + 1,
             None,
         )],
@@ -490,7 +490,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             split_balance,
             None,
         )],
@@ -507,7 +507,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             split_unstaked,
             None,
         )],
@@ -532,7 +532,7 @@ fn test_stake_account_lifetime() {
         &[stake_instruction::withdraw(
             &split_stake_pubkey,
             &stake_pubkey,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             split_remaining_balance,
             None,
         )],
@@ -560,7 +560,7 @@ fn test_create_stake_account_from_seed() {
         ..
     } = create_genesis_config_with_leader(
         100_000_000_000,
-        &solana_sdk::pubkey::new_rand(),
+        &xandeum_sdk::pubkey::new_rand(),
         1_000_000,
     );
     let bank = Bank::new_for_tests(&genesis_config);
@@ -598,7 +598,7 @@ fn test_create_stake_account_from_seed() {
     let (balance, delegation) = {
         let rent = &bank.rent_collector().rent;
         let rent_exempt_reserve = rent.minimum_balance(StakeState::size_of());
-        let minimum_delegation = solana_stake_program::get_minimum_delegation(&bank.feature_set);
+        let minimum_delegation = xandeum_stake_program::get_minimum_delegation(&bank.feature_set);
         (rent_exempt_reserve + minimum_delegation, minimum_delegation)
     };
 

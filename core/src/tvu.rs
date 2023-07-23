@@ -29,27 +29,27 @@ use {
         window_service::WindowService,
     },
     crossbeam_channel::{unbounded, Receiver},
-    solana_client::connection_cache::ConnectionCache,
-    solana_geyser_plugin_manager::block_metadata_notifier_interface::BlockMetadataNotifierLock,
-    solana_gossip::{
+    xandeum_client::connection_cache::ConnectionCache,
+    xandeum_geyser_plugin_manager::block_metadata_notifier_interface::BlockMetadataNotifierLock,
+    xandeum_gossip::{
         cluster_info::ClusterInfo, duplicate_shred_handler::DuplicateShredHandler,
         duplicate_shred_listener::DuplicateShredListener,
     },
-    solana_ledger::{
+    xandeum_ledger::{
         blockstore::Blockstore, blockstore_processor::TransactionStatusSender,
         entry_notifier_service::EntryNotifierSender, leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_poh::poh_recorder::PohRecorder,
-    solana_rpc::{
+    xandeum_poh::poh_recorder::PohRecorder,
+    xandeum_rpc::{
         max_slots::MaxSlots, optimistically_confirmed_bank_tracker::BankNotificationSenderConfig,
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         accounts_background_service::AbsRequestSender, bank_forks::BankForks,
         commitment::BlockCommitmentCache, prioritization_fee_cache::PrioritizationFeeCache,
         vote_sender_types::ReplayVoteSender,
     },
-    solana_sdk::{clock::Slot, pubkey::Pubkey, signature::Keypair},
+    xandeum_sdk::{clock::Slot, pubkey::Pubkey, signature::Keypair},
     std::{
         collections::HashSet,
         net::UdpSocket,
@@ -369,18 +369,18 @@ pub mod tests {
     use {
         super::*,
         serial_test::serial,
-        solana_gossip::cluster_info::{ClusterInfo, Node},
-        solana_ledger::{
+        xandeum_gossip::cluster_info::{ClusterInfo, Node},
+        xandeum_ledger::{
             blockstore::BlockstoreSignals,
             blockstore_options::BlockstoreOptions,
             create_new_tmp_ledger,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
         },
-        solana_poh::poh_recorder::create_test_recorder,
-        solana_rpc::optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
-        solana_runtime::bank::Bank,
-        solana_sdk::signature::{Keypair, Signer},
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_poh::poh_recorder::create_test_recorder,
+        xandeum_rpc::optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
+        xandeum_runtime::bank::Bank,
+        xandeum_sdk::signature::{Keypair, Signer},
+        xandeum_streamer::socket::SocketAddrSpace,
         std::sync::atomic::{AtomicU64, Ordering},
     };
 
@@ -388,7 +388,7 @@ pub mod tests {
     #[test]
     #[serial]
     fn test_tvu_exit() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let leader = Node::new_localhost();
         let target1_keypair = Keypair::new();
         let target1 = Node::new_localhost_with_pubkey(&target1_keypair.pubkey());

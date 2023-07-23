@@ -6,12 +6,12 @@ server {
 server {
 
     listen 443;
-    server_name internal-metrics.solana.com;
+    server_name internal-metrics.xandeum.com;
 
    # ssl_certificate           /etc/nginx/cert.crt;
    # ssl_certificate_key       /etc/nginx/cert.key;
-  ssl_certificate /home/okcan/metrics-solana-com/certs/fullchain.pem;
-  ssl_certificate_key /home/okcan/metrics-solana-com/certs/privkey.pem;
+  ssl_certificate /home/okcan/metrics-xandeum-com/certs/fullchain.pem;
+  ssl_certificate_key /home/okcan/metrics-xandeum-com/certs/privkey.pem;
 
     ssl on;
     ssl_session_cache  builtin:1000  shared:SSL:10m;
@@ -29,9 +29,9 @@ server {
       proxy_set_header        X-Forwarded-Proto $scheme;
 
       # Fix the “It appears that your reverse proxy set up is broken" error.
-      proxy_pass          https://internal-metrics.solana.com:3000;
+      proxy_pass          https://internal-metrics.xandeum.com:3000;
       proxy_read_timeout  90;
 
-      proxy_redirect      https://internal-metrics.solana.com:3000 https://internal-metrics.solana.com;
+      proxy_redirect      https://internal-metrics.xandeum.com:3000 https://internal-metrics.xandeum.com;
     }
   }

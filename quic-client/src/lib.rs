@@ -4,7 +4,7 @@ pub mod nonblocking;
 pub mod quic_client;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate xandeum_metrics;
 
 use {
     crate::{
@@ -16,15 +16,15 @@ use {
     },
     quinn::Endpoint,
     rcgen::RcgenError,
-    solana_connection_cache::{
+    xandeum_connection_cache::{
         connection_cache::{
             BaseClientConnection, ClientError, ConnectionManager, ConnectionPool,
             ConnectionPoolError, NewConnectionConfig, Protocol,
         },
         connection_cache_stats::ConnectionCacheStats,
     },
-    solana_sdk::{pubkey::Pubkey, signature::Keypair},
-    solana_streamer::{
+    xandeum_sdk::{pubkey::Pubkey, signature::Keypair},
+    xandeum_streamer::{
         nonblocking::quic::{compute_max_allowed_uni_streams, ConnectionPeerType},
         streamer::StakedNodes,
         tls_certificates::new_self_signed_tls_certificate,
@@ -226,7 +226,7 @@ impl QuicConnectionManager {
 mod tests {
     use {
         super::*,
-        solana_sdk::quic::{
+        xandeum_sdk::quic::{
             QUIC_MAX_UNSTAKED_CONCURRENT_STREAMS, QUIC_MIN_STAKED_CONCURRENT_STREAMS,
             QUIC_TOTAL_STAKED_CONCURRENT_STREAMS,
         },
@@ -235,7 +235,7 @@ mod tests {
 
     #[test]
     fn test_connection_cache_max_parallel_chunks() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let mut connection_config = QuicConfig::new().unwrap();
         assert_eq!(

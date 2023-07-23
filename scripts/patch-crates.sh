@@ -1,39 +1,39 @@
 # source this file
 
-update_solana_dependencies() {
+update_xandeum_dependencies() {
   declare project_root="$1"
-  declare solana_ver="$2"
+  declare xandeum_ver="$2"
   declare tomls=()
   while IFS='' read -r line; do tomls+=("$line"); done < <(find "$project_root" -name Cargo.toml)
 
-  sed -i -e "s#\(solana-program = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-program-test = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-sdk = \"\).*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-sdk = { version = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-client = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-client = { version = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-clap-utils = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-clap-utils = { version = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-account-decoder = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-account-decoder = { version = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-faucet = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-faucet = { version = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-zk-token-sdk = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
-  sed -i -e "s#\(solana-zk-token-sdk = { version = \"\)[^\"]*\(\"\)#\1=$solana_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-program = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-program-test = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-sdk = \"\).*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-sdk = { version = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-client = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-client = { version = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-clap-utils = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-clap-utils = { version = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-account-decoder = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-account-decoder = { version = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-faucet = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-faucet = { version = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-zk-token-sdk = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
+  sed -i -e "s#\(xandeum-zk-token-sdk = { version = \"\)[^\"]*\(\"\)#\1=$xandeum_ver\2#g" "${tomls[@]}" || return $?
 }
 
-patch_crates_io_solana() {
+patch_crates_io_xandeum() {
   declare Cargo_toml="$1"
-  declare solana_dir="$2"
+  declare xandeum_dir="$2"
   cat >> "$Cargo_toml" <<EOF
 [patch.crates-io]
-solana-account-decoder = { path = "$solana_dir/account-decoder" }
-solana-clap-utils = { path = "$solana_dir/clap-utils" }
-solana-client = { path = "$solana_dir/client" }
-solana-program = { path = "$solana_dir/sdk/program" }
-solana-program-test = { path = "$solana_dir/program-test" }
-solana-sdk = { path = "$solana_dir/sdk" }
-solana-faucet = { path = "$solana_dir/faucet" }
-solana-zk-token-sdk = { path = "$solana_dir/zk-token-sdk" }
+xandeum-account-decoder = { path = "$xandeum_dir/account-decoder" }
+xandeum-clap-utils = { path = "$xandeum_dir/clap-utils" }
+xandeum-client = { path = "$xandeum_dir/client" }
+xandeum-program = { path = "$xandeum_dir/sdk/program" }
+xandeum-program-test = { path = "$xandeum_dir/program-test" }
+xandeum-sdk = { path = "$xandeum_dir/sdk" }
+xandeum-faucet = { path = "$xandeum_dir/faucet" }
+xandeum-zk-token-sdk = { path = "$xandeum_dir/zk-token-sdk" }
 EOF
 }

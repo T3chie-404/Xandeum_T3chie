@@ -1,6 +1,6 @@
 use {
-    solana_measure::measure,
-    solana_sdk::{clock::Slot, pubkey::Pubkey, saturating_add_assign},
+    xandeum_measure::measure,
+    xandeum_sdk::{clock::Slot, pubkey::Pubkey, saturating_add_assign},
     std::collections::HashMap,
 };
 
@@ -248,11 +248,11 @@ impl PrioritizationFee {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_sdk::pubkey::Pubkey};
+    use {super::*, xandeum_sdk::pubkey::Pubkey};
 
     #[test]
     fn test_update_prioritization_fee() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let write_account_a = Pubkey::new_unique();
         let write_account_b = Pubkey::new_unique();
         let write_account_c = Pubkey::new_unique();

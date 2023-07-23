@@ -1,7 +1,7 @@
 [package]
-name = "solana-tpu-client"
+name = "xandeum-tpu-client"
 description = "Solana TPU Client"
-documentation = "https://docs.rs/solana-tpu-client"
+documentation = "https://docs.rs/xandeum-tpu-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,13 +18,13 @@ indicatif = { workspace = true, optional = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-sdk = { workspace = true }
+xandeum-connection-cache = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-pubsub-client = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-sdk = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
@@ -35,7 +35,7 @@ rand_chacha = { workspace = true }
 default = ["spinner"]
 # Support tpu-client methods that feature a spinner progress bar for
 # command-line interfaces
-spinner = ["dep:indicatif", "solana-rpc-client/spinner"]
+spinner = ["dep:indicatif", "xandeum-rpc-client/spinner"]
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

@@ -6,7 +6,7 @@ title: Web3 JavaScript API
 
 The Solana-Web3.js library aims to provide complete coverage of Solana. The library was built on top of the [Solana JSON RPC API](/api).
 
-You can find the full documentation for the `@solana/web3.js` library [here](https://solana-labs.github.io/solana-web3.js/).
+You can find the full documentation for the `@xandeum/web3.js` library [here](https://xandeum-labs.github.io/xandeum-web3.js/).
 
 ## Common Terminology
 
@@ -25,23 +25,23 @@ For the full list of terms, see [Solana terminology](../../terminology#cross-pro
 #### yarn
 
 ```bash
-$ yarn add @solana/web3.js
+$ yarn add @xandeum/web3.js
 ```
 
 #### npm
 
 ```bash
-$ npm install --save @solana/web3.js
+$ npm install --save @xandeum/web3.js
 ```
 
 #### Bundle
 
 ```html
 <!-- Development (un-minified) -->
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
+<script src="https://unpkg.com/@xandeum/web3.js@latest/lib/index.iife.js"></script>
 
 <!-- Production (minified) -->
-<script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+<script src="https://unpkg.com/@xandeum/web3.js@latest/lib/index.iife.min.js"></script>
 ```
 
 ### Usage
@@ -49,22 +49,22 @@ $ npm install --save @solana/web3.js
 #### Javascript
 
 ```javascript
-const solanaWeb3 = require("@solana/web3.js");
-console.log(solanaWeb3);
+const xandeumWeb3 = require("@xandeum/web3.js");
+console.log(xandeumWeb3);
 ```
 
 #### ES6
 
 ```javascript
-import * as solanaWeb3 from "@solana/web3.js";
-console.log(solanaWeb3);
+import * as xandeumWeb3 from "@xandeum/web3.js";
+console.log(xandeumWeb3);
 ```
 
 #### Browser Bundle
 
 ```javascript
-// solanaWeb3 is provided in the global namespace by the bundle script
-console.log(solanaWeb3);
+// xandeumWeb3 is provided in the global namespace by the bundle script
+console.log(xandeumWeb3);
 ```
 
 ## Quickstart
@@ -81,7 +81,7 @@ There are two ways to obtain a Keypair:
 You can obtain a new Keypair with the following:
 
 ```javascript
-const { Keypair } = require("@solana/web3.js");
+const { Keypair } = require("@xandeum/web3.js");
 
 let keypair = Keypair.generate();
 ```
@@ -91,7 +91,7 @@ This will generate a brand new Keypair for a user to fund and use within your ap
 You can allow entry of the secretKey using a textbox, and obtain the Keypair with `Keypair.fromSecretKey(secretKey)`.
 
 ```javascript
-const { Keypair } = require("@solana/web3.js");
+const { Keypair } = require("@xandeum/web3.js");
 
 let secretKey = Uint8Array.from([
   202, 171, 192, 129, 150, 189, 204, 241, 142, 71, 205, 2, 81, 97, 2, 176, 48,
@@ -103,7 +103,7 @@ let secretKey = Uint8Array.from([
 let keypair = Keypair.fromSecretKey(secretKey);
 ```
 
-Many wallets today allow users to bring their Keypair using a variety of extensions or web wallets. The general recommendation is to use wallets, not Keypairs, to sign transactions. The wallet creates a layer of separation between the dApp and the Keypair, ensuring that the dApp never has access to the secret key. You can find ways to connect to external wallets with the [wallet-adapter](https://github.com/solana-labs/wallet-adapter) library.
+Many wallets today allow users to bring their Keypair using a variety of extensions or web wallets. The general recommendation is to use wallets, not Keypairs, to sign transactions. The wallet creates a layer of separation between the dApp and the Keypair, ensuring that the dApp never has access to the secret key. You can find ways to connect to external wallets with the [wallet-adapter](https://github.com/xandeum-labs/wallet-adapter) library.
 
 ### Creating and Sending Transactions
 
@@ -119,7 +119,7 @@ const {
   Transaction,
   SystemProgram,
   LAMPORTS_PER_SOL,
-} = require("@solana/web3.js");
+} = require("@xandeum/web3.js");
 
 let fromKeypair = Keypair.generate();
 let toKeypair = Keypair.generate();
@@ -143,7 +143,7 @@ const {
   sendAndConfirmTransaction,
   clusterApiUrl,
   Connection,
-} = require("@solana/web3.js");
+} = require("@xandeum/web3.js");
 
 let keypair = Keypair.generate();
 let connection = new Connection(clusterApiUrl("testnet"));
@@ -172,7 +172,7 @@ You must always provide every account that the program will be interacting withi
 
 In the `allocate` method above, a single account `pubkey` is required, as well as an amount of `space` for allocation. We know that the `allocate` method writes to the account by allocating space within it, making the `pubkey` required to be `isWritable`. `isSigner` is required when you are designating the account that is running the instruction. In this case, the signer is the account calling to allocate space within itself.
 
-Let's look at how to call this instruction using solana-web3.js:
+Let's look at how to call this instruction using xandeum-web3.js:
 
 ```javascript
 let keypair = web3.Keypair.generate();
@@ -206,7 +206,7 @@ let allocateStruct = {
 };
 ```
 
-The above is created using `u32` and `ns64` from `@solana/buffer-layout` to facilitate the payload creation. The `allocate` function takes in the parameter `space`. To interact with the function we must provide the data as a Buffer format. The `buffer-layout` library helps with allocating the buffer and encoding it correctly for Rust programs on Solana to interpret.
+The above is created using `u32` and `ns64` from `@xandeum/buffer-layout` to facilitate the payload creation. The `allocate` function takes in the parameter `space`. To interact with the function we must provide the data as a Buffer format. The `buffer-layout` library helps with allocating the buffer and encoding it correctly for Rust programs on Solana to interpret.
 
 Let's break down this struct.
 
@@ -223,7 +223,7 @@ Let's break down this struct.
 `index` is set to 8 because the function `allocate` is in the 8th position in the instruction enum for `SystemProgram`.
 
 ```rust
-/* https://github.com/solana-labs/solana/blob/21bc43ed58c63c827ba4db30426965ef3e807180/sdk/program/src/system_instruction.rs#L142-L305 */
+/* https://github.com/xandeum-labs/xandeum/blob/21bc43ed58c63c827ba4db30426965ef3e807180/sdk/program/src/system_instruction.rs#L142-L305 */
 pub enum SystemInstruction {
     /** 0 **/CreateAccount {/**/},
     /** 1 **/Assign {/**/},
@@ -265,7 +265,7 @@ The `layout` in the allocate struct must always have `u32('instruction')` first 
 }
 ```
 
-`ns64('space')` is the argument for the `allocate` function. You can see in the original `allocate` function in Rust that space was of the type `u64`. `u64` is an unsigned 64bit integer. Javascript by default only provides up to 53bit integers. `ns64` comes from `@solana/buffer-layout` to help with type conversions between Rust and Javascript. You can find more type conversions between Rust and Javascript at [solana-labs/buffer-layout](https://github.com/solana-labs/buffer-layout).
+`ns64('space')` is the argument for the `allocate` function. You can see in the original `allocate` function in Rust that space was of the type `u64`. `u64` is an unsigned 64bit integer. Javascript by default only provides up to 53bit integers. `ns64` comes from `@xandeum/buffer-layout` to help with type conversions between Rust and Javascript. You can find more type conversions between Rust and Javascript at [xandeum-labs/buffer-layout](https://github.com/xandeum-labs/buffer-layout).
 
 ```javascript
 let data = Buffer.alloc(allocateStruct.layout.span);
@@ -295,9 +295,9 @@ Finally, we add the transaction instruction with all the account keys, payer, da
 The full code can be found below.
 
 ```javascript
-const { struct, u32, ns64 } = require("@solana/buffer-layout");
+const { struct, u32, ns64 } = require("@xandeum/buffer-layout");
 const { Buffer } = require("buffer");
-const web3 = require("@solana/web3.js");
+const web3 = require("@xandeum/web3.js");
 
 let keypair = web3.Keypair.generate();
 let payer = web3.Keypair.generate();

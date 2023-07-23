@@ -17,18 +17,18 @@
 //
 // `clippy::op_ref` is turned off to prevent clippy from warning that this is not idiomatic code.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 #[macro_use]
 pub(crate) mod macros;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 pub mod encryption;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 pub mod errors;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 mod range_proof;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 mod sigma_proofs;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 mod transcript;
 
 // TODO: re-organize visibility

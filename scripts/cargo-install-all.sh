@@ -82,28 +82,28 @@ if [[ $CI_OS_NAME = windows ]]; then
     cargo-build-sbf
     cargo-test-bpf
     cargo-test-sbf
-    solana
-    solana-install
-    solana-install-init
-    solana-keygen
-    solana-stake-accounts
-    solana-test-validator
-    solana-tokens
+    xandeum
+    xandeum-install
+    xandeum-install-init
+    xandeum-keygen
+    xandeum-stake-accounts
+    xandeum-test-validator
+    xandeum-tokens
   )
 else
   ./fetch-perf-libs.sh
 
   BINS=(
-    solana
-    solana-bench-tps
-    solana-faucet
-    solana-gossip
-    solana-install
-    solana-keygen
-    solana-ledger-tool
-    solana-log-analyzer
-    solana-net-shaper
-    solana-validator
+    xandeum
+    xandeum-bench-tps
+    xandeum-faucet
+    xandeum-gossip
+    xandeum-install
+    xandeum-keygen
+    xandeum-ledger-tool
+    xandeum-log-analyzer
+    xandeum-net-shaper
+    xandeum-validator
     rbpf-cli
   )
 
@@ -114,18 +114,18 @@ else
       cargo-build-sbf
       cargo-test-bpf
       cargo-test-sbf
-      solana-dos
-      solana-install-init
-      solana-stake-accounts
-      solana-test-validator
-      solana-tokens
-      solana-watchtower
+      xandeum-dos
+      xandeum-install-init
+      xandeum-stake-accounts
+      xandeum-test-validator
+      xandeum-tokens
+      xandeum-watchtower
     )
   fi
 
-  #XXX: Ensure `solana-genesis` is built LAST!
-  # See https://github.com/solana-labs/solana/issues/5826
-  BINS+=(solana-genesis)
+  #XXX: Ensure `xandeum-genesis` is built LAST!
+  # See https://github.com/xandeum-labs/xandeum/issues/5826
+  BINS+=(xandeum-genesis)
 fi
 
 binArgs=()
@@ -145,7 +145,7 @@ mkdir -p "$installDir/bin"
     # the patch-related configs are needed for rust 1.69+ on Windows; see Cargo.toml
     # shellcheck disable=SC2086 # Don't want to double quote $rust_version
     "$cargo" $maybeRustVersion \
-      --config 'patch.crates-io.ntapi.git="https://github.com/solana-labs/ntapi"' \
+      --config 'patch.crates-io.ntapi.git="https://github.com/xandeum-labs/ntapi"' \
       --config 'patch.crates-io.ntapi.rev="97ede981a1777883ff86d142b75024b023f04fad"' \
       install --locked spl-token-cli --root "$installDir"
   fi
@@ -206,7 +206,7 @@ fi
   set -x
   # deps dir can be empty
   shopt -s nullglob
-  for dep in target/"$buildVariant"/deps/libsolana*program.*; do
+  for dep in target/"$buildVariant"/deps/libxandeum*program.*; do
     cp -fv "$dep" "$installDir/bin/deps"
   done
 )

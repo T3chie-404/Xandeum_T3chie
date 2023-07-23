@@ -2,9 +2,9 @@ use {
     crate::bench_tps_client::*,
     log::*,
     rayon::prelude::*,
-    solana_core::gen_keys::GenKeys,
-    solana_measure::measure::Measure,
-    solana_sdk::{
+    xandeum_core::gen_keys::GenKeys,
+    xandeum_measure::measure::Measure,
+    xandeum_sdk::{
         commitment_config::CommitmentConfig,
         hash::Hash,
         message::Message,

@@ -1,21 +1,21 @@
 #![allow(clippy::integer_arithmetic)]
 #[cfg(any(target_arch = "x86", target_arch = "x86_64"))]
-use solana_entry::entry::{self, create_ticks, init_poh, EntrySlice, VerifyRecyclers};
+use xandeum_entry::entry::{self, create_ticks, init_poh, EntrySlice, VerifyRecyclers};
 #[cfg(not(any(target_arch = "x86", target_arch = "x86_64")))]
-use solana_entry::entry::{create_ticks, init_poh, EntrySlice, VerifyRecyclers};
+use xandeum_entry::entry::{create_ticks, init_poh, EntrySlice, VerifyRecyclers};
 use {
     clap::{crate_description, crate_name, Arg, Command},
-    solana_measure::measure::Measure,
-    solana_perf::perf_libs,
-    solana_sdk::hash::hash,
+    xandeum_measure::measure::Measure,
+    xandeum_perf::perf_libs,
+    xandeum_sdk::hash::hash,
 };
 
 fn main() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let matches = Command::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(xandeum_version::version!())
         .arg(
             Arg::new("max_num_entries")
                 .long("max-num-entries")

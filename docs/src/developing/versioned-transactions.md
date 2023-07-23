@@ -25,11 +25,11 @@ An RPC request will fail if a [Versioned Transaction](./versioned-transactions.m
 
 ## How to set max supported version
 
-You can set the `maxSupportedTransactionVersion` using both the [`@solana/web3.js`](https://solana-labs.github.io/solana-web3.js/) library and JSON formatted requests directly to an RPC endpoint.
+You can set the `maxSupportedTransactionVersion` using both the [`@xandeum/web3.js`](https://xandeum-labs.github.io/xandeum-web3.js/) library and JSON formatted requests directly to an RPC endpoint.
 
 ### Using web3.js
 
-Using the [`@solana/web3.js`](https://solana-labs.github.io/solana-web3.js/) library, you can retrieve the most recent block or get a specific transaction:
+Using the [`@xandeum/web3.js`](https://xandeum-labs.github.io/xandeum-web3.js/) library, you can retrieve the most recent block or get a specific transaction:
 
 ```js
 // connect to the `devnet` cluster and get the current `slot`
@@ -68,7 +68,7 @@ curl http://localhost:8899 -X POST -H "Content-Type: application/json" -d \
 
 Versioned transactions can be created similar to the older method of creating transactions. There are differences in using certain libraries that should be noted.
 
-Below is an example of how to create a Versioned Transaction, using the `@solana/web3.js` library, to send perform a SOL transfer between two accounts.
+Below is an example of how to create a Versioned Transaction, using the `@xandeum/web3.js` library, to send perform a SOL transfer between two accounts.
 
 #### Notes:
 
@@ -80,7 +80,7 @@ Firstly, import the web3.js library and create a `connection` to your desired cl
 We then define the recent `blockhash` and `minRent` we will need for our transaction and the account:
 
 ```js
-const web3 = require("@solana/web3.js");
+const web3 = require("@xandeum/web3.js");
 
 // connect to the cluster and get the minimum rent for rent exempt status
 const connection = new web3.Connection(web3.clusterApiUrl("devnet"));
@@ -136,7 +136,7 @@ After your `VersionedTransaction` has been signed by all required accounts, you 
 ```js
 // send our v0 transaction to the cluster
 const txid = await connection.sendTransaction(transaction);
-console.log(`https://explorer.solana.com/tx/${txid}?cluster=devnet`);
+console.log(`https://explorer.xandeum.com/tx/${txid}?cluster=devnet`);
 ```
 
 > NOTE:
@@ -145,5 +145,5 @@ console.log(`https://explorer.solana.com/tx/${txid}?cluster=devnet`);
 ## More Resources
 
 - using [Versioned Transactions for Address Lookup Tables](./lookup-tables.md#how-to-create-an-address-lookup-table)
-- view an [example of a v0 transaction](https://explorer.solana.com/tx/3jpoANiFeVGisWRY5UP648xRXs3iQasCHABPWRWnoEjeA93nc79WrnGgpgazjq4K9m8g2NJoyKoWBV1Kx5VmtwHQ/?cluster=devnet) on Solana Explorer
+- view an [example of a v0 transaction](https://explorer.xandeum.com/tx/3jpoANiFeVGisWRY5UP648xRXs3iQasCHABPWRWnoEjeA93nc79WrnGgpgazjq4K9m8g2NJoyKoWBV1Kx5VmtwHQ/?cluster=devnet) on Solana Explorer
 - read the [accepted proposal](./../proposals/versioned-transactions.md) for Versioned Transaction and Address Lookup Tables

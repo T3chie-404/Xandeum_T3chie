@@ -8,8 +8,8 @@ use {
     log::*,
     rand::{thread_rng, Rng},
     rayon::prelude::*,
-    solana_client::connection_cache::ConnectionCache,
-    solana_core::{
+    xandeum_client::connection_cache::ConnectionCache,
+    xandeum_core::{
         banking_stage::{
             committer::Committer, consumer::Consumer, BankingStage, BankingStageStats,
         },
@@ -19,23 +19,23 @@ use {
         unprocessed_packet_batches::*,
         unprocessed_transaction_storage::{ThreadType, UnprocessedTransactionStorage},
     },
-    solana_entry::entry::{next_hash, Entry},
-    solana_gossip::cluster_info::{ClusterInfo, Node},
-    solana_ledger::{
+    xandeum_entry::entry::{next_hash, Entry},
+    xandeum_gossip::cluster_info::{ClusterInfo, Node},
+    xandeum_ledger::{
         blockstore::Blockstore,
         blockstore_processor::process_entries_for_tests,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         get_tmp_ledger_path,
     },
-    solana_perf::{
+    xandeum_perf::{
         packet::{to_packet_batches, Packet},
         test_tx::test_tx,
     },
-    solana_poh::poh_recorder::{create_test_recorder, WorkingBankEntry},
-    solana_runtime::{
+    xandeum_poh::poh_recorder::{create_test_recorder, WorkingBankEntry},
+    xandeum_runtime::{
         bank::Bank, bank_forks::BankForks, prioritization_fee_cache::PrioritizationFeeCache,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         genesis_config::GenesisConfig,
         hash::Hash,
         message::Message,
@@ -45,8 +45,8 @@ use {
         timing::{duration_as_us, timestamp},
         transaction::{Transaction, VersionedTransaction},
     },
-    solana_streamer::socket::SocketAddrSpace,
-    solana_vote_program::{
+    xandeum_streamer::socket::SocketAddrSpace,
+    xandeum_vote_program::{
         vote_state::VoteStateUpdate, vote_transaction::new_vote_state_update_transaction,
     },
     std::{
@@ -190,7 +190,7 @@ enum TransactionType {
 }
 
 fn bench_banking(bencher: &mut Bencher, tx_type: TransactionType) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let num_threads = BankingStage::num_threads() as usize;
     //   a multiple of packet chunk duplicates to avoid races
     const CHUNKS: usize = 8;

@@ -2,7 +2,7 @@
 
 use {
     crate::{bucket_api::BucketApi, bucket_stats::BucketMapStats, MaxSearch, RefCount},
-    solana_sdk::pubkey::Pubkey,
+    xandeum_sdk::pubkey::Pubkey,
     std::{convert::TryInto, fmt::Debug, fs, path::PathBuf, sync::Arc},
     tempfile::TempDir,
 };
@@ -239,7 +239,7 @@ mod tests {
 
     #[test]
     fn bucket_map_test_update_to_0_len() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let key = Pubkey::new_unique();
         let config = BucketMapConfig::new(1 << 1);
         let index = BucketMap::new(config);
@@ -354,7 +354,7 @@ mod tests {
     #[test]
     fn hashmap_compare() {
         use std::sync::Mutex;
-        solana_logger::setup();
+        xandeum_logger::setup();
         for mut use_batch_insert in [true, false] {
             let maps = (0..2)
                 .map(|max_buckets_pow2| {
@@ -455,7 +455,7 @@ mod tests {
 
                     let additions = (0..to_add)
                         .map(|_| {
-                            let k = solana_sdk::pubkey::new_rand();
+                            let k = xandeum_sdk::pubkey::new_rand();
                             let mut v = gen_rand_value();
                             if use_batch_insert {
                                 // refcount has to be 1 to use batch insert

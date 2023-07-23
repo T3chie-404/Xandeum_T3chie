@@ -264,13 +264,13 @@ on-chain.
 ### Calculate tree cost in JavaScript
 
 Within the
-[`@solana/spl-account-compression`](https://www.npmjs.com/package/@solana/spl-account-compression)
+[`@xandeum/spl-account-compression`](https://www.npmjs.com/package/@xandeum/spl-account-compression)
 package, developers can use the
-[`getConcurrentMerkleTreeAccountSize`](https://solana-labs.github.io/solana-program-library/account-compression/sdk/docs/modules/index.html#getConcurrentMerkleTreeAccountSize)
+[`getConcurrentMerkleTreeAccountSize`](https://xandeum-labs.github.io/xandeum-program-library/account-compression/sdk/docs/modules/index.html#getConcurrentMerkleTreeAccountSize)
 function to calculate the required space for a given tree size parameters.
 
 Then using the
-[`getMinimumBalanceForRentExemption`](https://solana-labs.github.io/solana-web3.js/classes/Connection.html#getMinimumBalanceForRentExemption)
+[`getMinimumBalanceForRentExemption`](https://xandeum-labs.github.io/xandeum-web3.js/classes/Connection.html#getMinimumBalanceForRentExemption)
 function to get the final cost (in lamports) to allocate the required space for
 the tree on-chain.
 

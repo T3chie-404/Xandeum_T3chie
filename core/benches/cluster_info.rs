@@ -4,27 +4,27 @@ extern crate test;
 
 use {
     rand::{thread_rng, Rng},
-    solana_core::{
+    xandeum_core::{
         broadcast_stage::{
             broadcast_metrics::TransmitShredsStats, broadcast_shreds, BroadcastStage,
         },
         cluster_nodes::ClusterNodesCache,
     },
-    solana_gossip::{
+    xandeum_gossip::{
         cluster_info::{ClusterInfo, Node},
         contact_info::ContactInfo,
     },
-    solana_ledger::{
+    xandeum_ledger::{
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         shred::{Shred, ShredFlags},
     },
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{
+    xandeum_runtime::{bank::Bank, bank_forks::BankForks},
+    xandeum_sdk::{
         pubkey,
         signature::{Keypair, Signer},
         timing::{timestamp, AtomicInterval},
     },
-    solana_streamer::socket::SocketAddrSpace,
+    xandeum_streamer::socket::SocketAddrSpace,
     std::{
         collections::HashMap,
         net::UdpSocket,
@@ -36,7 +36,7 @@ use {
 
 #[bench]
 fn broadcast_shreds_bench(bencher: &mut Bencher) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let leader_keypair = Arc::new(Keypair::new());
     let leader_info = Node::new_localhost_with_pubkey(&leader_keypair.pubkey());
     let cluster_info = ClusterInfo::new(

@@ -6,7 +6,7 @@
 cd "$(dirname "$0")"
 
 if [[ -z $HOST ]]; then
-  HOST=metrics.solana.com
+  HOST=metrics.xandeum.com
 fi
 echo "HOST: $HOST"
 
@@ -43,8 +43,8 @@ sudo docker run \
   --env inactivity-duration=48h \
   --env GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID_8888" \
   --env GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET_8888" \
-  --env PUBLIC_URL=https://metrics.solana.com:8888 \
-  --env GOOGLE_DOMAINS=solana.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets,influxdata.com,solana.org  \
+  --env PUBLIC_URL=https://metrics.xandeum.com:8888 \
+  --env GOOGLE_DOMAINS=xandeum.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets,influxdata.com,xandeum.org  \
   --env TLS_CERTIFICATE=/certs/fullchain.pem \
   --env TLS_PRIVATE_KEY=/certs/privkey.pem \
   --env TOKEN_SECRET="$TOKEN_SECRET" \
@@ -56,4 +56,4 @@ sudo docker run \
   --volume /var/lib/chronograf:/var/lib/chronograf \
   --log-opt max-size=1g \
   --log-opt max-file=5 \
-  $CHRONOGRAF_IMAGE --influxdb-url=https://metrics.solana.com:8086 --auth-duration="720h" --inactivity-duration="48h"
+  $CHRONOGRAF_IMAGE --influxdb-url=https://metrics.xandeum.com:8086 --auth-duration="720h" --inactivity-duration="48h"

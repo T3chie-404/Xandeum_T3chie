@@ -6,12 +6,12 @@ use {
     fs_extra::dir::CopyOptions,
     itertools::Itertools,
     log::{info, trace},
-    solana_core::{
+    xandeum_core::{
         accounts_hash_verifier::AccountsHashVerifier,
         snapshot_packager_service::SnapshotPackagerService,
     },
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfo},
-    solana_runtime::{
+    xandeum_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfo},
+    xandeum_runtime::{
         accounts_background_service::{
             AbsRequestHandlers, AbsRequestSender, AccountsBackgroundService,
             PrunedBanksRequestHandler, SnapshotRequestHandler,
@@ -34,7 +34,7 @@ use {
         },
         status_cache::MAX_CACHE_ENTRIES,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot,
         genesis_config::{
             ClusterType::{self, Development, Devnet, MainnetBeta, Testnet},
@@ -46,7 +46,7 @@ use {
         system_transaction,
         timing::timestamp,
     },
-    solana_streamer::socket::SocketAddrSpace,
+    xandeum_streamer::socket::SocketAddrSpace,
     std::{
         collections::HashSet,
         fs,
@@ -93,7 +93,7 @@ impl SnapshotTestConfig {
         // snapshots.
         let mut genesis_config_info = create_genesis_config_with_leader(
             10_000,                          // mint_lamports
-            &solana_sdk::pubkey::new_rand(), // validator_pubkey
+            &xandeum_sdk::pubkey::new_rand(), // validator_pubkey
             1,                               // validator_stake_lamports
         );
         genesis_config_info.genesis_config.cluster_type = cluster_type;
@@ -201,7 +201,7 @@ fn run_bank_forks_snapshot_n<F>(
 ) where
     F: Fn(&mut Bank, &Keypair),
 {
-    solana_logger::setup();
+    xandeum_logger::setup();
     // Set up snapshotting config
     let mut snapshot_test_config = SnapshotTestConfig::new(
         snapshot_version,
@@ -263,7 +263,7 @@ fn run_bank_forks_snapshot_n<F>(
     last_bank.force_flush_accounts_cache();
     let accounts_hash =
         last_bank.update_accounts_hash(CalcAccountsHashDataSource::Storages, false, false);
-    solana_runtime::serde_snapshot::reserialize_bank_with_new_accounts_hash(
+    xandeum_runtime::serde_snapshot::reserialize_bank_with_new_accounts_hash(
         accounts_package.bank_snapshot_dir(),
         accounts_package.slot,
         &accounts_hash,
@@ -332,7 +332,7 @@ fn test_concurrent_snapshot_packaging(
     snapshot_version: SnapshotVersion,
     cluster_type: ClusterType,
 ) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     const MAX_BANK_SNAPSHOTS_TO_RETAIN: usize = 8;
 
     // Set up snapshotting config
@@ -527,7 +527,7 @@ fn test_concurrent_snapshot_packaging(
             move || {
                 let accounts_package = real_accounts_package_receiver.try_recv().unwrap();
                 let accounts_hash = AccountsHash(Hash::default());
-                solana_runtime::serde_snapshot::reserialize_bank_with_new_accounts_hash(
+                xandeum_runtime::serde_snapshot::reserialize_bank_with_new_accounts_hash(
                     accounts_package.bank_snapshot_dir(),
                     accounts_package.slot,
                     &accounts_hash,
@@ -559,7 +559,7 @@ fn test_concurrent_snapshot_packaging(
     // Check the archive we cached the state for earlier was generated correctly
 
     // files were saved off before we reserialized the bank in the hacked up accounts_hash_verifier stand-in.
-    solana_runtime::serde_snapshot::reserialize_bank_with_new_accounts_hash(
+    xandeum_runtime::serde_snapshot::reserialize_bank_with_new_accounts_hash(
         snapshot_utils::get_bank_snapshot_dir(&saved_snapshots_dir, saved_slot),
         saved_slot,
         &AccountsHash(Hash::default()),
@@ -580,7 +580,7 @@ fn test_concurrent_snapshot_packaging(
 #[test_case(V1_2_0, Testnet)]
 #[test_case(V1_2_0, MainnetBeta)]
 fn test_slots_to_snapshot(snapshot_version: SnapshotVersion, cluster_type: ClusterType) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let num_set_roots = MAX_CACHE_ENTRIES * 2;
 
     for add_root_interval in &[1, 3, 9] {
@@ -693,7 +693,7 @@ fn test_bank_forks_incremental_snapshot(
     snapshot_version: SnapshotVersion,
     cluster_type: ClusterType,
 ) {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     const SET_ROOT_INTERVAL: Slot = 2;
     const INCREMENTAL_SNAPSHOT_ARCHIVE_INTERVAL_SLOTS: Slot = SET_ROOT_INTERVAL * 2;
@@ -733,11 +733,11 @@ fn test_bank_forks_incremental_snapshot(
         let bank = {
             let bank = Bank::new_from_parent(&bank_forks[slot - 1], &Pubkey::default(), slot);
 
-            let key = solana_sdk::pubkey::new_rand();
+            let key = xandeum_sdk::pubkey::new_rand();
             let tx = system_transaction::transfer(mint_keypair, &key, 1, bank.last_blockhash());
             assert_eq!(bank.process_transaction(&tx), Ok(()));
 
-            let key = solana_sdk::pubkey::new_rand();
+            let key = xandeum_sdk::pubkey::new_rand();
             let tx = system_transaction::transfer(mint_keypair, &key, 0, bank.last_blockhash());
             assert_eq!(bank.process_transaction(&tx), Ok(()));
 
@@ -913,7 +913,7 @@ fn test_snapshots_with_background_services(
     snapshot_version: SnapshotVersion,
     cluster_type: ClusterType,
 ) {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     const SET_ROOT_INTERVAL_SLOTS: Slot = 2;
     const BANK_SNAPSHOT_INTERVAL_SLOTS: Slot = SET_ROOT_INTERVAL_SLOTS * 2;
@@ -1031,11 +1031,11 @@ fn test_snapshots_with_background_services(
                 slot,
             );
 
-            let key = solana_sdk::pubkey::new_rand();
+            let key = xandeum_sdk::pubkey::new_rand();
             let tx = system_transaction::transfer(mint_keypair, &key, 1, bank.last_blockhash());
             assert_eq!(bank.process_transaction(&tx), Ok(()));
 
-            let key = solana_sdk::pubkey::new_rand();
+            let key = xandeum_sdk::pubkey::new_rand();
             let tx = system_transaction::transfer(mint_keypair, &key, 0, bank.last_blockhash());
             assert_eq!(bank.process_transaction(&tx), Ok(()));
 

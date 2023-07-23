@@ -1,14 +1,14 @@
 use {
     bytemuck::Pod,
-    solana_program_test::*,
-    solana_sdk::{
+    xandeum_program_test::*,
+    xandeum_sdk::{
         instruction::InstructionError,
         signature::Signer,
         signer::keypair::Keypair,
         system_instruction,
         transaction::{Transaction, TransactionError},
     },
-    solana_zk_token_sdk::{
+    xandeum_zk_token_sdk::{
         encryption::{
             elgamal::ElGamalKeypair,
             grouped_elgamal::GroupedElGamal,

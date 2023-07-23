@@ -2,12 +2,12 @@ use {
     clap::{value_t, value_t_or_exit, values_t_or_exit, ArgMatches},
     crossbeam_channel::unbounded,
     log::*,
-    solana_core::{
+    xandeum_core::{
         accounts_hash_verifier::AccountsHashVerifier, validator::BlockVerificationMethod,
     },
-    solana_geyser_plugin_manager::geyser_plugin_service::GeyserPluginService,
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfo},
-    solana_ledger::{
+    xandeum_geyser_plugin_manager::geyser_plugin_service::GeyserPluginService,
+    xandeum_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfo},
+    xandeum_ledger::{
         bank_forks_utils,
         blockstore::{Blockstore, BlockstoreError},
         blockstore_options::{
@@ -18,12 +18,12 @@ use {
             self, BlockstoreProcessorError, ProcessOptions, TransactionStatusSender,
         },
     },
-    solana_measure::measure::Measure,
-    solana_rpc::{
+    xandeum_measure::measure::Measure,
+    xandeum_rpc::{
         transaction_notifier_interface::TransactionNotifierLock,
         transaction_status_service::TransactionStatusService,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         accounts_background_service::{
             AbsRequestHandlers, AbsRequestSender, AccountsBackgroundService,
             PrunedBanksRequestHandler, SnapshotRequestHandler,
@@ -38,11 +38,11 @@ use {
             move_and_async_delete_path_contents,
         },
     },
-    solana_sdk::{
+    xandeum_sdk::{
         genesis_config::GenesisConfig, signature::Signer, signer::keypair::Keypair,
         timing::timestamp,
     },
-    solana_streamer::socket::SocketAddrSpace,
+    xandeum_streamer::socket::SocketAddrSpace,
     std::{
         path::{Path, PathBuf},
         process::exit,
@@ -139,14 +139,14 @@ pub fn load_and_process_ledger(
     }
 
     let account_paths = if let Some(account_paths) = arg_matches.value_of("account_paths") {
-        // If this blockstore access is Primary, no other process (solana-validator) can hold
+        // If this blockstore access is Primary, no other process (xandeum-validator) can hold
         // Primary access. So, allow a custom accounts path without worry of wiping the accounts
-        // of solana-validator.
+        // of xandeum-validator.
         if !blockstore.is_primary_access() {
             // Attempt to open the Blockstore in Primary access; if successful, no other process
             // was holding Primary so allow things to proceed with custom accounts path. Release
-            // the Primary access instead of holding it to give priority to solana-validator over
-            // solana-ledger-tool should solana-validator start before we've finished.
+            // the Primary access instead of holding it to give priority to xandeum-validator over
+            // xandeum-ledger-tool should xandeum-validator start before we've finished.
             info!(
                 "Checking if another process currently holding Primary access to {:?}",
                 blockstore.ledger_path()

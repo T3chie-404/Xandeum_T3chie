@@ -64,9 +64,9 @@ case "$clientType" in
 esac
 
 case $clientToRun in
-solana-bench-tps)
+xandeum-bench-tps)
   net/scripts/rsync-retry.sh -vPrc \
-    "$entrypointIp":~/solana/config/bench-tps"$clientIndex".yml ./client-accounts.yml
+    "$entrypointIp":~/xandeum/config/bench-tps"$clientIndex".yml ./client-accounts.yml
 
   args=()
 
@@ -81,7 +81,7 @@ solana-bench-tps)
   fi
 
   clientCommand="\
-    solana-bench-tps \
+    xandeum-bench-tps \
       --duration 7500 \
       --sustained \
       --threads $threadCount \
@@ -93,7 +93,7 @@ solana-bench-tps)
 idle)
   # Add the faucet keypair to idle clients for convenience
   net/scripts/rsync-retry.sh -vPrc \
-    "$entrypointIp":~/solana/config/faucet.json ~/solana/
+    "$entrypointIp":~/xandeum/config/faucet.json ~/xandeum/
   exit 0
   ;;
 *)
@@ -102,9 +102,9 @@ idle)
 esac
 
 
-cat > ~/solana/on-reboot <<EOF
+cat > ~/xandeum/on-reboot <<EOF
 #!/usr/bin/env bash
-cd ~/solana
+cd ~/xandeum
 
 PATH="$HOME"/.cargo/bin:"$PATH"
 export USE_INSTALL=1
@@ -131,10 +131,10 @@ tmux new -s "$clientToRun" -d "
   done
 "
 EOF
-chmod +x ~/solana/on-reboot
-echo "@reboot ~/solana/on-reboot" | crontab -
+chmod +x ~/xandeum/on-reboot
+echo "@reboot ~/xandeum/on-reboot" | crontab -
 
-~/solana/on-reboot
+~/xandeum/on-reboot
 
 sleep 1
 tmux capture-pane -t "$clientToRun" -p -S -100

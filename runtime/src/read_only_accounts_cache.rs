@@ -3,7 +3,7 @@
 use {
     dashmap::{mapref::entry::Entry, DashMap},
     index_list::{Index, IndexList},
-    solana_sdk::{
+    xandeum_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::Slot,
         pubkey::Pubkey,
@@ -169,7 +169,7 @@ mod tests {
             Rng, SeedableRng,
         },
         rand_chacha::ChaChaRng,
-        solana_sdk::account::{accounts_equal, Account, WritableAccount},
+        xandeum_sdk::account::{accounts_equal, Account, WritableAccount},
         std::{collections::HashMap, iter::repeat_with, sync::Arc},
     };
     #[test]
@@ -181,7 +181,7 @@ mod tests {
 
     #[test]
     fn test_read_only_accounts_cache() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let per_account_size = CACHE_ENTRY_SIZE;
         let data_size = 100;
         let max = data_size + per_account_size;

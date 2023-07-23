@@ -40,7 +40,7 @@ A [“blockhash”](./../terminology.md#blockhash) refers to the last Proof of H
 
 Solana’s Proof of History mechanism uses a very long chain of recursive SHA-256 hashes to build a trusted clock. The “history” part of the name comes from the fact that block producers hash transaction id’s into the stream to record which transactions were processed in their block.
 
-[PoH hash calculation](https://github.com/solana-labs/solana/blob/9488a73f5252ad0d7ea830a0b456d9aa4bfbb7c1/entry/src/poh.rs#L82): `next_hash = hash(prev_hash, hash(transaction_ids))`
+[PoH hash calculation](https://github.com/xandeum-labs/xandeum/blob/9488a73f5252ad0d7ea830a0b456d9aa4bfbb7c1/entry/src/poh.rs#L82): `next_hash = hash(prev_hash, hash(transaction_ids))`
 
 PoH can be used as a trusted clock because each hash must be produced sequentially. Each produced block contains a blockhash and a list of hash checkpoints called “ticks” so that validators can verify the full chain of hashes in parallel and prove that some amount of time has actually passed. The stream of hashes can be broken up into the following time units:
 
@@ -50,9 +50,9 @@ By default, all Solana transactions will expire if not committed to a block in a
 
 ## How does transaction expiration work?
 
-Each transaction includes a “recent blockhash” which is used as a PoH clock timestamp and expires when that blockhash is no longer “recent” enough. More concretely, Solana validators look up the corresponding slot number for each transaction’s blockhash that they wish to process in a block. If the validator [can’t find a slot number for the blockhash](https://github.com/solana-labs/solana/blob/9488a73f5252ad0d7ea830a0b456d9aa4bfbb7c1/runtime/src/bank.rs#L3687) or if the looked up slot number is more than 151 slots lower than the slot number of the block being processed, the transaction will be rejected.
+Each transaction includes a “recent blockhash” which is used as a PoH clock timestamp and expires when that blockhash is no longer “recent” enough. More concretely, Solana validators look up the corresponding slot number for each transaction’s blockhash that they wish to process in a block. If the validator [can’t find a slot number for the blockhash](https://github.com/xandeum-labs/xandeum/blob/9488a73f5252ad0d7ea830a0b456d9aa4bfbb7c1/runtime/src/bank.rs#L3687) or if the looked up slot number is more than 151 slots lower than the slot number of the block being processed, the transaction will be rejected.
 
-Slots are configured to last about [400ms](https://github.com/solana-labs/solana/blob/47b938e617b77eb3fc171f19aae62222503098d7/sdk/program/src/clock.rs#L12) but often fluctuate between 400ms and 600ms, so a given blockhash can only be used by transactions for about 60 to 90 seconds.
+Slots are configured to last about [400ms](https://github.com/xandeum-labs/xandeum/blob/47b938e617b77eb3fc171f19aae62222503098d7/sdk/program/src/clock.rs#L12) but often fluctuate between 400ms and 600ms, so a given blockhash can only be used by transactions for about 60 to 90 seconds.
 
 Transaction has expired pseudocode: `currentBankSlot > slotForTxRecentBlockhash + 151`
 
@@ -99,9 +99,9 @@ Of course there are some disadvantages too:
 
 These disadvantages highlight a tradeoff in how transaction expiration is configured. If the expiration time of a transaction is increased, validators need to use more memory to track more transactions. If expiration time is decreased, users don’t have enough time to submit their transaction.
 
-Currently, Solana clusters require that transactions use blockhashes that are no more than [151 slots](https://github.com/solana-labs/solana/blob/9488a73f5252ad0d7ea830a0b456d9aa4bfbb7c1/sdk/program/src/clock.rs#L65) old.
+Currently, Solana clusters require that transactions use blockhashes that are no more than [151 slots](https://github.com/xandeum-labs/xandeum/blob/9488a73f5252ad0d7ea830a0b456d9aa4bfbb7c1/sdk/program/src/clock.rs#L65) old.
 
-> This [Github issue](https://github.com/solana-labs/solana/issues/23582) contains some calculations that estimate that mainnet-beta validators need about 150MB of memory to track transactions.
+> This [Github issue](https://github.com/xandeum-labs/xandeum/issues/23582) contains some calculations that estimate that mainnet-beta validators need about 150MB of memory to track transactions.
 > This could be slimmed down in the future if necessary without decreasing expiration time as I’ve detailed in that issue.
 
 ## Transaction confirmation tips
@@ -184,9 +184,9 @@ Then, poll the [`getBlockHeight`](/api/http#getblockheight) RPC API with the “
 
 Sometimes transaction expiration issues are really hard to avoid (e.g. offline signing, cluster instability). If the previous tips are still not sufficient for your use-case, you can switch to using durable transactions (they just require a bit of setup).
 
-To start using durable transactions, a user first needs to submit a transaction that [invokes instructions that create a special on-chain “nonce” account](https://docs.rs/solana-program/latest/solana_program/system_instruction/fn.create_nonce_account.html) and stores a “durable blockhash” inside of it. At any point in the future (as long as the nonce account hasn’t been used yet), the user can create a durable transaction by following these 2 rules:
+To start using durable transactions, a user first needs to submit a transaction that [invokes instructions that create a special on-chain “nonce” account](https://docs.rs/xandeum-program/latest/xandeum_program/system_instruction/fn.create_nonce_account.html) and stores a “durable blockhash” inside of it. At any point in the future (as long as the nonce account hasn’t been used yet), the user can create a durable transaction by following these 2 rules:
 
-1. The instruction list must start with an [“advance nonce” system instruction](https://docs.rs/solana-program/latest/solana_program/system_instruction/fn.advance_nonce_account.html) which loads their on-chain nonce account
+1. The instruction list must start with an [“advance nonce” system instruction](https://docs.rs/xandeum-program/latest/xandeum_program/system_instruction/fn.advance_nonce_account.html) which loads their on-chain nonce account
 2. The transaction’s blockhash must be equal to the durable blockhash stored by the on-chain nonce account
 
 Here’s how these transactions are processed by the Solana runtime:

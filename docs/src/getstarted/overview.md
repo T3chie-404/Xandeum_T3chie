@@ -6,9 +6,9 @@ keywords:
   - accounts
   - transactions
   - nft
-  - solana basics
+  - xandeum basics
   - tutorial
-  - intro to solana development
+  - intro to xandeum development
   - blockchain developer
   - blockchain tutorial
   - web3 developer
@@ -41,7 +41,7 @@ Here's a high level representation of this. It’s important to note that this i
 an oversimplification of the Solana network for the purposes of learning in an
 easy-to-understand way.
 
-![Solana developer workflows program-client model](/img/quickstarts/solana-overview-client-program.png)
+![Solana developer workflows program-client model](/img/quickstarts/xandeum-overview-client-program.png)
 
 ### Program development
 
@@ -185,7 +185,7 @@ accounts that are passed in via instructions.
 
 There are two sets of programs that are maintained by the Solana Labs team:
 [Native Programs](../developing/runtime-facilities/programs.md) and the
-[Solana Program Library (SPL)](https://spl.solana.com/). These serve as core
+[Solana Program Library (SPL)](https://spl.xandeum.com/). These serve as core
 building blocks for on-chain interactions. Native programs are used for core
 blockchain functionality like creating new accounts, assigning ownership,
 transferring SOL, and more. SPL programs are used for creating, swapping, and

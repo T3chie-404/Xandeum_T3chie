@@ -12,20 +12,20 @@ use {
     },
     crossbeam_channel::{unbounded, Receiver, RecvTimeoutError, Select, Sender},
     log::*,
-    solana_gossip::{
+    xandeum_gossip::{
         cluster_info::{ClusterInfo, GOSSIP_SLEEP_MILLIS},
         crds::Cursor,
     },
-    solana_ledger::blockstore::Blockstore,
-    solana_measure::measure::Measure,
-    solana_metrics::inc_new_counter_debug,
-    solana_perf::packet,
-    solana_poh::poh_recorder::PohRecorder,
-    solana_rpc::{
+    xandeum_ledger::blockstore::Blockstore,
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::inc_new_counter_debug,
+    xandeum_perf::packet,
+    xandeum_poh::poh_recorder::PohRecorder,
+    xandeum_rpc::{
         optimistically_confirmed_bank_tracker::{BankNotification, BankNotificationSender},
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         bank::Bank,
         bank_forks::BankForks,
         commitment::VOTE_THRESHOLD_SIZE,
@@ -34,7 +34,7 @@ use {
         vote_sender_types::ReplayVoteReceiver,
         vote_transaction::VoteTransaction,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT, DEFAULT_TICKS_PER_SLOT},
         hash::Hash,
         pubkey::Pubkey,
@@ -872,9 +872,9 @@ mod tests {
     use {
         super::*,
         crate::banking_trace::BankingTracer,
-        solana_perf::packet,
-        solana_rpc::optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
-        solana_runtime::{
+        xandeum_perf::packet,
+        xandeum_rpc::optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
+        xandeum_runtime::{
             bank::Bank,
             commitment::BlockCommitmentCache,
             genesis_utils::{
@@ -882,12 +882,12 @@ mod tests {
             },
             vote_sender_types::ReplayVoteSender,
         },
-        solana_sdk::{
+        xandeum_sdk::{
             hash::Hash,
             pubkey::Pubkey,
             signature::{Keypair, Signature, Signer},
         },
-        solana_vote_program::{vote_state::Vote, vote_transaction},
+        xandeum_vote_program::{vote_state::Vote, vote_transaction},
         std::{
             collections::BTreeSet,
             iter::repeat_with,
@@ -897,7 +897,7 @@ mod tests {
 
     #[test]
     fn test_max_vote_tx_fits() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let node_keypair = Keypair::new();
         let vote_keypair = Keypair::new();
         let slots: Vec<_> = (0..31).collect();
@@ -925,7 +925,7 @@ mod tests {
         let (vote_tracker, bank, _, _) = setup();
 
         // Check outdated slots are purged with new root
-        let new_voter = solana_sdk::pubkey::new_rand();
+        let new_voter = xandeum_sdk::pubkey::new_rand();
         // Make separate copy so the original doesn't count toward
         // the ref count, which would prevent cleanup
         let new_voter_ = new_voter;
@@ -1580,7 +1580,7 @@ mod tests {
 
     #[test]
     fn test_verify_votes_empty() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(10_000);
         let bank = Bank::new_for_tests(&genesis_config);
         let bank_forks = RwLock::new(BankForks::new(bank));

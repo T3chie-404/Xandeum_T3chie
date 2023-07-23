@@ -170,7 +170,7 @@ A [public key](#public-key-pubkey) and corresponding [private key](#private-key)
 A fractional [native token](#native-token) with the value of 0.000000001 [sol](#sol).
 
 :::info
-Within the compute budget, a quantity of _[micro-lamports](https://github.com/solana-labs/solana/blob/ced8f6a512c61e0dd5308095ae8457add4a39e94/program-runtime/src/prioritization_fee.rs#L1-L2)_ is used in the calculation of [prioritization fees](#prioritization-fee).
+Within the compute budget, a quantity of _[micro-lamports](https://github.com/xandeum-labs/xandeum/blob/ced8f6a512c61e0dd5308095ae8457add4a39e94/program-runtime/src/prioritization_fee.rs#L1-L2)_ is used in the calculation of [prioritization fees](#prioritization-fee).
 :::
 
 ## leader
@@ -314,7 +314,7 @@ The [native token](#native-token) of a Solana [cluster](#cluster).
 
 ## Solana Program Library (SPL)
 
-A [library of programs](https://spl.solana.com/) on Solana such as spl-token that facilitates tasks such as creating and using tokens.
+A [library of programs](https://spl.xandeum.com/) on Solana such as spl-token that facilitates tasks such as creating and using tokens.
 
 ## stake
 

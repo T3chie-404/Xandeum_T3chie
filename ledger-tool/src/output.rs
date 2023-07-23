@@ -1,6 +1,6 @@
 use {
     serde::Serialize,
-    solana_cli_output::{QuietDisplay, VerboseDisplay},
+    xandeum_cli_output::{QuietDisplay, VerboseDisplay},
     std::fmt::{Display, Formatter, Result},
 };
 

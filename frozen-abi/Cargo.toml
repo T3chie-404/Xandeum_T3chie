@@ -1,7 +1,7 @@
 [package]
-name = "solana-frozen-abi"
+name = "xandeum-frozen-abi"
 description = "Solana Frozen ABI"
-documentation = "https://docs.rs/solana-frozen-abi"
+documentation = "https://docs.rs/xandeum-frozen-abi"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -20,10 +20,10 @@ serde_bytes = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
 sha2 = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
+xandeum-frozen-abi-macro = { workspace = true }
 thiserror = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "xandeum"))'.dependencies]
 ahash = { workspace = true }
 blake3 = { workspace = true, features = ["digest", "traits-preview"] }
 block-buffer = { workspace = true }
@@ -38,8 +38,8 @@ once_cell = { workspace = true, features = ["alloc", "race"] }
 rand_core = { workspace = true, features = ["std"] }
 subtle = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dev-dependencies]
-solana-logger = { workspace = true }
+[target.'cfg(not(target_os = "xandeum"))'.dev-dependencies]
+xandeum-logger = { workspace = true }
 
 [build-dependencies]
 rustc_version = { workspace = true }

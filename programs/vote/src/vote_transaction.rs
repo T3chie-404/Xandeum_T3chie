@@ -1,9 +1,9 @@
 use {
-    solana_program::vote::{
+    xandeum_program::vote::{
         self,
         state::{Vote, VoteStateUpdate},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot,
         hash::Hash,
         signature::{Keypair, Signer},

@@ -6,7 +6,7 @@ here=$(dirname "$0")
 # shellcheck source=.buildkite/scripts/common.sh
 source "$here"/common.sh
 
-agent="${1-solana}"
+agent="${1-xandeum}"
 
 group "downstream projects" \
   '{ "name": "example-helloworld", "command": "./ci/downstream-projects/run-example-helloworld.sh", "timeout_in_minutes": 30, "agent": "'"$agent"'" }'

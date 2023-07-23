@@ -80,7 +80,7 @@ budget, or exceeds a bound, the entire invocation chain and the top level
 transaction processing are halted.
 
 The current [compute
-budget](https://github.com/solana-labs/solana/blob/090e11210aa7222d8295610a6ccac4acda711bb9/program-runtime/src/compute_budget.rs#L26-L87) can be found in the Solana Program Runtime.
+budget](https://github.com/xandeum-labs/xandeum/blob/090e11210aa7222d8295610a6ccac4acda711bb9/program-runtime/src/compute_budget.rs#L26-L87) can be found in the Solana Program Runtime.
 
 #### Example Compute Budget
 
@@ -161,12 +161,12 @@ used to activate a feature, which marks it pending, once marked pending the
 feature will be activated at the next epoch.
 
 To determine which features are activated use the [Solana command-line
-tools](cli/install-solana-cli-tools.md):
+tools](cli/install-xandeum-cli-tools.md):
 
 ```bash
-solana feature status
+xandeum feature status
 ```
 
 If you encounter problems, first ensure that the Solana tools version you are
-using match the version returned by `solana cluster-version`. If they do not
-match, [install the correct tool suite](cli/install-solana-cli-tools.md).
+using match the version returned by `xandeum cluster-version`. If they do not
+match, [install the correct tool suite](cli/install-xandeum-cli-tools.md).

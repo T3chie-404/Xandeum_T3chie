@@ -7,20 +7,20 @@ use {
     clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
     reqwest::blocking::Client,
     serde_json::{Map, Value},
-    solana_account_decoder::validator_info::{
+    xandeum_account_decoder::validator_info::{
         self, ValidatorInfo, MAX_LONG_FIELD_LENGTH, MAX_SHORT_FIELD_LENGTH,
     },
-    solana_clap_utils::{
+    xandeum_clap_utils::{
         hidden_unless_forced,
         input_parsers::pubkey_of,
         input_validators::{is_pubkey, is_url},
         keypair::DefaultSigner,
     },
-    solana_cli_output::{CliValidatorInfo, CliValidatorInfoVec},
-    solana_config_program::{config_instruction, get_config_data, ConfigKeys, ConfigState},
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::{
+    xandeum_cli_output::{CliValidatorInfo, CliValidatorInfoVec},
+    xandeum_config_program::{config_instruction, get_config_data, ConfigKeys, ConfigState},
+    xandeum_remote_wallet::remote_wallet::RemoteWalletManager,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_sdk::{
         account::Account,
         message::Message,
         pubkey::Pubkey,
@@ -83,7 +83,7 @@ fn verify_keybase(
 ) -> Result<(), Box<dyn error::Error>> {
     if let Some(keybase_username) = keybase_username.as_str() {
         let url =
-            format!("https://keybase.pub/{keybase_username}/solana/validator-{validator_pubkey:?}");
+            format!("https://keybase.pub/{keybase_username}/xandeum/validator-{validator_pubkey:?}");
         let client = Client::new();
         if client.head(&url).send()?.status().is_success() {
             Ok(())
@@ -124,7 +124,7 @@ fn parse_validator_info(
     pubkey: &Pubkey,
     account: &Account,
 ) -> Result<(Pubkey, Map<String, serde_json::value::Value>), Box<dyn error::Error>> {
-    if account.owner != solana_config_program::id() {
+    if account.owner != xandeum_config_program::id() {
         return Err(format!("{pubkey} is not a validator info account").into());
     }
     let key_list: ConfigKeys = deserialize(&account.data)?;
@@ -291,7 +291,7 @@ pub fn process_set_validator_info(
     }
 
     // Check for existing validator-info account
-    let all_config = rpc_client.get_program_accounts(&solana_config_program::id())?;
+    let all_config = rpc_client.get_program_accounts(&xandeum_config_program::id())?;
     let existing_account = all_config
         .iter()
         .filter(
@@ -402,7 +402,7 @@ pub fn process_get_validator_info(
             rpc_client.get_account(&validator_info_pubkey)?,
         )]
     } else {
-        let all_config = rpc_client.get_program_accounts(&solana_config_program::id())?;
+        let all_config = rpc_client.get_program_accounts(&xandeum_config_program::id())?;
         all_config
             .into_iter()
             .filter(|(_, validator_info_account)| {
@@ -477,7 +477,7 @@ mod tests {
 
     #[test]
     fn test_verify_keybase_username_not_string() {
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = xandeum_sdk::pubkey::new_rand();
         let value = Value::Bool(true);
 
         assert_eq!(
@@ -542,7 +542,7 @@ mod tests {
 
     #[test]
     fn test_parse_validator_info() {
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = xandeum_sdk::pubkey::new_rand();
         let keys = vec![(validator_info::id(), false), (pubkey, true)];
         let config = ConfigKeys { keys };
 
@@ -556,7 +556,7 @@ mod tests {
             parse_validator_info(
                 &Pubkey::default(),
                 &Account {
-                    owner: solana_config_program::id(),
+                    owner: xandeum_config_program::id(),
                     data,
                     ..Account::default()
                 }
@@ -571,7 +571,7 @@ mod tests {
         assert!(parse_validator_info(
             &Pubkey::default(),
             &Account {
-                owner: solana_sdk::pubkey::new_rand(),
+                owner: xandeum_sdk::pubkey::new_rand(),
                 ..Account::default()
             }
         )
@@ -591,7 +591,7 @@ mod tests {
         assert!(parse_validator_info(
             &Pubkey::default(),
             &Account {
-                owner: solana_config_program::id(),
+                owner: xandeum_config_program::id(),
                 data,
                 ..Account::default()
             },

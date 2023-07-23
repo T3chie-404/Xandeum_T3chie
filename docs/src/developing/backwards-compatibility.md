@@ -72,11 +72,11 @@ Major releases:
 
 ### Rust Crates
 
-- [`solana-sdk`](https://docs.rs/solana-sdk/) - Rust SDK for creating transactions and parsing account state
-- [`solana-program`](https://docs.rs/solana-program/) - Rust SDK for writing programs
-- [`solana-client`](https://docs.rs/solana-client/) - Rust client for connecting to RPC API
-- [`solana-cli-config`](https://docs.rs/solana-cli-config/) - Rust client for managing Solana CLI config files
-- [`solana-geyser-plugin-interface`](https://docs.rs/solana-geyser-plugin-interface/) - Rust interface for developing Solana Geyser plugins.
+- [`xandeum-sdk`](https://docs.rs/xandeum-sdk/) - Rust SDK for creating transactions and parsing account state
+- [`xandeum-program`](https://docs.rs/xandeum-program/) - Rust SDK for writing programs
+- [`xandeum-client`](https://docs.rs/xandeum-client/) - Rust client for connecting to RPC API
+- [`xandeum-cli-config`](https://docs.rs/xandeum-cli-config/) - Rust client for managing Solana CLI config files
+- [`xandeum-geyser-plugin-interface`](https://docs.rs/xandeum-geyser-plugin-interface/) - Rust interface for developing Solana Geyser plugins.
 
 Patch releases:
 

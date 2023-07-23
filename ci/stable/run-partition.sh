@@ -31,9 +31,9 @@ if [ ! "$LIMIT" -gt "$INDEX" ]; then
 fi
 
 DONT_USE_NEXTEST_PACKAGES=(
-  solana-client-test
-  solana-cargo-build-sbf
-  solana-core
+  xandeum-client-test
+  xandeum-cargo-build-sbf
+  xandeum-core
 )
 
 if [ "$INDEX" -eq "$((LIMIT - 1))" ]; then
@@ -61,7 +61,7 @@ else
     --jobs "$JOBS"
     --partition hash:"$((INDEX + 1))/$((LIMIT - 1))"
     --verbose
-    --exclude solana-local-cluster
+    --exclude xandeum-local-cluster
   )
   for package in "${DONT_USE_NEXTEST_PACKAGES[@]}"; do
     ARGS+=(--exclude "$package")

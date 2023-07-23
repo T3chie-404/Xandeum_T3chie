@@ -2,10 +2,10 @@
 
 #![cfg(feature = "program")]
 
-extern crate solana_program;
+extern crate xandeum_program;
 use {
     crate::instructions::*,
-    solana_program::{
+    xandeum_program::{
         account_info::AccountInfo,
         entrypoint::{ProgramResult, MAX_PERMITTED_DATA_INCREASE},
         instruction::{AccountMeta, Instruction},
@@ -14,11 +14,11 @@ use {
         pubkey::Pubkey,
         system_instruction, system_program,
     },
-    solana_sbf_rust_realloc::instructions::*,
+    xandeum_sbf_rust_realloc::instructions::*,
     std::convert::TryInto,
 };
 
-solana_program::entrypoint!(process_instruction);
+xandeum_program::entrypoint!(process_instruction);
 #[allow(clippy::unnecessary_wraps)]
 fn process_instruction(
     program_id: &Pubkey,

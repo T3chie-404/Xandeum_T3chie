@@ -1,17 +1,17 @@
-pub use solana_connection_cache::connection_cache::Protocol;
+pub use xandeum_connection_cache::connection_cache::Protocol;
 use {
     quinn::Endpoint,
-    solana_connection_cache::{
+    xandeum_connection_cache::{
         client_connection::ClientConnection,
         connection_cache::{
             BaseClientConnection, ConnectionCache as BackendConnectionCache, ConnectionPool,
             NewConnectionConfig,
         },
     },
-    solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-    solana_sdk::{pubkey::Pubkey, signature::Keypair, transport::Result as TransportResult},
-    solana_streamer::streamer::StakedNodes,
-    solana_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
+    xandeum_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+    xandeum_sdk::{pubkey::Pubkey, signature::Keypair, transport::Result as TransportResult},
+    xandeum_streamer::streamer::StakedNodes,
+    xandeum_udp_client::{UdpConfig, UdpConnectionManager, UdpPool},
     std::{
         error::Error,
         net::{IpAddr, Ipv4Addr, SocketAddr},
@@ -189,7 +189,7 @@ impl ClientConnection for BlockingClientConnection {
 }
 
 #[async_trait::async_trait]
-impl solana_connection_cache::nonblocking::client_connection::ClientConnection
+impl xandeum_connection_cache::nonblocking::client_connection::ClientConnection
     for NonblockingClientConnection
 {
     dispatch!(fn server_addr(&self) -> &SocketAddr);
@@ -215,8 +215,8 @@ mod tests {
         super::*,
         crate::connection_cache::ConnectionCache,
         crossbeam_channel::unbounded,
-        solana_sdk::{net::DEFAULT_TPU_COALESCE, signature::Keypair},
-        solana_streamer::{
+        xandeum_sdk::{net::DEFAULT_TPU_COALESCE, signature::Keypair},
+        xandeum_streamer::{
             nonblocking::quic::DEFAULT_WAIT_FOR_CHUNK_TIMEOUT, streamer::StakedNodes,
         },
         std::{
@@ -245,7 +245,7 @@ mod tests {
 
         let staked_nodes = Arc::new(RwLock::new(StakedNodes::default()));
 
-        let (response_recv_endpoint, response_recv_thread) = solana_streamer::quic::spawn_server(
+        let (response_recv_endpoint, response_recv_thread) = xandeum_streamer::quic::spawn_server(
             "quic_streamer_test",
             response_recv_socket,
             &keypair2,

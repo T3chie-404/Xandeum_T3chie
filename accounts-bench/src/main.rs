@@ -5,8 +5,8 @@ extern crate log;
 use {
     clap::{crate_description, crate_name, value_t, App, Arg},
     rayon::prelude::*,
-    solana_measure::measure::Measure,
-    solana_runtime::{
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::{
         accounts::Accounts,
         accounts_db::{
             test_utils::{create_test_accounts, update_accounts_bench},
@@ -16,18 +16,18 @@ use {
         ancestors::Ancestors,
         rent_collector::RentCollector,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         genesis_config::ClusterType, pubkey::Pubkey, sysvar::epoch_schedule::EpochSchedule,
     },
     std::{env, fs, path::PathBuf},
 };
 
 fn main() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(xandeum_version::version!())
         .arg(
             Arg::with_name("num_slots")
                 .long("num_slots")
@@ -128,7 +128,7 @@ fn main() {
             let results_store = accounts.accounts_db.update_accounts_hash(
                 CalcAccountsHashDataSource::Storages,
                 false,
-                solana_sdk::clock::Slot::default(),
+                xandeum_sdk::clock::Slot::default(),
                 &ancestors,
                 None,
                 &EpochSchedule::default(),

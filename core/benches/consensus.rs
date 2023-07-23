@@ -1,14 +1,14 @@
 #![feature(test)]
 
-extern crate solana_core;
+extern crate xandeum_core;
 extern crate test;
 
 use {
-    solana_core::{
+    xandeum_core::{
         consensus::Tower, tower_storage::FileTowerStorage, vote_simulator::VoteSimulator,
     },
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{
+    xandeum_runtime::{bank::Bank, bank_forks::BankForks},
+    xandeum_sdk::{
         pubkey::Pubkey,
         signature::{Keypair, Signer},
     },

@@ -19,34 +19,34 @@ otherVersions=(
   edge
 )
 
-solanaInstallDataDir=$PWD/releases
-solanaInstallGlobalOpts=(
-  --data-dir "$solanaInstallDataDir"
-  --config "$solanaInstallDataDir"/config.yml
+xandeumInstallDataDir=$PWD/releases
+xandeumInstallGlobalOpts=(
+  --data-dir "$xandeumInstallDataDir"
+  --config "$xandeumInstallDataDir"/config.yml
   --no-modify-path
 )
 
-# Install all the solana versions
+# Install all the xandeum versions
 bootstrapInstall() {
   declare v=$1
-  if [[ ! -h $solanaInstallDataDir/active_release ]]; then
-    sh "$SOLANA_ROOT"/install/solana-install-init.sh "$v" "${solanaInstallGlobalOpts[@]}"
+  if [[ ! -h $xandeumInstallDataDir/active_release ]]; then
+    sh "$SOLANA_ROOT"/install/xandeum-install-init.sh "$v" "${xandeumInstallGlobalOpts[@]}"
   fi
-  export PATH="$solanaInstallDataDir/active_release/bin/:$PATH"
+  export PATH="$xandeumInstallDataDir/active_release/bin/:$PATH"
 }
 
 bootstrapInstall "$baselineVersion"
 for v in "${otherVersions[@]}"; do
-  solana-install-init "${solanaInstallGlobalOpts[@]}" "$v"
-  solana -V
+  xandeum-install-init "${xandeumInstallGlobalOpts[@]}" "$v"
+  xandeum -V
 done
 
 
 ORIGINAL_PATH=$PATH
-solanaInstallUse() {
+xandeumInstallUse() {
   declare version=$1
-  echo "--- Now using solana $version"
-  SOLANA_BIN="$solanaInstallDataDir/releases/$version/solana-release/bin"
+  echo "--- Now using xandeum $version"
+  SOLANA_BIN="$xandeumInstallDataDir/releases/$version/xandeum-release/bin"
   export PATH="$SOLANA_BIN:$ORIGINAL_PATH"
 }
 
@@ -57,14 +57,14 @@ killSession() {
 export RUST_BACKTRACE=1
 
 # Start up the bootstrap validator using the baseline version
-solanaInstallUse "$baselineVersion"
+xandeumInstallUse "$baselineVersion"
 echo "--- Starting $baselineVersion bootstrap validator"
 trap 'killSession' INT TERM ERR EXIT
 killSession
 (
   set -x
   if [[ ! -x baseline-run.sh ]]; then
-    curl https://raw.githubusercontent.com/solana-labs/solana/v"$baselineVersion"/run.sh -o baseline-run.sh
+    curl https://raw.githubusercontent.com/xandeum-labs/xandeum/v"$baselineVersion"/run.sh -o baseline-run.sh
     chmod +x baseline-run.sh
   fi
   tmux new -s abi -d " \
@@ -80,16 +80,16 @@ killSession
     fi
   done
 
-  solana --url http://127.0.0.1:8899 show-validators
+  xandeum --url http://127.0.0.1:8899 show-validators
 )
 
 # Ensure all versions can see the bootstrap validator
 for v in "${otherVersions[@]}"; do
-  solanaInstallUse "$v"
+  xandeumInstallUse "$v"
   echo "--- Looking for bootstrap validator on gossip"
   (
     set -x
-    "$SOLANA_BIN"/solana-gossip spy \
+    "$SOLANA_BIN"/xandeum-gossip spy \
       --entrypoint 127.0.0.1:8001 \
       --num-nodes-exactly 1 \
       --timeout 30
@@ -99,13 +99,13 @@ done
 
 # Start a validator for each version and look for it
 #
-# Once https://github.com/solana-labs/solana/issues/7738 is resolved, remove
+# Once https://github.com/xandeum-labs/xandeum/issues/7738 is resolved, remove
 # `--no-snapshot-fetch` when starting the validators
 #
 nodeCount=1
 for v in "${otherVersions[@]}"; do
   nodeCount=$((nodeCount + 1))
-  solanaInstallUse "$v"
+  xandeumInstallUse "$v"
   # start another validator
   ledger="$ledgerDir"/ledger-"$v"
   rm -rf "$ledger"
@@ -113,13 +113,13 @@ for v in "${otherVersions[@]}"; do
   (
     set -x
     tmux new-window -t abi -n "$v" " \
-      $SOLANA_BIN/solana-validator \
+      $SOLANA_BIN/xandeum-validator \
       --ledger $ledger \
       --no-snapshot-fetch \
       --entrypoint 127.0.0.1:8001 \
       -o - 2>&1 | tee $logDir/$v.log \
     "
-    "$SOLANA_BIN"/solana-gossip spy \
+    "$SOLANA_BIN"/xandeum-gossip spy \
       --entrypoint 127.0.0.1:8001 \
       --num-nodes-exactly $nodeCount \
       --timeout 30

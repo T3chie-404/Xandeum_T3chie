@@ -1,4 +1,4 @@
-FROM solanalabs/rust:1.69.0
+FROM xandeumlabs/rust:1.69.0
 ARG date
 
 RUN set -x \

@@ -24,11 +24,11 @@ and high TPS. For specific requirements, please see
 
 To run an api node:
 
-1. [Install the Solana command-line tool suite](../cli/install-solana-cli-tools.md)
+1. [Install the Solana command-line tool suite](../cli/install-xandeum-cli-tools.md)
 2. Start the validator with at least the following parameters:
 
 ```bash
-solana-validator \
+xandeum-validator \
   --ledger <LEDGER_PATH> \
   --identity <VALIDATOR_IDENTITY_KEYPAIR> \
   --entrypoint <CLUSTER_ENTRYPOINT> \
@@ -44,17 +44,17 @@ solana-validator \
 Customize `--ledger` to your desired ledger storage location, and `--rpc-port` to the port you want to expose.
 
 The `--entrypoint` and `--expected-genesis-hash` parameters are all specific to the cluster you are joining.
-[Current parameters for Mainnet Beta](../clusters.md#example-solana-validator-command-line-2)
+[Current parameters for Mainnet Beta](../clusters.md#example-xandeum-validator-command-line-2)
 
 The `--limit-ledger-size` parameter allows you to specify how many ledger
 [shreds](../terminology.md#shred) your node retains on disk. If you do not
 include this parameter, the validator will keep the entire ledger until it runs
 out of disk space. The default value attempts to keep the ledger disk usage
 under 500GB. More or less disk usage may be requested by adding an argument to
-`--limit-ledger-size` if desired. Check `solana-validator --help` for the
+`--limit-ledger-size` if desired. Check `xandeum-validator --help` for the
 default limit value used by `--limit-ledger-size`. More information about
 selecting a custom limit value is [available
-here](https://github.com/solana-labs/solana/blob/583cec922b6107e0f85c7e14cb5e642bc7dfb340/core/src/ledger_cleanup_service.rs#L15-L26).
+here](https://github.com/xandeum-labs/xandeum/blob/583cec922b6107e0f85c7e14cb5e642bc7dfb340/core/src/ledger_cleanup_service.rs#L15-L26).
 
 Specifying one or more `--known-validator` parameters can protect you from booting from a malicious snapshot. [More on the value of booting with known validators](../running-validator/validator-start.md#known-validators)
 
@@ -66,20 +66,20 @@ Optional parameters to consider:
 ### Automatic Restarts and Monitoring
 
 We recommend configuring each of your nodes to restart automatically on exit, to
-ensure you miss as little data as possible. Running the solana software as a
+ensure you miss as little data as possible. Running the xandeum software as a
 systemd service is one great option.
 
 For monitoring, we provide
-[`solana-watchtower`](https://github.com/solana-labs/solana/blob/master/watchtower/README.md),
-which can monitor your validator and detect with the `solana-validator` process
+[`xandeum-watchtower`](https://github.com/xandeum-labs/xandeum/blob/master/watchtower/README.md),
+which can monitor your validator and detect with the `xandeum-validator` process
 is unhealthy. It can directly be configured to alert you via Slack, Telegram,
-Discord, or Twillio. For details, run `solana-watchtower --help`.
+Discord, or Twillio. For details, run `xandeum-watchtower --help`.
 
 ```bash
-solana-watchtower --validator-identity <YOUR VALIDATOR IDENTITY>
+xandeum-watchtower --validator-identity <YOUR VALIDATOR IDENTITY>
 ```
 
-> You can find more information about the [best practices for Solana Watchtower](../validator/best-practices/monitoring.md#solana-watchtower) here in the docs.
+> You can find more information about the [best practices for Solana Watchtower](../validator/best-practices/monitoring.md#xandeum-watchtower) here in the docs.
 
 #### New Software Release Announcements
 
@@ -103,7 +103,7 @@ known validators. This snapshot reflects the current state of the chain, but
 does not contain the complete historical ledger. If one of your node exits and
 boots from a new snapshot, there may be a gap in the ledger on that node. In
 order to prevent this issue, add the `--no-snapshot-fetch` parameter to your
-`solana-validator` command to receive historical ledger data instead of a
+`xandeum-validator` command to receive historical ledger data instead of a
 snapshot.
 
 Do not pass the `--no-snapshot-fetch` parameter on your initial boot as it's not
@@ -224,7 +224,7 @@ Solana API node.
   passing the last block you have already processed as the start-slot parameter:
 
 ```bash
-curl https://api.devnet.solana.com -X POST -H "Content-Type: application/json" -d '{
+curl https://api.devnet.xandeum.com -X POST -H "Content-Type: application/json" -d '{
   "jsonrpc": "2.0",
   "id": 1,
   "method": "getBlocks",
@@ -254,7 +254,7 @@ that isn't necessary for tracking account balances. Set the "transactionDetails"
 parameter to speed up block fetching.
 
 ```bash
-curl https://api.devnet.solana.com -X POST -H 'Content-Type: application/json' -d '{
+curl https://api.devnet.xandeum.com -X POST -H 'Content-Type: application/json' -d '{
   "jsonrpc": "2.0",
   "id": 1,
   "method": "getBlock",
@@ -344,8 +344,8 @@ transfer of 1040000000 - 1030000000 = 10,000,000 lamports = 0.01 SOL
 
 If you need more information about the transaction type or other specifics, you
 can request the block from RPC in binary format, and parse it using either our
-[Rust SDK](https://github.com/solana-labs/solana) or
-[Javascript SDK](https://github.com/solana-labs/solana-web3.js).
+[Rust SDK](https://github.com/xandeum-labs/xandeum) or
+[Javascript SDK](https://github.com/xandeum-labs/xandeum-web3.js).
 
 ### Address History
 
@@ -407,7 +407,7 @@ curl localhost:8899 -X POST -H "Content-Type: application/json" -d '{
   [`getTransaction`](../api/http#gettransaction) request:
 
 ```bash
-curl https://api.devnet.solana.com -X POST -H 'Content-Type: application/json' -d '{
+curl https://api.devnet.xandeum.com -X POST -H 'Content-Type: application/json' -d '{
   "jsonrpc":"2.0",
   "id":1,
   "method":"getTransaction",
@@ -519,16 +519,16 @@ cluster.
 Sending a synchronous transfer to the Solana cluster allows you to easily ensure
 that a transfer is successful and finalized by the cluster.
 
-Solana's command-line tool offers a simple command, `solana transfer`, to
+Solana's command-line tool offers a simple command, `xandeum transfer`, to
 generate, submit, and confirm transfer transactions. By default, this method
 will wait and track progress on stderr until the transaction has been finalized
 by the cluster. If the transaction fails, it will report any transaction errors.
 
 ```bash
-solana transfer <USER_ADDRESS> <AMOUNT> --allow-unfunded-recipient --keypair <KEYPAIR> --url http://localhost:8899
+xandeum transfer <USER_ADDRESS> <AMOUNT> --allow-unfunded-recipient --keypair <KEYPAIR> --url http://localhost:8899
 ```
 
-The [Solana Javascript SDK](https://github.com/solana-labs/solana-web3.js)
+The [Solana Javascript SDK](https://github.com/xandeum-labs/xandeum-web3.js)
 offers a similar approach for the JS ecosystem. Use the `SystemProgram` to build
 a transfer transaction, and submit it using the `sendAndConfirmTransaction`
 method.
@@ -549,14 +549,14 @@ more on [blockhash expiration](#blockhash-expiration) below.
 First, get a recent blockhash using the [`getFees`](../api/http#getfees) endpoint or the CLI command:
 
 ```bash
-solana fees --url http://localhost:8899
+xandeum fees --url http://localhost:8899
 ```
 
 In the command-line tool, pass the `--no-wait` argument to send a transfer
 asynchronously, and include your recent blockhash with the `--blockhash` argument:
 
 ```bash
-solana transfer <USER_ADDRESS> <AMOUNT> --no-wait --allow-unfunded-recipient --blockhash <RECENT_BLOCKHASH> --keypair <KEYPAIR> --url http://localhost:8899
+xandeum transfer <USER_ADDRESS> <AMOUNT> --no-wait --allow-unfunded-recipient --blockhash <RECENT_BLOCKHASH> --keypair <KEYPAIR> --url http://localhost:8899
 ```
 
 You can also build, sign, and serialize the transaction manually, and fire it off to
@@ -735,7 +735,7 @@ curl localhost:8899 -X POST -H "Content-Type: application/json" -d '{
 
 ## Supporting the SPL Token Standard
 
-[SPL Token](https://spl.solana.com/token) is the standard for wrapped/synthetic
+[SPL Token](https://spl.xandeum.com/token) is the standard for wrapped/synthetic
 token creation and exchange on the Solana blockchain.
 
 The SPL Token workflow is similar to that of native SOL tokens, but there are a
@@ -811,7 +811,7 @@ Signature: 4JsqZEPra2eDTHtHpB4FMWSfk3UgcCVmkKkP7zESZeMrKmFFkDkNd91pKP3vPVVZZPiu5
 Or to create an SPL Token account with a specific keypair:
 
 ```
-$ solana-keygen new -o token-account.json
+$ xandeum-keygen new -o token-account.json
 $ spl-token create-account AkUFCWTXb3w9nY2n6SFJvBV6VwvFUCe4KBMCcgLsa2ir token-account.json
 Creating account 6VzWGL51jLebvnDifvcuEDec17sK6Wupi4gYhm5RzfkV
 Signature: 4JsqZEPra2eDTHtHpB4FMWSfk3UgcCVmkKkP7zESZeMrKmFFkDkNd91pKP3vPVVZZPiu5XxyJwS73Vi5WsZL88D7
@@ -828,7 +828,7 @@ spl-token balance <TOKEN_ACCOUNT_ADDRESS>
 #### Example
 
 ```
-$ solana balance 6VzWGL51jLebvnDifvcuEDec17sK6Wupi4gYhm5RzfkV
+$ xandeum balance 6VzWGL51jLebvnDifvcuEDec17sK6Wupi4gYhm5RzfkV
 0
 ```
 
@@ -863,7 +863,7 @@ Signature: 3R6tsog17QM8KfzbcbdP4aoMfwgo6hBggJDVy7dZPVmH2xbCWjEj31JKD53NzMrf25ChF
 Since each `(wallet, mint)` pair requires a separate account on chain. It is
 recommended that the addresses for these accounts be derived from SOL deposit
 wallets using the
-[Associated Token Account](https://spl.solana.com/associated-token-account) (ATA)
+[Associated Token Account](https://spl.xandeum.com/associated-token-account) (ATA)
 scheme and that _only_ deposits from ATA addresses be accepted.
 
 Monitoring for deposit transactions should follow the [block polling](#poll-for-blocks)
@@ -890,9 +890,9 @@ account data. If the address has no SOL balance, user confirmation should be
 obtained before proceeding with the withdrawal. All other withdrawal addresses
 must be rejected.
 
-From the withdrawal address, the [Associated Token Account](https://spl.solana.com/associated-token-account)
+From the withdrawal address, the [Associated Token Account](https://spl.xandeum.com/associated-token-account)
 (ATA) for the correct mint is derived and the transfer issued to that account via a
-[TransferChecked](https://github.com/solana-labs/solana-program-library/blob/fc0d6a2db79bd6499f04b9be7ead0c400283845e/token/program/src/instruction.rs#L268)
+[TransferChecked](https://github.com/xandeum-labs/xandeum-program-library/blob/fc0d6a2db79bd6499f04b9be7ead0c400283845e/token/program/src/instruction.rs#L268)
 instruction. Note that it is possible that the ATA address does not yet exist, at which point the
 exchange should fund the account on behalf of the user. For SPL Token v2
 accounts, funding the withdrawal account will require 0.00203928 SOL (2,039,280
@@ -910,7 +910,7 @@ $ spl-token transfer --fund-recipient <exchange token account> <withdrawal amoun
 
 For regulatory compliance reasons, an SPL Token issuing entity may optionally
 choose to hold "Freeze Authority" over all accounts created in association with
-its mint. This allows them to [freeze](https://spl.solana.com/token#freezing-accounts)
+its mint. This allows them to [freeze](https://spl.xandeum.com/token#freezing-accounts)
 the assets in a given account at will, rendering the account unusable until thawed.
 If this feature is in use, the freeze authority's pubkey will be registered in
 the SPL Token's mint account.
@@ -921,4 +921,4 @@ Be sure to test your complete workflow on Solana devnet and testnet
 [clusters](../clusters.md) before moving to production on mainnet-beta. Devnet
 is the most open and flexible, and ideal for initial development, while testnet
 offers more realistic cluster configuration. Both devnet and testnet support a faucet,
-run `solana airdrop 1` to obtain some devnet or testnet SOL for development and testing.
+run `xandeum airdrop 1` to obtain some devnet or testnet SOL for development and testing.

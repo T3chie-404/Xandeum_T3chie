@@ -1,7 +1,7 @@
 use {
     crossbeam_channel::Receiver,
-    solana_measure::measure::Measure,
-    solana_runtime::bank::Bank,
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::bank::Bank,
     std::{
         sync::Arc,
         thread::{self, Builder, JoinHandle},

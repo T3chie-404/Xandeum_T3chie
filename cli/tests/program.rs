@@ -2,28 +2,28 @@
 
 use {
     serde_json::Value,
-    solana_cli::{
+    xandeum_cli::{
         cli::{process_command, CliCommand, CliConfig},
         program::{ProgramCliCommand, CLOSE_PROGRAM_WARNING},
     },
-    solana_cli_output::OutputFormat,
-    solana_faucet::faucet::run_local_faucet,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::{
+    xandeum_cli_output::OutputFormat,
+    xandeum_faucet::faucet::run_local_faucet,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_sdk::{
         account_utils::StateMut,
         bpf_loader_upgradeable::{self, UpgradeableLoaderState},
         commitment_config::CommitmentConfig,
         pubkey::Pubkey,
         signature::{Keypair, Signer},
     },
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidator,
+    xandeum_streamer::socket::SocketAddrSpace,
+    xandeum_test_validator::TestValidator,
     std::{env, fs::File, io::Read, path::PathBuf, str::FromStr},
 };
 
 #[test]
 fn test_cli_program_deploy_non_upgradeable() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -199,7 +199,7 @@ fn test_cli_program_deploy_non_upgradeable() {
 
 #[test]
 fn test_cli_program_deploy_no_authority() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -285,7 +285,7 @@ fn test_cli_program_deploy_no_authority() {
 
 #[test]
 fn test_cli_program_deploy_with_authority() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -624,7 +624,7 @@ fn test_cli_program_deploy_with_authority() {
 
 #[test]
 fn test_cli_program_close_program() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -724,7 +724,7 @@ fn test_cli_program_close_program() {
 
 #[test]
 fn test_cli_program_write_buffer() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1056,7 +1056,7 @@ fn test_cli_program_write_buffer() {
 
 #[test]
 fn test_cli_program_set_buffer_authority() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1171,7 +1171,7 @@ fn test_cli_program_set_buffer_authority() {
 
 #[test]
 fn test_cli_program_mismatch_buffer_authority() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1264,7 +1264,7 @@ fn test_cli_program_mismatch_buffer_authority() {
 
 #[test]
 fn test_cli_program_show() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");
@@ -1451,7 +1451,7 @@ fn test_cli_program_show() {
 
 #[test]
 fn test_cli_program_dump() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut noop_path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     noop_path.push("tests");

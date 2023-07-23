@@ -1,6 +1,6 @@
 //! The `validator` module hosts all the validator microservices.
 
-pub use solana_perf::report_target_features;
+pub use xandeum_perf::report_target_features;
 use {
     crate::{
         accounts_hash_verifier::{AccountsHashFaultInjector, AccountsHashVerifier},
@@ -30,12 +30,12 @@ use {
     crossbeam_channel::{bounded, unbounded, Receiver},
     lazy_static::lazy_static,
     rand::{thread_rng, Rng},
-    solana_client::connection_cache::{ConnectionCache, Protocol},
-    solana_entry::poh::compute_hash_time_ns,
-    solana_geyser_plugin_manager::{
+    xandeum_client::connection_cache::{ConnectionCache, Protocol},
+    xandeum_entry::poh::compute_hash_time_ns,
+    xandeum_geyser_plugin_manager::{
         geyser_plugin_service::GeyserPluginService, GeyserPluginManagerRequest,
     },
-    solana_gossip::{
+    xandeum_gossip::{
         cluster_info::{
             ClusterInfo, Node, DEFAULT_CONTACT_DEBUG_INTERVAL_MILLIS,
             DEFAULT_CONTACT_SAVE_INTERVAL_MILLIS,
@@ -44,7 +44,7 @@ use {
         gossip_service::GossipService,
         legacy_contact_info::LegacyContactInfo as ContactInfo,
     },
-    solana_ledger::{
+    xandeum_ledger::{
         bank_forks_utils,
         blockstore::{
             Blockstore, BlockstoreError, BlockstoreSignals, CompletedSlotsReceiver, PurgeType,
@@ -56,13 +56,13 @@ use {
         leader_schedule::FixedSchedule,
         leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_measure::measure::Measure,
-    solana_metrics::{datapoint_info, poh_timing_point::PohTimingSender},
-    solana_poh::{
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::{datapoint_info, poh_timing_point::PohTimingSender},
+    xandeum_poh::{
         poh_recorder::PohRecorder,
         poh_service::{self, PohService},
     },
-    solana_rpc::{
+    xandeum_rpc::{
         max_slots::MaxSlots,
         optimistically_confirmed_bank_tracker::{
             BankNotificationSenderConfig, OptimisticallyConfirmedBank,
@@ -76,7 +76,7 @@ use {
         transaction_notifier_interface::TransactionNotifierLock,
         transaction_status_service::TransactionStatusService,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         accounts_background_service::{
             AbsRequestHandlers, AbsRequestSender, AccountsBackgroundService, DroppedSlotsReceiver,
             PrunedBanksRequestHandler, SnapshotRequestHandler,
@@ -97,7 +97,7 @@ use {
             self, clean_orphaned_account_snapshot_dirs, move_and_async_delete_path_contents,
         },
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot,
         epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET,
         exit::Exit,
@@ -108,9 +108,9 @@ use {
         signature::{Keypair, Signer},
         timing::timestamp,
     },
-    solana_send_transaction_service::send_transaction_service,
-    solana_streamer::{socket::SocketAddrSpace, streamer::StakedNodes},
-    solana_vote_program::vote_state,
+    xandeum_send_transaction_service::send_transaction_service,
+    xandeum_streamer::{socket::SocketAddrSpace, streamer::StakedNodes},
+    xandeum_vote_program::vote_state,
     std::{
         collections::{HashMap, HashSet},
         net::SocketAddr,
@@ -446,7 +446,7 @@ pub struct Validator {
     poh_service: PohService,
     tpu: Tpu,
     tvu: Tvu,
-    ip_echo_server: Option<solana_net_utils::IpEchoServer>,
+    ip_echo_server: Option<xandeum_net_utils::IpEchoServer>,
     pub cluster_info: Arc<ClusterInfo>,
     pub bank_forks: Arc<RwLock<BankForks>>,
     pub blockstore: Arc<Blockstore>,
@@ -533,7 +533,7 @@ impl Validator {
             warn!("Rayon global thread pool already initialized");
         }
 
-        if solana_perf::perf_libs::api().is_some() {
+        if xandeum_perf::perf_libs::api().is_some() {
             info!("Initializing sigverify, this could take a while...");
         } else {
             info!("Initializing sigverify...");
@@ -1002,7 +1002,7 @@ impl Validator {
         }
         let ip_echo_server = match node.sockets.ip_echo {
             None => None,
-            Some(tcp_listener) => Some(solana_net_utils::ip_echo_server(
+            Some(tcp_listener) => Some(xandeum_net_utils::ip_echo_server(
                 tcp_listener,
                 Some(node.info.shred_version()),
             )),
@@ -1204,7 +1204,7 @@ impl Validator {
         datapoint_info!(
             "validator-new",
             ("id", id.to_string(), String),
-            ("version", solana_version::version!(), String)
+            ("version", xandeum_version::version!(), String)
         );
 
         *start_progress.write().unwrap() = ValidatorStartProgress::Running;
@@ -1880,7 +1880,7 @@ fn maybe_warp_slot(
             &root_bank,
             &Pubkey::default(),
             warp_slot,
-            solana_runtime::accounts_db::CalcAccountsHashDataSource::Storages,
+            xandeum_runtime::accounts_db::CalcAccountsHashDataSource::Storages,
         ));
         bank_forks.set_root(
             warp_slot,
@@ -2283,10 +2283,10 @@ mod tests {
     use {
         super::*,
         crossbeam_channel::{bounded, RecvTimeoutError},
-        solana_gossip::contact_info::{ContactInfo, LegacyContactInfo},
-        solana_ledger::{create_new_tmp_ledger, genesis_utils::create_genesis_config_with_leader},
-        solana_sdk::{genesis_config::create_genesis_config, poh_config::PohConfig},
-        solana_tpu_client::tpu_client::{
+        xandeum_gossip::contact_info::{ContactInfo, LegacyContactInfo},
+        xandeum_ledger::{create_new_tmp_ledger, genesis_utils::create_genesis_config_with_leader},
+        xandeum_sdk::{genesis_config::create_genesis_config, poh_config::PohConfig},
+        xandeum_tpu_client::tpu_client::{
             DEFAULT_TPU_CONNECTION_POOL_SIZE, DEFAULT_TPU_ENABLE_UDP, DEFAULT_TPU_USE_QUIC,
         },
         std::{fs::remove_dir_all, thread, time::Duration},
@@ -2294,7 +2294,7 @@ mod tests {
 
     #[test]
     fn validator_exit() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let leader_keypair = Keypair::new();
         let leader_node = Node::new_localhost_with_pubkey(&leader_keypair.pubkey());
 
@@ -2343,10 +2343,10 @@ mod tests {
     #[test]
     fn test_backup_and_clear_blockstore() {
         use std::time::Instant;
-        solana_logger::setup();
+        xandeum_logger::setup();
         use {
-            solana_entry::entry,
-            solana_ledger::{blockstore, get_tmp_ledger_path},
+            xandeum_entry::entry,
+            xandeum_ledger::{blockstore, get_tmp_ledger_path},
         };
 
         let validator_config = ValidatorConfig::default_for_test();
@@ -2458,8 +2458,8 @@ mod tests {
 
     #[test]
     fn test_wait_for_supermajority() {
-        solana_logger::setup();
-        use solana_sdk::hash::hash;
+        xandeum_logger::setup();
+        use xandeum_sdk::hash::hash;
         let node_keypair = Arc::new(Keypair::new());
         let cluster_info = ClusterInfo::new(
             ContactInfo::new_localhost(&node_keypair.pubkey(), timestamp()),
@@ -2627,11 +2627,11 @@ mod tests {
 
     #[test]
     fn test_poh_speed() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let poh_config = PohConfig {
-            target_tick_duration: Duration::from_millis(solana_sdk::clock::MS_PER_TICK),
+            target_tick_duration: Duration::from_millis(xandeum_sdk::clock::MS_PER_TICK),
             // make PoH rate really fast to cause the panic condition
-            hashes_per_tick: Some(100 * solana_sdk::clock::DEFAULT_HASHES_PER_TICK),
+            hashes_per_tick: Some(100 * xandeum_sdk::clock::DEFAULT_HASHES_PER_TICK),
             ..PohConfig::default()
         };
         let genesis_config = GenesisConfig {
@@ -2644,7 +2644,7 @@ mod tests {
     #[test]
     fn test_poh_speed_no_hashes_per_tick() {
         let poh_config = PohConfig {
-            target_tick_duration: Duration::from_millis(solana_sdk::clock::MS_PER_TICK),
+            target_tick_duration: Duration::from_millis(xandeum_sdk::clock::MS_PER_TICK),
             hashes_per_tick: None,
             ..PohConfig::default()
         };

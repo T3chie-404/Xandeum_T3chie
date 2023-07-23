@@ -21,17 +21,17 @@ use {
     },
     crossbeam_channel::RecvTimeoutError,
     histogram::Histogram,
-    solana_client::connection_cache::ConnectionCache,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::blockstore_processor::TransactionStatusSender,
-    solana_measure::{measure, measure_us},
-    solana_perf::{data_budget::DataBudget, packet::PACKETS_PER_BATCH},
-    solana_poh::poh_recorder::PohRecorder,
-    solana_runtime::{
+    xandeum_client::connection_cache::ConnectionCache,
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::blockstore_processor::TransactionStatusSender,
+    xandeum_measure::{measure, measure_us},
+    xandeum_perf::{data_budget::DataBudget, packet::PACKETS_PER_BATCH},
+    xandeum_poh::poh_recorder::PohRecorder,
+    xandeum_runtime::{
         bank_forks::BankForks, prioritization_fee_cache::PrioritizationFeeCache,
         vote_sender_types::ReplayVoteSender,
     },
-    solana_sdk::{feature_set::allow_votes_to_directly_update_vote_state, timing::AtomicInterval},
+    xandeum_sdk::{feature_set::allow_votes_to_directly_update_vote_state, timing::AtomicInterval},
     std::{
         cmp, env,
         sync::{
@@ -584,9 +584,9 @@ mod tests {
         crate::banking_trace::{BankingPacketBatch, BankingTracer},
         crossbeam_channel::{unbounded, Receiver},
         itertools::Itertools,
-        solana_entry::entry::{Entry, EntrySlice},
-        solana_gossip::cluster_info::Node,
-        solana_ledger::{
+        xandeum_entry::entry::{Entry, EntrySlice},
+        xandeum_gossip::cluster_info::Node,
+        xandeum_ledger::{
             blockstore::Blockstore,
             genesis_utils::{
                 create_genesis_config, create_genesis_config_with_leader, GenesisConfigInfo,
@@ -594,19 +594,19 @@ mod tests {
             get_tmp_ledger_path_auto_delete,
             leader_schedule_cache::LeaderScheduleCache,
         },
-        solana_perf::packet::{to_packet_batches, PacketBatch},
-        solana_poh::{
+        xandeum_perf::packet::{to_packet_batches, PacketBatch},
+        xandeum_poh::{
             poh_recorder::{
                 create_test_recorder, PohRecorderError, Record, RecordTransactionsSummary,
             },
             poh_service::PohService,
         },
-        solana_runtime::{
+        xandeum_runtime::{
             bank::Bank,
             bank_forks::BankForks,
             genesis_utils::{activate_feature, bootstrap_validator_stake_lamports},
         },
-        solana_sdk::{
+        xandeum_sdk::{
             hash::Hash,
             poh_config::PohConfig,
             pubkey::Pubkey,
@@ -614,8 +614,8 @@ mod tests {
             system_transaction,
             transaction::{SanitizedTransaction, Transaction},
         },
-        solana_streamer::socket::SocketAddrSpace,
-        solana_vote_program::{
+        xandeum_streamer::socket::SocketAddrSpace,
+        xandeum_vote_program::{
             vote_state::VoteStateUpdate, vote_transaction::new_vote_state_update_transaction,
         },
         std::{
@@ -686,7 +686,7 @@ mod tests {
 
     #[test]
     fn test_banking_stage_tick() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo {
             mut genesis_config, ..
         } = create_genesis_config(2);
@@ -765,7 +765,7 @@ mod tests {
 
     #[test]
     fn test_banking_stage_entries_only() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo {
             genesis_config,
             mint_keypair,
@@ -819,16 +819,16 @@ mod tests {
             bank.process_transaction(&fund_tx).unwrap();
 
             // good tx
-            let to = solana_sdk::pubkey::new_rand();
+            let to = xandeum_sdk::pubkey::new_rand();
             let tx = system_transaction::transfer(&mint_keypair, &to, 1, start_hash);
 
             // good tx, but no verify
-            let to2 = solana_sdk::pubkey::new_rand();
+            let to2 = xandeum_sdk::pubkey::new_rand();
             let tx_no_ver = system_transaction::transfer(&keypair, &to2, 2, start_hash);
 
             // bad tx, AccountNotFound
             let keypair = Keypair::new();
-            let to3 = solana_sdk::pubkey::new_rand();
+            let to3 = xandeum_sdk::pubkey::new_rand();
             let tx_anf = system_transaction::transfer(&keypair, &to3, 1, start_hash);
 
             // send 'em over
@@ -893,7 +893,7 @@ mod tests {
 
     #[test]
     fn test_banking_stage_entryfication() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         // In this attack we'll demonstrate that a verifier can interpret the ledger
         // differently if either the server doesn't signal the ledger to add an
         // Entry OR if the verifier tries to parallelize across multiple Entries.
@@ -1010,7 +1010,7 @@ mod tests {
 
     #[test]
     fn test_bank_record_transactions() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let GenesisConfigInfo {
             genesis_config,
@@ -1041,9 +1041,9 @@ mod tests {
             let poh_simulator = simulate_poh(record_receiver, &poh_recorder);
 
             poh_recorder.write().unwrap().set_bank(bank.clone(), false);
-            let pubkey = solana_sdk::pubkey::new_rand();
+            let pubkey = xandeum_sdk::pubkey::new_rand();
             let keypair2 = Keypair::new();
-            let pubkey2 = solana_sdk::pubkey::new_rand();
+            let pubkey2 = xandeum_sdk::pubkey::new_rand();
 
             let txs = vec![
                 system_transaction::transfer(&mint_keypair, &pubkey, 1, genesis_config.hash())
@@ -1075,7 +1075,7 @@ mod tests {
     }
 
     pub(crate) fn create_slow_genesis_config(lamports: u64) -> GenesisConfigInfo {
-        create_slow_genesis_config_with_leader(lamports, &solana_sdk::pubkey::new_rand())
+        create_slow_genesis_config_with_leader(lamports, &xandeum_sdk::pubkey::new_rand())
     }
 
     pub(crate) fn create_slow_genesis_config_with_leader(
@@ -1085,7 +1085,7 @@ mod tests {
         let mut config_info = create_genesis_config_with_leader(
             lamports,
             validator_pubkey,
-            // See solana_ledger::genesis_utils::create_genesis_config.
+            // See xandeum_ledger::genesis_utils::create_genesis_config.
             bootstrap_validator_stake_lamports(),
         );
 
@@ -1101,7 +1101,7 @@ mod tests {
         let poh_recorder = poh_recorder.clone();
         let is_exited = poh_recorder.read().unwrap().is_exited.clone();
         let tick_producer = Builder::new()
-            .name("solana-simulate_poh".to_string())
+            .name("xandeum-simulate_poh".to_string())
             .spawn(move || loop {
                 PohService::read_record_receiver_and_process(
                     &poh_recorder,
@@ -1117,7 +1117,7 @@ mod tests {
 
     #[test]
     fn test_unprocessed_transaction_storage_full_send() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo {
             mut genesis_config,
             mint_keypair,

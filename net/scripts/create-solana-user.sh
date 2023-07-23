@@ -4,25 +4,25 @@ set -ex
 [[ $(uname) = Linux ]] || exit 1
 [[ $USER = root ]] || exit 1
 
-if grep -q solana /etc/passwd ; then
-  echo "User solana already exists"
+if grep -q xandeum /etc/passwd ; then
+  echo "User xandeum already exists"
 else
-  adduser solana --gecos "" --disabled-password --quiet
-  adduser solana sudo
-  adduser solana adm
-  echo "solana ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-  id solana
+  adduser xandeum --gecos "" --disabled-password --quiet
+  adduser xandeum sudo
+  adduser xandeum adm
+  echo "xandeum ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+  id xandeum
 
-  [[ -r /solana-scratch/id_ecdsa ]] || exit 1
-  [[ -r /solana-scratch/id_ecdsa.pub ]] || exit 1
+  [[ -r /xandeum-scratch/id_ecdsa ]] || exit 1
+  [[ -r /xandeum-scratch/id_ecdsa.pub ]] || exit 1
 
-  sudo -u solana bash -c "
-    echo 'PATH=\"/home/solana/.cargo/bin:$PATH\"' > /home/solana/.profile
-    mkdir -p /home/solana/.ssh/
-    cd /home/solana/.ssh/
-    cp /solana-scratch/id_ecdsa.pub authorized_keys
+  sudo -u xandeum bash -c "
+    echo 'PATH=\"/home/xandeum/.cargo/bin:$PATH\"' > /home/xandeum/.profile
+    mkdir -p /home/xandeum/.ssh/
+    cd /home/xandeum/.ssh/
+    cp /xandeum-scratch/id_ecdsa.pub authorized_keys
     umask 377
-    cp /solana-scratch/id_ecdsa id_ecdsa
+    cp /xandeum-scratch/id_ecdsa id_ecdsa
     echo \"
       Host *
       BatchMode yes

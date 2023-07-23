@@ -25,13 +25,13 @@ use {
         IteratorMode as RocksIteratorMode, LiveFile, Options, WriteBatch as RWriteBatch, DB,
     },
     serde::{de::DeserializeOwned, Serialize},
-    solana_runtime::hardened_unpack::UnpackError,
-    solana_sdk::{
+    xandeum_runtime::hardened_unpack::UnpackError,
+    xandeum_sdk::{
         clock::{Slot, UnixTimestamp},
         pubkey::Pubkey,
         signature::Signature,
     },
-    solana_storage_proto::convert::generated,
+    xandeum_storage_proto::convert::generated,
     std::{
         collections::{HashMap, HashSet},
         ffi::{CStr, CString},
@@ -385,13 +385,13 @@ impl Rocks {
                 write_batch_perf_status: PerfSamplingStatus::default(),
             },
             AccessType::Secondary => {
-                let secondary_path = path.join("solana-secondary");
+                let secondary_path = path.join("xandeum-secondary");
 
                 info!(
                     "Opening Rocks with secondary (read only) access at: {:?}",
                     secondary_path
                 );
-                info!("This secondary access could temporarily degrade other accesses, such as by solana-validator");
+                info!("This secondary access could temporarily degrade other accesses, such as by xandeum-validator");
 
                 Rocks {
                     db: DB::open_cf_descriptors_as_secondary(

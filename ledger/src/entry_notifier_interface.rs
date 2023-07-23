@@ -1,6 +1,6 @@
 use {
-    solana_entry::entry::EntrySummary,
-    solana_sdk::clock::Slot,
+    xandeum_entry::entry::EntrySummary,
+    xandeum_sdk::clock::Slot,
     std::sync::{Arc, RwLock},
 };
 

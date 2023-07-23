@@ -1,9 +1,9 @@
 [workspace.package]
 version = "1.16.1"
 description = "Solana SBF test program written in Rust"
-authors = ["Solana Labs Maintainers <maintainers@solanalabs.com>"]
-repository = "https://github.com/solana-labs/solana"
-homepage = "https://solanalabs.com/"
+authors = ["Solana Labs Maintainers <maintainers@xandeumlabs.com>"]
+repository = "https://github.com/xandeum-labs/xandeum"
+homepage = "https://xandeumlabs.com/"
 license = "Apache-2.0"
 edition = "2021"
 
@@ -24,37 +24,37 @@ num-traits = "0.2"
 rand = "0.7"
 serde = "1.0.112"
 serde_json = "1.0.56"
-solana_rbpf = "=0.5.0"
-solana-account-decoder = { path = "../../account-decoder", version = "=1.16.1" }
-solana-address-lookup-table-program = { path = "../../programs/address-lookup-table", version = "=1.16.1" }
-solana-bpf-loader-program = { path = "../bpf_loader", version = "=1.16.1" }
-solana-cli-output = { path = "../../cli-output", version = "=1.16.1" }
-solana-ledger = { path = "../../ledger", version = "=1.16.1" }
-solana-logger = { path = "../../logger", version = "=1.16.1" }
-solana-measure = { path = "../../measure", version = "=1.16.1" }
-solana-program = { path = "../../sdk/program", version = "=1.16.1" }
-solana-program-runtime = { path = "../../program-runtime", version = "=1.16.1" }
-solana-program-test = { path = "../../program-test", version = "=1.16.1" }
-solana-runtime = { path = "../../runtime", version = "=1.16.1" }
-solana-sbf-rust-128bit-dep = { path = "rust/128bit_dep", version = "=1.16.1" }
-solana-sbf-rust-invoke = { path = "rust/invoke", version = "=1.16.1" }
-solana-sbf-rust-invoked = { path = "rust/invoked", version = "=1.16.1", default-features = false }
-solana-sbf-rust-many-args-dep = { path = "rust/many_args_dep", version = "=1.16.1" }
-solana-sbf-rust-mem = { path = "rust/mem", version = "=1.16.1" }
-solana-sbf-rust-param-passing-dep = { path = "rust/param_passing_dep", version = "=1.16.1" }
-solana-sbf-rust-realloc = { path = "rust/realloc", version = "=1.16.1", default-features = false }
-solana-sbf-rust-realloc-invoke = { path = "rust/realloc_invoke", version = "=1.16.1" }
-solana-sdk = { path = "../../sdk", version = "=1.16.1" }
-solana-transaction-status = { path = "../../transaction-status", version = "=1.16.1" }
-solana-validator = { path = "../../validator", version = "=1.16.1" }
-solana-zk-token-sdk = { path = "../../zk-token-sdk", version = "=1.16.1" }
+xandeum_rbpf = "=0.5.0"
+xandeum-account-decoder = { path = "../../account-decoder", version = "=1.16.1" }
+xandeum-address-lookup-table-program = { path = "../../programs/address-lookup-table", version = "=1.16.1" }
+xandeum-bpf-loader-program = { path = "../bpf_loader", version = "=1.16.1" }
+xandeum-cli-output = { path = "../../cli-output", version = "=1.16.1" }
+xandeum-ledger = { path = "../../ledger", version = "=1.16.1" }
+xandeum-logger = { path = "../../logger", version = "=1.16.1" }
+xandeum-measure = { path = "../../measure", version = "=1.16.1" }
+xandeum-program = { path = "../../sdk/program", version = "=1.16.1" }
+xandeum-program-runtime = { path = "../../program-runtime", version = "=1.16.1" }
+xandeum-program-test = { path = "../../program-test", version = "=1.16.1" }
+xandeum-runtime = { path = "../../runtime", version = "=1.16.1" }
+xandeum-sbf-rust-128bit-dep = { path = "rust/128bit_dep", version = "=1.16.1" }
+xandeum-sbf-rust-invoke = { path = "rust/invoke", version = "=1.16.1" }
+xandeum-sbf-rust-invoked = { path = "rust/invoked", version = "=1.16.1", default-features = false }
+xandeum-sbf-rust-many-args-dep = { path = "rust/many_args_dep", version = "=1.16.1" }
+xandeum-sbf-rust-mem = { path = "rust/mem", version = "=1.16.1" }
+xandeum-sbf-rust-param-passing-dep = { path = "rust/param_passing_dep", version = "=1.16.1" }
+xandeum-sbf-rust-realloc = { path = "rust/realloc", version = "=1.16.1", default-features = false }
+xandeum-sbf-rust-realloc-invoke = { path = "rust/realloc_invoke", version = "=1.16.1" }
+xandeum-sdk = { path = "../../sdk", version = "=1.16.1" }
+xandeum-transaction-status = { path = "../../transaction-status", version = "=1.16.1" }
+xandeum-validator = { path = "../../validator", version = "=1.16.1" }
+xandeum-zk-token-sdk = { path = "../../zk-token-sdk", version = "=1.16.1" }
 static_assertions = "1.1.0"
 thiserror = "1.0"
 
 [package]
-name = "solana-sbf-programs"
+name = "xandeum-sbf-programs"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana"
+documentation = "https://docs.rs/xandeum"
 readme = "README.md"
 publish = false
 version = { workspace = true }
@@ -83,22 +83,22 @@ itertools = { workspace = true }
 log = { workspace = true }
 miow = { workspace = true }
 net2 = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sbf-rust-invoke = { workspace = true }
-solana-sbf-rust-realloc = { workspace = true, features = ["default"] }
-solana-sbf-rust-realloc-invoke = { workspace = true }
-solana-sdk = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana_rbpf = { workspace = true }
+xandeum-account-decoder = { workspace = true }
+xandeum-bpf-loader-program = { workspace = true }
+xandeum-cli-output = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-program-runtime = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sbf-rust-invoke = { workspace = true }
+xandeum-sbf-rust-realloc = { workspace = true, features = ["default"] }
+xandeum-sbf-rust-realloc-invoke = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-transaction-status = { workspace = true }
+xandeum_rbpf = { workspace = true }
 
 [dev-dependencies]
-solana-ledger = { workspace = true }
+xandeum-ledger = { workspace = true }
 
 [[bench]]
 name = "bpf_loader"
@@ -162,7 +162,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [patch.crates-io]
 # Rust 1.69+ broke ntapi v0.3.x, which doesn't contain proper fix:
 #   https://github.com/MSxDOS/ntapi/pull/12
-ntapi = { git = "https://github.com/solana-labs/ntapi", rev = "97ede981a1777883ff86d142b75024b023f04fad" }
+ntapi = { git = "https://github.com/xandeum-labs/ntapi", rev = "97ede981a1777883ff86d142b75024b023f04fad" }
 
 # We include the following crates as our dependencies from crates.io:
 #
@@ -174,7 +174,7 @@ ntapi = { git = "https://github.com/solana-labs/ntapi", rev = "97ede981a1777883f
 #
 # They are included indirectly, for example, `account-decoder` depends on
 #
-#     solana-sdk = { workspace = true }
+#     xandeum-sdk = { workspace = true }
 #
 # and that is specified as
 #
@@ -182,17 +182,17 @@ ntapi = { git = "https://github.com/solana-labs/ntapi", rev = "97ede981a1777883f
 #
 # in `../../Cargo.toml`.
 #
-# `spl-token`, in turn, depends on `solana-program`, which we explicitly specify above as a local
+# `spl-token`, in turn, depends on `xandeum-program`, which we explicitly specify above as a local
 # path dependency:
 #
-#     solana-program = { path = "../../sdk/program", version = "=1.16.0" }
+#     xandeum-program = { path = "../../sdk/program", version = "=1.16.0" }
 #
-# Unfortunately, Cargo will try to resolve the `spl-token` `solana-program` dependency only using
+# Unfortunately, Cargo will try to resolve the `spl-token` `xandeum-program` dependency only using
 # what is available on crates.io.  Crates.io normally contains a previous version of these crates,
-# and we end up with two versions of `solana-program` and `solana-zk-token-sdk` and all of their
+# and we end up with two versions of `xandeum-program` and `xandeum-zk-token-sdk` and all of their
 # dependencies in our build tree.
 #
 # There is a similar override in `../../Cargo.toml`.  Please keep both comments and the
 # overrides in sync.
-solana-program = { path = "../../sdk/program" }
-solana-zk-token-sdk = { path = "../../zk-token-sdk" }
+xandeum-program = { path = "../../sdk/program" }
+xandeum-zk-token-sdk = { path = "../../zk-token-sdk" }

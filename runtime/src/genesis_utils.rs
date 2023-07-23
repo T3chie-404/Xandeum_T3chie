@@ -1,5 +1,5 @@
 use {
-    solana_sdk::{
+    xandeum_sdk::{
         account::{Account, AccountSharedData},
         feature::{self, Feature},
         feature_set::FeatureSet,
@@ -11,8 +11,8 @@ use {
         stake::state::StakeState,
         system_program,
     },
-    solana_stake_program::stake_state,
-    solana_vote_program::vote_state,
+    xandeum_stake_program::stake_state,
+    xandeum_vote_program::vote_state,
     std::borrow::Borrow,
 };
 
@@ -83,7 +83,7 @@ pub fn create_genesis_config(mint_lamports: u64) -> GenesisConfigInfo {
     // accounts-db which in particular will break snapshots test.
     create_genesis_config_with_leader(
         mint_lamports,
-        &solana_sdk::pubkey::new_rand(), // validator_pubkey
+        &xandeum_sdk::pubkey::new_rand(), // validator_pubkey
         0,                               // validator_stake_lamports
     )
 }
@@ -177,7 +177,7 @@ pub fn create_genesis_config_with_leader(
         &mint_keypair.pubkey(),
         validator_pubkey,
         &voting_keypair.pubkey(),
-        &solana_sdk::pubkey::new_rand(),
+        &xandeum_sdk::pubkey::new_rand(),
         validator_stake_lamports,
         VALIDATOR_LAMPORTS,
         FeeRateGovernor::new(0, 0), // most tests can't handle transaction fees
@@ -265,7 +265,7 @@ pub fn create_genesis_config_with_leader_ex(
         ..GenesisConfig::default()
     };
 
-    solana_stake_program::add_genesis_accounts(&mut genesis_config);
+    xandeum_stake_program::add_genesis_accounts(&mut genesis_config);
     if genesis_config.cluster_type == ClusterType::Development {
         activate_all_features(&mut genesis_config);
     }

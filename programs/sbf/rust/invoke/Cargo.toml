@@ -1,6 +1,6 @@
 [package]
-name = "solana-sbf-rust-invoke"
-documentation = "https://docs.rs/solana-sbf-rust-invoke"
+name = "xandeum-sbf-rust-invoke"
+documentation = "https://docs.rs/xandeum-sbf-rust-invoke"
 version = { workspace = true }
 description = { workspace = true }
 authors = { workspace = true }
@@ -14,8 +14,8 @@ default = ["program"]
 program = []
 
 [dependencies]
-solana-program = { workspace = true }
-solana-sbf-rust-invoked = { workspace = true }
+xandeum-program = { workspace = true }
+xandeum-sbf-rust-invoked = { workspace = true }
 
 [lib]
 crate-type = ["lib", "cdylib"]

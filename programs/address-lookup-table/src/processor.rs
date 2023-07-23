@@ -6,8 +6,8 @@ use {
             LOOKUP_TABLE_MAX_ADDRESSES, LOOKUP_TABLE_META_SIZE,
         },
     },
-    solana_program_runtime::{declare_process_instruction, ic_msg, invoke_context::InvokeContext},
-    solana_sdk::{
+    xandeum_program_runtime::{declare_process_instruction, ic_msg, invoke_context::InvokeContext},
+    xandeum_sdk::{
         clock::Slot,
         feature_set,
         instruction::InstructionError,

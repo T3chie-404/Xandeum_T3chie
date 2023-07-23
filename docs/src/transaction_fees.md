@@ -125,13 +125,13 @@ consume and the compute unit price by including a `SetComputeUnitLimit` and
 `SetComputeUnitPrice` compute budget instruction respectively.
 
 :::info
-[Compute Budget instructions](https://github.com/solana-labs/solana/blob/master/sdk/src/compute_budget.rs)
+[Compute Budget instructions](https://github.com/xandeum-labs/xandeum/blob/master/sdk/src/compute_budget.rs)
 do **not** require any accounts. :::
 
 If no `SetComputeUnitLimit` instruction is provided, the limit will be
 calculated as the product of the number of instructions in the transaction and
 the default per-instruction units, which is currently
-[200k](https://github.com/solana-labs/solana/blob/4293f11cf13fc1e83f1baa2ca3bb2f8ea8f9a000/program-runtime/src/compute_budget.rs#L13).
+[200k](https://github.com/xandeum-labs/xandeum/blob/4293f11cf13fc1e83f1baa2ca3bb2f8ea8f9a000/program-runtime/src/compute_budget.rs#L13).
 
 If no `SetComputeUnitPrice` instruction is provided, the transaction will
 default to no additional elevated fee and the lowest priority.
@@ -143,20 +143,20 @@ instruction, and optionally a `SetComputeUnitLimit` instruction. The runtime
 will use these values to calculate the prioritization fee, which will be used to
 prioritize the given transaction within the block.
 
-You can craft each of these instructions via their `rust` or `@solana/web3.js`
+You can craft each of these instructions via their `rust` or `@xandeum/web3.js`
 functions. Each of these instructions can then be included in the transaction
 and sent to the cluster like normal. See also the
 [best practices](#prioritization-fee-best-practices) below.
 
 :::caution Transactions can only contain **one of each type** of compute budget
 instruction. Duplicate types will result in an
-[`TransactionError::DuplicateInstruction`](https://github.com/solana-labs/solana/blob/master/sdk/src/transaction/error.rs#L144-145)
+[`TransactionError::DuplicateInstruction`](https://github.com/xandeum-labs/xandeum/blob/master/sdk/src/transaction/error.rs#L144-145)
 error, and ultimately transaction failure. :::
 
 #### Rust
 
-The rust `solana-sdk` crate includes functions within
-[`ComputeBudgetInstruction`](https://docs.rs/solana-sdk/latest/solana_sdk/compute_budget/enum.ComputeBudgetInstruction.html)
+The rust `xandeum-sdk` crate includes functions within
+[`ComputeBudgetInstruction`](https://docs.rs/xandeum-sdk/latest/xandeum_sdk/compute_budget/enum.ComputeBudgetInstruction.html)
 to craft instructions for setting the _compute unit limit_ and _compute unit
 price_:
 
@@ -170,8 +170,8 @@ let instruction = ComputeBudgetInstruction::set_compute_unit_price(1);
 
 #### Javascript
 
-The `@solana/web3.js` library includes functions within the
-[`ComputeBudgetProgram`](https://solana-labs.github.io/solana-web3.js/classes/ComputeBudgetProgram.html)
+The `@xandeum/web3.js` library includes functions within the
+[`ComputeBudgetProgram`](https://xandeum-labs.github.io/xandeum-web3.js/classes/ComputeBudgetProgram.html)
 class to craft instructions for setting the _compute unit limit_ and _compute
 unit price_:
 

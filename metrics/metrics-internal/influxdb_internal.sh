@@ -5,7 +5,7 @@
 cd "$(dirname "$0")"
 
 if [[ -z $HOST ]]; then
-  HOST=internal-metrics.solana.com
+  HOST=internal-metrics.xandeum.com
 fi
 echo "HOST: $HOST"
 

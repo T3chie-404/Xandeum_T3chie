@@ -74,17 +74,17 @@ Follow the wallet's instructions for selecting a validator.  You can get
 information about potentially performant validators from the links below.
 The Solana Foundation does not recommend any particular validator.
 
-The site solanabeach.io is built and maintained by one of our validators,
+The site xandeumbeach.io is built and maintained by one of our validators,
 Staking Facilities. It provides a some high-level graphical information about
 the network as a whole, as well as a list of each validator and some recent
 performance statistics about each one.
 
-- https://solanabeach.io
+- https://xandeumbeach.io
 
 To view block production statistics, use the Solana command-line tools:
 
-- `solana validators`
-- `solana block-production`
+- `xandeum validators`
+- `xandeum block-production`
 
 The Solana team does not make recommendations on how to interpret this
 information. Do your own due diligence.

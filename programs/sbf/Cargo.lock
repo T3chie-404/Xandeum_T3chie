@@ -2823,7 +2823,7 @@ dependencies = [
 [[package]]
 name = "ntapi"
 version = "0.3.7"
-source = "git+https://github.com/solana-labs/ntapi?rev=97ede981a1777883ff86d142b75024b023f04fad#97ede981a1777883ff86d142b75024b023f04fad"
+source = "git+https://github.com/xandeum-labs/ntapi?rev=97ede981a1777883ff86d142b75024b023f04fad#97ede981a1777883ff86d142b75024b023f04fad"
 dependencies = [
  "winapi 0.3.9",
 ]
@@ -4429,7 +4429,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-account-decoder"
+name = "xandeum-account-decoder"
 version = "1.16.1"
 dependencies = [
  "Inflector",
@@ -4441,9 +4441,9 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-address-lookup-table-program",
- "solana-config-program",
- "solana-sdk",
+ "xandeum-address-lookup-table-program",
+ "xandeum-config-program",
+ "xandeum-sdk",
  "spl-token",
  "spl-token-2022",
  "thiserror",
@@ -4451,7 +4451,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-address-lookup-table-program"
+name = "xandeum-address-lookup-table-program"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -4461,23 +4461,23 @@ dependencies = [
  "num-traits",
  "rustc_version",
  "serde",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-program",
- "solana-program-runtime",
- "solana-sdk",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-program",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-banks-client"
+name = "xandeum-banks-client"
 version = "1.16.1"
 dependencies = [
  "borsh 0.10.3",
  "futures 0.3.28",
- "solana-banks-interface",
- "solana-program",
- "solana-sdk",
+ "xandeum-banks-interface",
+ "xandeum-program",
+ "xandeum-sdk",
  "tarpc",
  "thiserror",
  "tokio",
@@ -4485,33 +4485,33 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-banks-interface"
+name = "xandeum-banks-interface"
 version = "1.16.1"
 dependencies = [
  "serde",
- "solana-sdk",
+ "xandeum-sdk",
  "tarpc",
 ]
 
 [[package]]
-name = "solana-banks-server"
+name = "xandeum-banks-server"
 version = "1.16.1"
 dependencies = [
  "bincode",
  "crossbeam-channel",
  "futures 0.3.28",
- "solana-banks-interface",
- "solana-client",
- "solana-runtime",
- "solana-sdk",
- "solana-send-transaction-service",
+ "xandeum-banks-interface",
+ "xandeum-client",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-send-transaction-service",
  "tarpc",
  "tokio",
  "tokio-serde",
 ]
 
 [[package]]
-name = "solana-bloom"
+name = "xandeum-bloom"
 version = "1.16.1"
 dependencies = [
  "bv",
@@ -4522,13 +4522,13 @@ dependencies = [
  "rustc_version",
  "serde",
  "serde_derive",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-sdk",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-bpf-loader-program"
+name = "xandeum-bpf-loader-program"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -4536,26 +4536,26 @@ dependencies = [
  "libsecp256k1 0.6.0",
  "log",
  "rand 0.7.3",
- "solana-measure",
- "solana-program-runtime",
- "solana-sdk",
- "solana-zk-token-sdk",
- "solana_rbpf",
+ "xandeum-measure",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
+ "xandeum-zk-token-sdk",
+ "xandeum_rbpf",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-bpf-rust-big-mod-exp"
+name = "xandeum-bpf-rust-big-mod-exp"
 version = "1.16.1"
 dependencies = [
  "array-bytes",
  "serde",
  "serde_json",
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-bucket-map"
+name = "xandeum-bucket-map"
 version = "1.16.1"
 dependencies = [
  "bv",
@@ -4564,21 +4564,21 @@ dependencies = [
  "modular-bitfield",
  "num_enum 0.6.1",
  "rand 0.7.3",
- "solana-measure",
- "solana-sdk",
+ "xandeum-measure",
+ "xandeum-sdk",
  "tempfile",
 ]
 
 [[package]]
-name = "solana-clap-utils"
+name = "xandeum-clap-utils"
 version = "1.16.1"
 dependencies = [
  "chrono",
  "clap 2.33.3",
  "rpassword",
- "solana-perf",
- "solana-remote-wallet",
- "solana-sdk",
+ "xandeum-perf",
+ "xandeum-remote-wallet",
+ "xandeum-sdk",
  "thiserror",
  "tiny-bip39",
  "uriparse",
@@ -4586,7 +4586,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-cli-config"
+name = "xandeum-cli-config"
 version = "1.16.1"
 dependencies = [
  "dirs-next",
@@ -4594,13 +4594,13 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_yaml",
- "solana-clap-utils",
- "solana-sdk",
+ "xandeum-clap-utils",
+ "xandeum-sdk",
  "url 2.3.1",
 ]
 
 [[package]]
-name = "solana-cli-output"
+name = "xandeum-cli-output"
 version = "1.16.1"
 dependencies = [
  "Inflector",
@@ -4614,18 +4614,18 @@ dependencies = [
  "semver",
  "serde",
  "serde_json",
- "solana-account-decoder",
- "solana-clap-utils",
- "solana-cli-config",
- "solana-rpc-client-api",
- "solana-sdk",
- "solana-transaction-status",
- "solana-vote-program",
+ "xandeum-account-decoder",
+ "xandeum-clap-utils",
+ "xandeum-cli-config",
+ "xandeum-rpc-client-api",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
+ "xandeum-vote-program",
  "spl-memo",
 ]
 
 [[package]]
-name = "solana-client"
+name = "xandeum-client"
 version = "1.16.1"
 dependencies = [
  "async-trait",
@@ -4638,45 +4638,45 @@ dependencies = [
  "quinn",
  "rand 0.7.3",
  "rayon",
- "solana-connection-cache",
- "solana-measure",
- "solana-metrics",
- "solana-pubsub-client",
- "solana-quic-client",
- "solana-rpc-client",
- "solana-rpc-client-api",
- "solana-rpc-client-nonce-utils",
- "solana-sdk",
- "solana-streamer",
- "solana-thin-client",
- "solana-tpu-client",
- "solana-udp-client",
+ "xandeum-connection-cache",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-pubsub-client",
+ "xandeum-quic-client",
+ "xandeum-rpc-client",
+ "xandeum-rpc-client-api",
+ "xandeum-rpc-client-nonce-utils",
+ "xandeum-sdk",
+ "xandeum-streamer",
+ "xandeum-thin-client",
+ "xandeum-tpu-client",
+ "xandeum-udp-client",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-compute-budget-program"
+name = "xandeum-compute-budget-program"
 version = "1.16.1"
 dependencies = [
- "solana-program-runtime",
- "solana-sdk",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-config-program"
+name = "xandeum-config-program"
 version = "1.16.1"
 dependencies = [
  "bincode",
  "chrono",
  "serde",
  "serde_derive",
- "solana-program-runtime",
- "solana-sdk",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-connection-cache"
+name = "xandeum-connection-cache"
 version = "1.16.1"
 dependencies = [
  "async-trait",
@@ -4687,15 +4687,15 @@ dependencies = [
  "rand 0.7.3",
  "rayon",
  "rcgen",
- "solana-measure",
- "solana-metrics",
- "solana-sdk",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-sdk",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-core"
+name = "xandeum-core"
 version = "1.16.1"
 dependencies = [
  "base64 0.21.2",
@@ -4720,32 +4720,32 @@ dependencies = [
  "rustc_version",
  "serde",
  "serde_derive",
- "solana-address-lookup-table-program",
- "solana-bloom",
- "solana-client",
- "solana-entry",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-geyser-plugin-manager",
- "solana-gossip",
- "solana-ledger",
- "solana-measure",
- "solana-metrics",
- "solana-net-utils",
- "solana-perf",
- "solana-poh",
- "solana-program-runtime",
- "solana-rayon-threadlimit",
- "solana-rpc",
- "solana-rpc-client-api",
- "solana-runtime",
- "solana-sdk",
- "solana-send-transaction-service",
- "solana-streamer",
- "solana-tpu-client",
- "solana-transaction-status",
- "solana-version",
- "solana-vote-program",
+ "xandeum-address-lookup-table-program",
+ "xandeum-bloom",
+ "xandeum-client",
+ "xandeum-entry",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-geyser-plugin-manager",
+ "xandeum-gossip",
+ "xandeum-ledger",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-net-utils",
+ "xandeum-perf",
+ "xandeum-poh",
+ "xandeum-program-runtime",
+ "xandeum-rayon-threadlimit",
+ "xandeum-rpc",
+ "xandeum-rpc-client-api",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-send-transaction-service",
+ "xandeum-streamer",
+ "xandeum-tpu-client",
+ "xandeum-transaction-status",
+ "xandeum-version",
+ "xandeum-vote-program",
  "strum",
  "strum_macros",
  "sys-info",
@@ -4757,19 +4757,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-download-utils"
+name = "xandeum-download-utils"
 version = "1.16.1"
 dependencies = [
  "console",
  "indicatif",
  "log",
  "reqwest",
- "solana-runtime",
- "solana-sdk",
+ "xandeum-runtime",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-entry"
+name = "xandeum-entry"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -4781,16 +4781,16 @@ dependencies = [
  "rand 0.7.3",
  "rayon",
  "serde",
- "solana-measure",
- "solana-merkle-tree",
- "solana-metrics",
- "solana-perf",
- "solana-rayon-threadlimit",
- "solana-sdk",
+ "xandeum-measure",
+ "xandeum-merkle-tree",
+ "xandeum-metrics",
+ "xandeum-perf",
+ "xandeum-rayon-threadlimit",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-faucet"
+name = "xandeum-faucet"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -4800,19 +4800,19 @@ dependencies = [
  "log",
  "serde",
  "serde_derive",
- "solana-clap-utils",
- "solana-cli-config",
- "solana-logger",
- "solana-metrics",
- "solana-sdk",
- "solana-version",
+ "xandeum-clap-utils",
+ "xandeum-cli-config",
+ "xandeum-logger",
+ "xandeum-metrics",
+ "xandeum-sdk",
+ "xandeum-version",
  "spl-memo",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-frozen-abi"
+name = "xandeum-frozen-abi"
 version = "1.16.1"
 dependencies = [
  "ahash 0.8.3",
@@ -4837,13 +4837,13 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "sha2 0.10.6",
- "solana-frozen-abi-macro",
+ "xandeum-frozen-abi-macro",
  "subtle",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-frozen-abi-macro"
+name = "xandeum-frozen-abi-macro"
 version = "1.16.1"
 dependencies = [
  "proc-macro2 1.0.59",
@@ -4853,28 +4853,28 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-genesis-utils"
+name = "xandeum-genesis-utils"
 version = "1.16.1"
 dependencies = [
  "log",
- "solana-download-utils",
- "solana-rpc-client",
- "solana-runtime",
- "solana-sdk",
+ "xandeum-download-utils",
+ "xandeum-rpc-client",
+ "xandeum-runtime",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-geyser-plugin-interface"
+name = "xandeum-geyser-plugin-interface"
 version = "1.16.1"
 dependencies = [
  "log",
- "solana-sdk",
- "solana-transaction-status",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-geyser-plugin-manager"
+name = "xandeum-geyser-plugin-manager"
 version = "1.16.1"
 dependencies = [
  "bs58",
@@ -4885,20 +4885,20 @@ dependencies = [
  "libloading",
  "log",
  "serde_json",
- "solana-entry",
- "solana-geyser-plugin-interface",
- "solana-ledger",
- "solana-measure",
- "solana-metrics",
- "solana-rpc",
- "solana-runtime",
- "solana-sdk",
- "solana-transaction-status",
+ "xandeum-entry",
+ "xandeum-geyser-plugin-interface",
+ "xandeum-ledger",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-rpc",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-gossip"
+name = "xandeum-gossip"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -4919,32 +4919,32 @@ dependencies = [
  "serde",
  "serde_bytes",
  "serde_derive",
- "solana-bloom",
- "solana-clap-utils",
- "solana-client",
- "solana-entry",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-ledger",
- "solana-logger",
- "solana-measure",
- "solana-metrics",
- "solana-net-utils",
- "solana-perf",
- "solana-rayon-threadlimit",
- "solana-runtime",
- "solana-sdk",
- "solana-streamer",
- "solana-thin-client",
- "solana-tpu-client",
- "solana-version",
- "solana-vote-program",
+ "xandeum-bloom",
+ "xandeum-clap-utils",
+ "xandeum-client",
+ "xandeum-entry",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-ledger",
+ "xandeum-logger",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-net-utils",
+ "xandeum-perf",
+ "xandeum-rayon-threadlimit",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-streamer",
+ "xandeum-thin-client",
+ "xandeum-tpu-client",
+ "xandeum-version",
+ "xandeum-vote-program",
  "static_assertions",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-ledger"
+name = "xandeum-ledger"
 version = "1.16.1"
 dependencies = [
  "assert_matches",
@@ -4975,23 +4975,23 @@ dependencies = [
  "serde",
  "serde_bytes",
  "sha2 0.10.6",
- "solana-account-decoder",
- "solana-bpf-loader-program",
- "solana-entry",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-measure",
- "solana-metrics",
- "solana-perf",
- "solana-program-runtime",
- "solana-rayon-threadlimit",
- "solana-runtime",
- "solana-sdk",
- "solana-stake-program",
- "solana-storage-bigtable",
- "solana-storage-proto",
- "solana-transaction-status",
- "solana-vote-program",
+ "xandeum-account-decoder",
+ "xandeum-bpf-loader-program",
+ "xandeum-entry",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-perf",
+ "xandeum-program-runtime",
+ "xandeum-rayon-threadlimit",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-stake-program",
+ "xandeum-storage-bigtable",
+ "xandeum-storage-proto",
+ "xandeum-transaction-status",
+ "xandeum-vote-program",
  "spl-token",
  "spl-token-2022",
  "static_assertions",
@@ -5003,19 +5003,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-loader-v4-program"
+name = "xandeum-loader-v4-program"
 version = "1.16.1"
 dependencies = [
  "log",
  "rand 0.7.3",
- "solana-measure",
- "solana-program-runtime",
- "solana-sdk",
- "solana_rbpf",
+ "xandeum-measure",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
+ "xandeum_rbpf",
 ]
 
 [[package]]
-name = "solana-logger"
+name = "xandeum-logger"
 version = "1.16.1"
 dependencies = [
  "env_logger",
@@ -5024,24 +5024,24 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-measure"
+name = "xandeum-measure"
 version = "1.16.1"
 dependencies = [
  "log",
- "solana-sdk",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-merkle-tree"
+name = "xandeum-merkle-tree"
 version = "1.16.1"
 dependencies = [
  "fast-math",
  "matches",
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-metrics"
+name = "xandeum-metrics"
 version = "1.16.1"
 dependencies = [
  "crossbeam-channel",
@@ -5049,11 +5049,11 @@ dependencies = [
  "lazy_static",
  "log",
  "reqwest",
- "solana-sdk",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-net-utils"
+name = "xandeum-net-utils"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -5065,15 +5065,15 @@ dependencies = [
  "serde",
  "serde_derive",
  "socket2",
- "solana-logger",
- "solana-sdk",
- "solana-version",
+ "xandeum-logger",
+ "xandeum-sdk",
+ "xandeum-version",
  "tokio",
  "url 2.3.1",
 ]
 
 [[package]]
-name = "solana-perf"
+name = "xandeum-perf"
 version = "1.16.1"
 dependencies = [
  "ahash 0.8.3",
@@ -5091,30 +5091,30 @@ dependencies = [
  "rand 0.7.3",
  "rayon",
  "serde",
- "solana-metrics",
- "solana-rayon-threadlimit",
- "solana-sdk",
- "solana-vote-program",
+ "xandeum-metrics",
+ "xandeum-rayon-threadlimit",
+ "xandeum-sdk",
+ "xandeum-vote-program",
 ]
 
 [[package]]
-name = "solana-poh"
+name = "xandeum-poh"
 version = "1.16.1"
 dependencies = [
  "core_affinity",
  "crossbeam-channel",
  "log",
- "solana-entry",
- "solana-ledger",
- "solana-measure",
- "solana-metrics",
- "solana-runtime",
- "solana-sdk",
+ "xandeum-entry",
+ "xandeum-ledger",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-runtime",
+ "xandeum-sdk",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-program"
+name = "xandeum-program"
 version = "1.16.1"
 dependencies = [
  "ark-bn254",
@@ -5156,9 +5156,9 @@ dependencies = [
  "serde_json",
  "sha2 0.10.6",
  "sha3 0.10.4",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-sdk-macro",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-sdk-macro",
  "thiserror",
  "tiny-bip39",
  "wasm-bindgen",
@@ -5166,7 +5166,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-program-runtime"
+name = "xandeum-program-runtime"
 version = "1.16.1"
 dependencies = [
  "base64 0.21.2",
@@ -5182,17 +5182,17 @@ dependencies = [
  "rand 0.7.3",
  "rustc_version",
  "serde",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-measure",
- "solana-metrics",
- "solana-sdk",
- "solana_rbpf",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-sdk",
+ "xandeum_rbpf",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-program-test"
+name = "xandeum-program-test"
 version = "1.16.1"
 dependencies = [
  "assert_matches",
@@ -5203,21 +5203,21 @@ dependencies = [
  "crossbeam-channel",
  "log",
  "serde",
- "solana-banks-client",
- "solana-banks-interface",
- "solana-banks-server",
- "solana-bpf-loader-program",
- "solana-logger",
- "solana-program-runtime",
- "solana-runtime",
- "solana-sdk",
- "solana-vote-program",
+ "xandeum-banks-client",
+ "xandeum-banks-interface",
+ "xandeum-banks-server",
+ "xandeum-bpf-loader-program",
+ "xandeum-logger",
+ "xandeum-program-runtime",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-vote-program",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-pubsub-client"
+name = "xandeum-pubsub-client"
 version = "1.16.1"
 dependencies = [
  "crossbeam-channel",
@@ -5228,9 +5228,9 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-account-decoder",
- "solana-rpc-client-api",
- "solana-sdk",
+ "xandeum-account-decoder",
+ "xandeum-rpc-client-api",
+ "xandeum-sdk",
  "thiserror",
  "tokio",
  "tokio-stream",
@@ -5240,7 +5240,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-quic-client"
+name = "xandeum-quic-client"
 version = "1.16.1"
 dependencies = [
  "async-mutex",
@@ -5254,19 +5254,19 @@ dependencies = [
  "quinn-udp",
  "rcgen",
  "rustls 0.20.8",
- "solana-connection-cache",
- "solana-measure",
- "solana-metrics",
- "solana-net-utils",
- "solana-rpc-client-api",
- "solana-sdk",
- "solana-streamer",
+ "xandeum-connection-cache",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-net-utils",
+ "xandeum-rpc-client-api",
+ "xandeum-sdk",
+ "xandeum-streamer",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-rayon-threadlimit"
+name = "xandeum-rayon-threadlimit"
 version = "1.16.1"
 dependencies = [
  "lazy_static",
@@ -5274,7 +5274,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-remote-wallet"
+name = "xandeum-remote-wallet"
 version = "1.16.1"
 dependencies = [
  "console",
@@ -5285,13 +5285,13 @@ dependencies = [
  "parking_lot 0.12.1",
  "qstring",
  "semver",
- "solana-sdk",
+ "xandeum-sdk",
  "thiserror",
  "uriparse",
 ]
 
 [[package]]
-name = "solana-rpc"
+name = "xandeum-rpc"
 version = "1.16.1"
 dependencies = [
  "base64 0.21.2",
@@ -5313,28 +5313,28 @@ dependencies = [
  "serde_derive",
  "serde_json",
  "soketto",
- "solana-account-decoder",
- "solana-client",
- "solana-entry",
- "solana-faucet",
- "solana-gossip",
- "solana-ledger",
- "solana-measure",
- "solana-metrics",
- "solana-perf",
- "solana-poh",
- "solana-rayon-threadlimit",
- "solana-rpc-client-api",
- "solana-runtime",
- "solana-sdk",
- "solana-send-transaction-service",
- "solana-stake-program",
- "solana-storage-bigtable",
- "solana-streamer",
- "solana-tpu-client",
- "solana-transaction-status",
- "solana-version",
- "solana-vote-program",
+ "xandeum-account-decoder",
+ "xandeum-client",
+ "xandeum-entry",
+ "xandeum-faucet",
+ "xandeum-gossip",
+ "xandeum-ledger",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-perf",
+ "xandeum-poh",
+ "xandeum-rayon-threadlimit",
+ "xandeum-rpc-client-api",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-send-transaction-service",
+ "xandeum-stake-program",
+ "xandeum-storage-bigtable",
+ "xandeum-streamer",
+ "xandeum-tpu-client",
+ "xandeum-transaction-status",
+ "xandeum-version",
+ "xandeum-vote-program",
  "spl-token",
  "spl-token-2022",
  "stream-cancel",
@@ -5344,7 +5344,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-rpc-client"
+name = "xandeum-rpc-client"
 version = "1.16.1"
 dependencies = [
  "async-trait",
@@ -5358,17 +5358,17 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-account-decoder",
- "solana-rpc-client-api",
- "solana-sdk",
- "solana-transaction-status",
- "solana-version",
- "solana-vote-program",
+ "xandeum-account-decoder",
+ "xandeum-rpc-client-api",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
+ "xandeum-version",
+ "xandeum-vote-program",
  "tokio",
 ]
 
 [[package]]
-name = "solana-rpc-client-api"
+name = "xandeum-rpc-client-api"
 version = "1.16.1"
 dependencies = [
  "base64 0.21.2",
@@ -5379,27 +5379,27 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-account-decoder",
- "solana-sdk",
- "solana-transaction-status",
- "solana-version",
+ "xandeum-account-decoder",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
+ "xandeum-version",
  "spl-token-2022",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-rpc-client-nonce-utils"
+name = "xandeum-rpc-client-nonce-utils"
 version = "1.16.1"
 dependencies = [
  "clap 2.33.3",
- "solana-clap-utils",
- "solana-rpc-client",
- "solana-sdk",
+ "xandeum-clap-utils",
+ "xandeum-rpc-client",
+ "xandeum-sdk",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-runtime"
+name = "xandeum-runtime"
 version = "1.16.1"
 dependencies = [
  "arrayref",
@@ -5436,25 +5436,25 @@ dependencies = [
  "rustc_version",
  "serde",
  "serde_derive",
- "solana-address-lookup-table-program",
- "solana-bpf-loader-program",
- "solana-bucket-map",
- "solana-compute-budget-program",
- "solana-config-program",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-loader-v4-program",
- "solana-measure",
- "solana-metrics",
- "solana-perf",
- "solana-program-runtime",
- "solana-rayon-threadlimit",
- "solana-sdk",
- "solana-stake-program",
- "solana-system-program",
- "solana-vote-program",
- "solana-zk-token-proof-program",
- "solana-zk-token-sdk",
+ "xandeum-address-lookup-table-program",
+ "xandeum-bpf-loader-program",
+ "xandeum-bucket-map",
+ "xandeum-compute-budget-program",
+ "xandeum-config-program",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-loader-v4-program",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-perf",
+ "xandeum-program-runtime",
+ "xandeum-rayon-threadlimit",
+ "xandeum-sdk",
+ "xandeum-stake-program",
+ "xandeum-system-program",
+ "xandeum-vote-program",
+ "xandeum-zk-token-proof-program",
+ "xandeum-zk-token-sdk",
  "static_assertions",
  "strum",
  "strum_macros",
@@ -5466,7 +5466,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-sbf-programs"
+name = "xandeum-sbf-programs"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -5476,391 +5476,391 @@ dependencies = [
  "log",
  "miow",
  "net2",
- "solana-account-decoder",
- "solana-bpf-loader-program",
- "solana-cli-output",
- "solana-ledger",
- "solana-logger",
- "solana-measure",
- "solana-program-runtime",
- "solana-runtime",
- "solana-sbf-rust-invoke",
- "solana-sbf-rust-realloc",
- "solana-sbf-rust-realloc-invoke",
- "solana-sdk",
- "solana-transaction-status",
- "solana_rbpf",
+ "xandeum-account-decoder",
+ "xandeum-bpf-loader-program",
+ "xandeum-cli-output",
+ "xandeum-ledger",
+ "xandeum-logger",
+ "xandeum-measure",
+ "xandeum-program-runtime",
+ "xandeum-runtime",
+ "xandeum-sbf-rust-invoke",
+ "xandeum-sbf-rust-realloc",
+ "xandeum-sbf-rust-realloc-invoke",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
+ "xandeum_rbpf",
  "walkdir",
 ]
 
 [[package]]
-name = "solana-sbf-rust-128bit"
+name = "xandeum-sbf-rust-128bit"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-sbf-rust-128bit-dep",
+ "xandeum-program",
+ "xandeum-sbf-rust-128bit-dep",
 ]
 
 [[package]]
-name = "solana-sbf-rust-128bit-dep"
+name = "xandeum-sbf-rust-128bit-dep"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-alloc"
+name = "xandeum-sbf-rust-alloc"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-alt-bn128"
+name = "xandeum-sbf-rust-alt-bn128"
 version = "1.16.1"
 dependencies = [
  "array-bytes",
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-call-depth"
+name = "xandeum-sbf-rust-call-depth"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-caller-access"
+name = "xandeum-sbf-rust-caller-access"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-curve25519"
+name = "xandeum-sbf-rust-curve25519"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-zk-token-sdk",
+ "xandeum-program",
+ "xandeum-zk-token-sdk",
 ]
 
 [[package]]
-name = "solana-sbf-rust-custom-heap"
+name = "xandeum-sbf-rust-custom-heap"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-dep-crate"
+name = "xandeum-sbf-rust-dep-crate"
 version = "1.16.1"
 dependencies = [
  "byteorder 1.4.3",
- "solana-address-lookup-table-program",
- "solana-program",
+ "xandeum-address-lookup-table-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-deprecated-loader"
+name = "xandeum-sbf-rust-deprecated-loader"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-dup-accounts"
+name = "xandeum-sbf-rust-dup-accounts"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-error-handling"
+name = "xandeum-sbf-rust-error-handling"
 version = "1.16.1"
 dependencies = [
  "num-derive",
  "num-traits",
- "solana-program",
+ "xandeum-program",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-sbf-rust-external-spend"
+name = "xandeum-sbf-rust-external-spend"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-finalize"
+name = "xandeum-sbf-rust-finalize"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-get-minimum-delegation"
+name = "xandeum-sbf-rust-get-minimum-delegation"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-inner_instruction_alignment_check"
+name = "xandeum-sbf-rust-inner_instruction_alignment_check"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-instruction-introspection"
+name = "xandeum-sbf-rust-instruction-introspection"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-invoke"
+name = "xandeum-sbf-rust-invoke"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-sbf-rust-invoked",
+ "xandeum-program",
+ "xandeum-sbf-rust-invoked",
 ]
 
 [[package]]
-name = "solana-sbf-rust-invoke-and-error"
+name = "xandeum-sbf-rust-invoke-and-error"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-invoke-and-ok"
+name = "xandeum-sbf-rust-invoke-and-ok"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-invoke-and-return"
+name = "xandeum-sbf-rust-invoke-and-return"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-invoked"
+name = "xandeum-sbf-rust-invoked"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-iter"
+name = "xandeum-sbf-rust-iter"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-log-data"
+name = "xandeum-sbf-rust-log-data"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-many-args"
+name = "xandeum-sbf-rust-many-args"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-sbf-rust-many-args-dep",
+ "xandeum-program",
+ "xandeum-sbf-rust-many-args-dep",
 ]
 
 [[package]]
-name = "solana-sbf-rust-many-args-dep"
+name = "xandeum-sbf-rust-many-args-dep"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-mem"
+name = "xandeum-sbf-rust-mem"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-program-runtime",
- "solana-program-test",
- "solana-sdk",
+ "xandeum-program",
+ "xandeum-program-runtime",
+ "xandeum-program-test",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-sbf-rust-membuiltins"
+name = "xandeum-sbf-rust-membuiltins"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-sbf-rust-mem",
+ "xandeum-program",
+ "xandeum-sbf-rust-mem",
 ]
 
 [[package]]
-name = "solana-sbf-rust-noop"
+name = "xandeum-sbf-rust-noop"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-panic"
+name = "xandeum-sbf-rust-panic"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-param-passing"
+name = "xandeum-sbf-rust-param-passing"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-sbf-rust-param-passing-dep",
+ "xandeum-program",
+ "xandeum-sbf-rust-param-passing-dep",
 ]
 
 [[package]]
-name = "solana-sbf-rust-param-passing-dep"
+name = "xandeum-sbf-rust-param-passing-dep"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-rand"
+name = "xandeum-sbf-rust-rand"
 version = "1.16.1"
 dependencies = [
  "getrandom 0.1.14",
  "rand 0.7.3",
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-realloc"
+name = "xandeum-sbf-rust-realloc"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-realloc-invoke"
+name = "xandeum-sbf-rust-realloc-invoke"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-sbf-rust-realloc",
+ "xandeum-program",
+ "xandeum-sbf-rust-realloc",
 ]
 
 [[package]]
-name = "solana-sbf-rust-ro-account_modify"
+name = "xandeum-sbf-rust-ro-account_modify"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-ro-modify"
+name = "xandeum-sbf-rust-ro-modify"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-sanity"
+name = "xandeum-sbf-rust-sanity"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-program-runtime",
- "solana-program-test",
- "solana-sdk",
+ "xandeum-program",
+ "xandeum-program-runtime",
+ "xandeum-program-test",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-sbf-rust-secp256k1-recover"
+name = "xandeum-sbf-rust-secp256k1-recover"
 version = "1.16.1"
 dependencies = [
  "libsecp256k1 0.7.0",
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-sha"
+name = "xandeum-sbf-rust-sha"
 version = "1.16.1"
 dependencies = [
  "blake3",
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-sibling-instructions"
+name = "xandeum-sbf-rust-sibling-instructions"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-sibling_inner-instructions"
+name = "xandeum-sbf-rust-sibling_inner-instructions"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-simulation"
+name = "xandeum-sbf-rust-simulation"
 version = "1.16.1"
 dependencies = [
- "solana-logger",
- "solana-program",
- "solana-program-test",
- "solana-sdk",
- "solana-validator",
+ "xandeum-logger",
+ "xandeum-program",
+ "xandeum-program-test",
+ "xandeum-sdk",
+ "xandeum-validator",
 ]
 
 [[package]]
-name = "solana-sbf-rust-spoof1"
+name = "xandeum-sbf-rust-spoof1"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-spoof1-system"
+name = "xandeum-sbf-rust-spoof1-system"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-sysvar"
+name = "xandeum-sbf-rust-sysvar"
 version = "1.16.1"
 dependencies = [
- "solana-program",
- "solana-program-runtime",
- "solana-program-test",
- "solana-sdk",
+ "xandeum-program",
+ "xandeum-program-runtime",
+ "xandeum-program-test",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-sbf-rust-upgradeable"
+name = "xandeum-sbf-rust-upgradeable"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sbf-rust-upgraded"
+name = "xandeum-sbf-rust-upgraded"
 version = "1.16.1"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
-name = "solana-sdk"
+name = "xandeum-sdk"
 version = "1.16.1"
 dependencies = [
  "assert_matches",
@@ -5900,18 +5900,18 @@ dependencies = [
  "serde_with",
  "sha2 0.10.6",
  "sha3 0.10.4",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-logger",
- "solana-program",
- "solana-sdk-macro",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-logger",
+ "xandeum-program",
+ "xandeum-sdk-macro",
  "thiserror",
  "uriparse",
  "wasm-bindgen",
 ]
 
 [[package]]
-name = "solana-sdk-macro"
+name = "xandeum-sdk-macro"
 version = "1.16.1"
 dependencies = [
  "bs58",
@@ -5922,34 +5922,34 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-send-transaction-service"
+name = "xandeum-send-transaction-service"
 version = "1.16.1"
 dependencies = [
  "crossbeam-channel",
  "log",
- "solana-client",
- "solana-measure",
- "solana-metrics",
- "solana-runtime",
- "solana-sdk",
- "solana-tpu-client",
+ "xandeum-client",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-tpu-client",
 ]
 
 [[package]]
-name = "solana-stake-program"
+name = "xandeum-stake-program"
 version = "1.16.1"
 dependencies = [
  "bincode",
  "log",
  "rustc_version",
- "solana-config-program",
- "solana-program-runtime",
- "solana-sdk",
- "solana-vote-program",
+ "xandeum-config-program",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
+ "xandeum-vote-program",
 ]
 
 [[package]]
-name = "solana-storage-bigtable"
+name = "xandeum-storage-bigtable"
 version = "1.16.1"
 dependencies = [
  "backoff",
@@ -5970,10 +5970,10 @@ dependencies = [
  "serde",
  "serde_derive",
  "smpl_jwt",
- "solana-metrics",
- "solana-sdk",
- "solana-storage-proto",
- "solana-transaction-status",
+ "xandeum-metrics",
+ "xandeum-sdk",
+ "xandeum-storage-proto",
+ "xandeum-transaction-status",
  "thiserror",
  "tokio",
  "tonic 0.8.3",
@@ -5981,7 +5981,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-storage-proto"
+name = "xandeum-storage-proto"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -5989,14 +5989,14 @@ dependencies = [
  "prost 0.11.9",
  "protobuf-src",
  "serde",
- "solana-account-decoder",
- "solana-sdk",
- "solana-transaction-status",
+ "xandeum-account-decoder",
+ "xandeum-sdk",
+ "xandeum-transaction-status",
  "tonic-build 0.8.4",
 ]
 
 [[package]]
-name = "solana-streamer"
+name = "xandeum-streamer"
 version = "1.16.1"
 dependencies = [
  "async-channel",
@@ -6018,28 +6018,28 @@ dependencies = [
  "rand 0.7.3",
  "rcgen",
  "rustls 0.20.8",
- "solana-metrics",
- "solana-perf",
- "solana-sdk",
+ "xandeum-metrics",
+ "xandeum-perf",
+ "xandeum-sdk",
  "thiserror",
  "tokio",
  "x509-parser",
 ]
 
 [[package]]
-name = "solana-system-program"
+name = "xandeum-system-program"
 version = "1.16.1"
 dependencies = [
  "bincode",
  "log",
  "serde",
  "serde_derive",
- "solana-program-runtime",
- "solana-sdk",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-test-validator"
+name = "xandeum-test-validator"
 version = "1.16.1"
 dependencies = [
  "base64 0.21.2",
@@ -6048,40 +6048,40 @@ dependencies = [
  "log",
  "serde_derive",
  "serde_json",
- "solana-cli-output",
- "solana-client",
- "solana-core",
- "solana-geyser-plugin-manager",
- "solana-gossip",
- "solana-ledger",
- "solana-logger",
- "solana-net-utils",
- "solana-program-runtime",
- "solana-program-test",
- "solana-rpc",
- "solana-rpc-client",
- "solana-runtime",
- "solana-sdk",
- "solana-streamer",
- "solana-tpu-client",
+ "xandeum-cli-output",
+ "xandeum-client",
+ "xandeum-core",
+ "xandeum-geyser-plugin-manager",
+ "xandeum-gossip",
+ "xandeum-ledger",
+ "xandeum-logger",
+ "xandeum-net-utils",
+ "xandeum-program-runtime",
+ "xandeum-program-test",
+ "xandeum-rpc",
+ "xandeum-rpc-client",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-streamer",
+ "xandeum-tpu-client",
  "tokio",
 ]
 
 [[package]]
-name = "solana-thin-client"
+name = "xandeum-thin-client"
 version = "1.16.1"
 dependencies = [
  "bincode",
  "log",
  "rayon",
- "solana-connection-cache",
- "solana-rpc-client",
- "solana-rpc-client-api",
- "solana-sdk",
+ "xandeum-connection-cache",
+ "xandeum-rpc-client",
+ "xandeum-rpc-client-api",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-tpu-client"
+name = "xandeum-tpu-client"
 version = "1.16.1"
 dependencies = [
  "async-trait",
@@ -6092,19 +6092,19 @@ dependencies = [
  "log",
  "rand 0.7.3",
  "rayon",
- "solana-connection-cache",
- "solana-measure",
- "solana-metrics",
- "solana-pubsub-client",
- "solana-rpc-client",
- "solana-rpc-client-api",
- "solana-sdk",
+ "xandeum-connection-cache",
+ "xandeum-measure",
+ "xandeum-metrics",
+ "xandeum-pubsub-client",
+ "xandeum-rpc-client",
+ "xandeum-rpc-client-api",
+ "xandeum-sdk",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-transaction-status"
+name = "xandeum-transaction-status"
 version = "1.16.1"
 dependencies = [
  "Inflector",
@@ -6117,9 +6117,9 @@ dependencies = [
  "serde",
  "serde_derive",
  "serde_json",
- "solana-account-decoder",
- "solana-address-lookup-table-program",
- "solana-sdk",
+ "xandeum-account-decoder",
+ "xandeum-address-lookup-table-program",
+ "xandeum-sdk",
  "spl-associated-token-account",
  "spl-memo",
  "spl-token",
@@ -6128,20 +6128,20 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-udp-client"
+name = "xandeum-udp-client"
 version = "1.16.1"
 dependencies = [
  "async-trait",
- "solana-connection-cache",
- "solana-net-utils",
- "solana-sdk",
- "solana-streamer",
+ "xandeum-connection-cache",
+ "xandeum-net-utils",
+ "xandeum-sdk",
+ "xandeum-streamer",
  "thiserror",
  "tokio",
 ]
 
 [[package]]
-name = "solana-validator"
+name = "xandeum-validator"
 version = "1.16.1"
 dependencies = [
  "chrono",
@@ -6168,41 +6168,41 @@ dependencies = [
  "serde_json",
  "serde_yaml",
  "signal-hook",
- "solana-clap-utils",
- "solana-cli-config",
- "solana-core",
- "solana-download-utils",
- "solana-entry",
- "solana-faucet",
- "solana-genesis-utils",
- "solana-geyser-plugin-interface",
- "solana-geyser-plugin-manager",
- "solana-gossip",
- "solana-ledger",
- "solana-logger",
- "solana-metrics",
- "solana-net-utils",
- "solana-perf",
- "solana-poh",
- "solana-rpc",
- "solana-rpc-client",
- "solana-rpc-client-api",
- "solana-runtime",
- "solana-sdk",
- "solana-send-transaction-service",
- "solana-storage-bigtable",
- "solana-streamer",
- "solana-test-validator",
- "solana-tpu-client",
- "solana-version",
- "solana-vote-program",
+ "xandeum-clap-utils",
+ "xandeum-cli-config",
+ "xandeum-core",
+ "xandeum-download-utils",
+ "xandeum-entry",
+ "xandeum-faucet",
+ "xandeum-genesis-utils",
+ "xandeum-geyser-plugin-interface",
+ "xandeum-geyser-plugin-manager",
+ "xandeum-gossip",
+ "xandeum-ledger",
+ "xandeum-logger",
+ "xandeum-metrics",
+ "xandeum-net-utils",
+ "xandeum-perf",
+ "xandeum-poh",
+ "xandeum-rpc",
+ "xandeum-rpc-client",
+ "xandeum-rpc-client-api",
+ "xandeum-runtime",
+ "xandeum-sdk",
+ "xandeum-send-transaction-service",
+ "xandeum-storage-bigtable",
+ "xandeum-streamer",
+ "xandeum-test-validator",
+ "xandeum-tpu-client",
+ "xandeum-version",
+ "xandeum-vote-program",
  "symlink",
  "thiserror",
  "tikv-jemallocator",
 ]
 
 [[package]]
-name = "solana-version"
+name = "xandeum-version"
 version = "1.16.1"
 dependencies = [
  "log",
@@ -6210,13 +6210,13 @@ dependencies = [
  "semver",
  "serde",
  "serde_derive",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-sdk",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-sdk",
 ]
 
 [[package]]
-name = "solana-vote-program"
+name = "xandeum-vote-program"
 version = "1.16.1"
 dependencies = [
  "bincode",
@@ -6226,30 +6226,30 @@ dependencies = [
  "rustc_version",
  "serde",
  "serde_derive",
- "solana-frozen-abi",
- "solana-frozen-abi-macro",
- "solana-metrics",
- "solana-program",
- "solana-program-runtime",
- "solana-sdk",
+ "xandeum-frozen-abi",
+ "xandeum-frozen-abi-macro",
+ "xandeum-metrics",
+ "xandeum-program",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
  "thiserror",
 ]
 
 [[package]]
-name = "solana-zk-token-proof-program"
+name = "xandeum-zk-token-proof-program"
 version = "1.16.1"
 dependencies = [
  "bytemuck",
  "getrandom 0.1.14",
  "num-derive",
  "num-traits",
- "solana-program-runtime",
- "solana-sdk",
- "solana-zk-token-sdk",
+ "xandeum-program-runtime",
+ "xandeum-sdk",
+ "xandeum-zk-token-sdk",
 ]
 
 [[package]]
-name = "solana-zk-token-sdk"
+name = "xandeum-zk-token-sdk"
 version = "1.16.1"
 dependencies = [
  "aes-gcm-siv",
@@ -6269,15 +6269,15 @@ dependencies = [
  "serde",
  "serde_json",
  "sha3 0.9.1",
- "solana-program",
- "solana-sdk",
+ "xandeum-program",
+ "xandeum-sdk",
  "subtle",
  "thiserror",
  "zeroize",
 ]
 
 [[package]]
-name = "solana_rbpf"
+name = "xandeum_rbpf"
 version = "0.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5ae90c406f0a2d4a15f08d16c8b64f37997a57611fec0a89f1277854166996e8"
@@ -6327,7 +6327,7 @@ dependencies = [
  "borsh 0.9.3",
  "num-derive",
  "num-traits",
- "solana-program",
+ "xandeum-program",
  "spl-token",
  "spl-token-2022",
  "thiserror",
@@ -6339,7 +6339,7 @@ version = "3.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bd0dc6f70db6bacea7ff25870b016a65ba1d1b6013536f08e4fd79a8f9005325"
 dependencies = [
- "solana-program",
+ "xandeum-program",
 ]
 
 [[package]]
@@ -6353,7 +6353,7 @@ dependencies = [
  "num-derive",
  "num-traits",
  "num_enum 0.5.9",
- "solana-program",
+ "xandeum-program",
  "thiserror",
 ]
 
@@ -6368,8 +6368,8 @@ dependencies = [
  "num-derive",
  "num-traits",
  "num_enum 0.5.9",
- "solana-program",
- "solana-zk-token-sdk",
+ "xandeum-program",
+ "xandeum-zk-token-sdk",
  "spl-memo",
  "spl-token",
  "thiserror",

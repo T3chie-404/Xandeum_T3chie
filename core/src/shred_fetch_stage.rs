@@ -3,15 +3,15 @@
 use {
     crate::{cluster_nodes::check_feature_activation, serve_repair::ServeRepair},
     crossbeam_channel::{unbounded, Sender},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::shred::{should_discard_shred, ShredFetchStats},
-    solana_perf::packet::{PacketBatch, PacketBatchRecycler, PacketFlags},
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::shred::{should_discard_shred, ShredFetchStats},
+    xandeum_perf::packet::{PacketBatch, PacketBatchRecycler, PacketFlags},
+    xandeum_runtime::{bank::Bank, bank_forks::BankForks},
+    xandeum_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT},
         feature_set,
     },
-    solana_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
+    xandeum_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
     std::{
         net::UdpSocket,
         sync::{
@@ -249,16 +249,16 @@ fn should_drop_merkle_shreds(shred_slot: Slot, root_bank: &Bank) -> bool {
 mod tests {
     use {
         super::*,
-        solana_ledger::{
+        xandeum_ledger::{
             blockstore::MAX_DATA_SHREDS_PER_SLOT,
             shred::{ReedSolomonCache, Shred, ShredFlags},
         },
-        solana_sdk::packet::Packet,
+        xandeum_sdk::packet::Packet,
     };
 
     #[test]
     fn test_data_code_same_index() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let mut packet = Packet::default();
         let mut stats = ShredFetchStats::default();
 
@@ -288,7 +288,7 @@ mod tests {
             |_| false, // should_drop_merkle_shreds
             &mut stats,
         ));
-        let coding = solana_ledger::shred::Shredder::generate_coding_shreds(
+        let coding = xandeum_ledger::shred::Shredder::generate_coding_shreds(
             &[shred],
             3, // next_code_index
             &ReedSolomonCache::default(),
@@ -306,7 +306,7 @@ mod tests {
 
     #[test]
     fn test_shred_filter() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let mut packet = Packet::default();
         let mut stats = ShredFetchStats::default();
         let last_root = 0;

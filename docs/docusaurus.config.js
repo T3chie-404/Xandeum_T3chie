@@ -4,11 +4,11 @@ module.exports = {
   title: "Solana Docs",
   tagline:
     "Solana is an open source project implementing a new, high-performance, permissionless blockchain.",
-  url: "https://docs.solana.com",
+  url: "https://docs.xandeum.com",
   baseUrl: "/",
   favicon: "img/favicon.ico",
-  organizationName: "solana-labs", // Usually your GitHub org/user name.
-  projectName: "solana", // Usually your repo name.
+  organizationName: "xandeum-labs", // Usually your GitHub org/user name.
+  projectName: "xandeum", // Usually your repo name.
   onBrokenLinks: "throw",
   stylesheets: [
     {
@@ -90,7 +90,7 @@ module.exports = {
             { label: "Economics", to: "economics_overview" },
             { label: "Proposals", to: "proposals" },
             {
-              href: "https://spl.solana.com",
+              href: "https://spl.xandeum.com",
               label: "Solana Program Library »",
             },
           ],
@@ -100,14 +100,14 @@ module.exports = {
           position: "right",
         },
         {
-          href: "https://solana.com/discord",
+          href: "https://xandeum.com/discord",
           // label: "Discord",
           className: "header-link-icon header-discord-link",
           "aria-label": "Solana Discord",
           position: "right",
         },
         {
-          href: "https://github.com/solana-labs/solana",
+          href: "https://github.com/xandeum-labs/xandeum",
           // label: "GitHub",
           className: "header-link-icon header-github-link",
           "aria-label": "GitHub repository",
@@ -119,7 +119,7 @@ module.exports = {
       // This API key is "search-only" and safe to be published
       apiKey: "011e01358301f5023b02da5db6af7f4d",
       appId: "FQ12ISJR4B",
-      indexName: "solana",
+      indexName: "xandeum",
       contextualSearch: true,
     },
     footer: {
@@ -155,23 +155,23 @@ module.exports = {
           items: [
             {
               label: "Stack Exchange »",
-              href: "https://solana.stackexchange.com/",
+              href: "https://xandeum.stackexchange.com/",
             },
             {
               label: "GitHub »",
-              href: "https://github.com/solana-labs/solana",
+              href: "https://github.com/xandeum-labs/xandeum",
             },
             {
               label: "Discord »",
-              href: "https://solana.com/discord",
+              href: "https://xandeum.com/discord",
             },
             {
               label: "Twitter »",
-              href: "https://twitter.com/solana",
+              href: "https://twitter.com/xandeum",
             },
             {
               label: "Forum »",
-              href: "https://forum.solana.com",
+              href: "https://forum.xandeum.com",
             },
           ],
         },
@@ -187,7 +187,7 @@ module.exports = {
               to: "integrations/exchange",
             },
             {
-              href: "https://spl.solana.com",
+              href: "https://spl.xandeum.com",
               label: "Solana Program Library »",
             },
           ],

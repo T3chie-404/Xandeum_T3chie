@@ -7,19 +7,19 @@ use {
     log::*,
     num_traits::FromPrimitive,
     serde_json::{self, Value},
-    solana_clap_utils::{self, input_parsers::*, keypair::*},
-    solana_cli_config::ConfigInput,
-    solana_cli_output::{
+    xandeum_clap_utils::{self, input_parsers::*, keypair::*},
+    xandeum_cli_config::ConfigInput,
+    xandeum_cli_output::{
         display::println_name_value, CliSignature, CliValidatorsSortOrder, OutputFormat,
     },
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    xandeum_remote_wallet::remote_wallet::RemoteWalletManager,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_rpc_client_api::{
         client_error::{Error as ClientError, Result as ClientResult},
         config::{RpcLargestAccountsFilter, RpcSendTransactionConfig, RpcTransactionLogsFilter},
     },
-    solana_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
-    solana_sdk::{
+    xandeum_rpc_client_nonce_utils::blockhash_query::BlockhashQuery,
+    xandeum_sdk::{
         clock::{Epoch, Slot},
         commitment_config::CommitmentConfig,
         decode_error::DecodeError,
@@ -31,8 +31,8 @@ use {
         stake::{instruction::LockupArgs, state::Lockup},
         transaction::{TransactionError, VersionedTransaction},
     },
-    solana_tpu_client::tpu_client::DEFAULT_TPU_ENABLE_UDP,
-    solana_vote_program::vote_state::VoteAuthorize,
+    xandeum_tpu_client::tpu_client::DEFAULT_TPU_ENABLE_UDP,
+    xandeum_vote_program::vote_state::VoteAuthorize,
     std::{collections::HashMap, error, io::stdout, str::FromStr, sync::Arc, time::Duration},
     thiserror::Error,
 };
@@ -470,7 +470,7 @@ pub enum CliError {
     #[error("Account {2} has insufficient funds for spend ({0} SOL) + fee ({1} SOL)")]
     InsufficientFundsForSpendAndFee(f64, f64, Pubkey),
     #[error(transparent)]
-    InvalidNonce(solana_rpc_client_nonce_utils::Error),
+    InvalidNonce(xandeum_rpc_client_nonce_utils::Error),
     #[error("Dynamic program error: {0}")]
     DynamicProgramError(String),
     #[error("RPC request error: {0}")]
@@ -487,10 +487,10 @@ impl From<Box<dyn error::Error>> for CliError {
     }
 }
 
-impl From<solana_rpc_client_nonce_utils::Error> for CliError {
-    fn from(error: solana_rpc_client_nonce_utils::Error) -> Self {
+impl From<xandeum_rpc_client_nonce_utils::Error> for CliError {
+    fn from(error: xandeum_rpc_client_nonce_utils::Error) -> Self {
         match error {
-            solana_rpc_client_nonce_utils::Error::Client(client_error) => {
+            xandeum_rpc_client_nonce_utils::Error::Client(client_error) => {
                 Self::RpcRequestError(client_error)
             }
             _ => Self::InvalidNonce(error),
@@ -586,9 +586,9 @@ pub fn parse_command(
             get_clap_app(
                 crate_name!(),
                 crate_description!(),
-                solana_version::version!(),
+                xandeum_version::version!(),
             )
-            .gen_completions_to("solana", shell_choice, &mut stdout());
+            .gen_completions_to("xandeum", shell_choice, &mut stdout());
             std::process::exit(0);
         }
         // Cluster Query Commands
@@ -678,7 +678,7 @@ pub fn parse_command(
         ("upgrade-nonce-account", Some(matches)) => parse_upgrade_nonce_account(matches),
         // Program Deployment
         ("deploy", Some(_matches)) => clap::Error::with_description(
-            "`solana deploy` has been replaced with `solana program deploy`",
+            "`xandeum deploy` has been replaced with `xandeum program deploy`",
             clap::ErrorKind::UnrecognizedSubcommand,
         )
         .exit(),
@@ -868,7 +868,7 @@ pub fn process_command(config: &CliConfig) -> ProcessResult {
         // Cluster Query Commands
         // Get address of this client
         CliCommand::Address => Ok(format!("{}", config.pubkey()?)),
-        // Return software version of solana-cli and cluster entrypoint node
+        // Return software version of xandeum-cli and cluster entrypoint node
         CliCommand::Catchup {
             node_pubkey,
             node_json_rpc_url,
@@ -1716,13 +1716,13 @@ mod tests {
     use {
         super::*,
         serde_json::json,
-        solana_rpc_client::mock_sender_for_cli::SIGNATURE,
-        solana_rpc_client_api::{
+        xandeum_rpc_client::mock_sender_for_cli::SIGNATURE,
+        xandeum_rpc_client_api::{
             request::RpcRequest,
             response::{Response, RpcResponseContext},
         },
-        solana_rpc_client_nonce_utils::blockhash_query,
-        solana_sdk::{
+        xandeum_rpc_client_nonce_utils::blockhash_query,
+        xandeum_sdk::{
             pubkey::Pubkey,
             signature::{
                 keypair_from_seed, read_keypair_file, write_keypair_file, Keypair, Presigner,
@@ -1730,7 +1730,7 @@ mod tests {
             stake, system_program,
             transaction::TransactionError,
         },
-        solana_transaction_status::TransactionConfirmationStatus,
+        xandeum_transaction_status::TransactionConfirmationStatus,
     };
 
     fn make_tmp_path(name: &str) -> String {
@@ -1768,7 +1768,7 @@ mod tests {
         assert_eq!(signer_info.signers.len(), 1);
         assert_eq!(signer_info.index_of(None), Some(0));
         assert_eq!(
-            signer_info.index_of(Some(solana_sdk::pubkey::new_rand())),
+            signer_info.index_of(Some(xandeum_sdk::pubkey::new_rand())),
             None
         );
 
@@ -1826,7 +1826,7 @@ mod tests {
     fn test_cli_parse_command() {
         let test_commands = get_clap_app("test", "desc", "version");
 
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = xandeum_sdk::pubkey::new_rand();
         let pubkey_string = format!("{pubkey}");
 
         let default_keypair = Keypair::new();
@@ -1917,11 +1917,11 @@ mod tests {
         assert!(parse_command(&test_bad_signature, &default_signer, &mut None).is_err());
 
         // Test CreateAddressWithSeed
-        let from_pubkey = Some(solana_sdk::pubkey::new_rand());
+        let from_pubkey = Some(xandeum_sdk::pubkey::new_rand());
         let from_str = from_pubkey.unwrap().to_string();
         for (name, program_id) in &[
             ("STAKE", stake::program::id()),
-            ("VOTE", solana_vote_program::id()),
+            ("VOTE", xandeum_vote_program::id()),
             ("NONCE", system_program::id()),
         ] {
             let test_create_address_with_seed = test_commands.clone().get_matches_from(vec![
@@ -2105,7 +2105,7 @@ mod tests {
             ..CliConfig::default()
         };
         let current_authority = keypair_from_seed(&[5; 32]).unwrap();
-        let new_authorized_pubkey = solana_sdk::pubkey::new_rand();
+        let new_authorized_pubkey = xandeum_sdk::pubkey::new_rand();
         vote_config.signers = vec![&current_authority];
         vote_config.command = CliCommand::VoteAuthorize {
             vote_account_pubkey: bob_pubkey,
@@ -2145,7 +2145,7 @@ mod tests {
 
         let bob_keypair = Keypair::new();
         let bob_pubkey = bob_keypair.pubkey();
-        let custodian = solana_sdk::pubkey::new_rand();
+        let custodian = xandeum_sdk::pubkey::new_rand();
         config.command = CliCommand::CreateStakeAccount {
             stake_account: 1,
             seed: None,
@@ -2172,8 +2172,8 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_sdk::pubkey::new_rand();
-        let to_pubkey = solana_sdk::pubkey::new_rand();
+        let stake_account_pubkey = xandeum_sdk::pubkey::new_rand();
+        let to_pubkey = xandeum_sdk::pubkey::new_rand();
         config.command = CliCommand::WithdrawStake {
             stake_account_pubkey,
             destination_account_pubkey: to_pubkey,
@@ -2194,7 +2194,7 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_sdk::pubkey::new_rand();
+        let stake_account_pubkey = xandeum_sdk::pubkey::new_rand();
         config.command = CliCommand::DeactivateStake {
             stake_account_pubkey,
             stake_authority: 0,
@@ -2212,7 +2212,7 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_sdk::pubkey::new_rand();
+        let stake_account_pubkey = xandeum_sdk::pubkey::new_rand();
         let split_stake_account = Keypair::new();
         config.command = CliCommand::SplitStake {
             stake_account_pubkey,
@@ -2233,8 +2233,8 @@ mod tests {
         let result = process_command(&config);
         assert!(result.is_ok());
 
-        let stake_account_pubkey = solana_sdk::pubkey::new_rand();
-        let source_stake_account_pubkey = solana_sdk::pubkey::new_rand();
+        let stake_account_pubkey = xandeum_sdk::pubkey::new_rand();
+        let source_stake_account_pubkey = xandeum_sdk::pubkey::new_rand();
         let merge_stake_account = Keypair::new();
         config.command = CliCommand::MergeStake {
             stake_account_pubkey,
@@ -2260,7 +2260,7 @@ mod tests {
         assert_eq!(process_command(&config).unwrap(), "1234");
 
         // CreateAddressWithSeed
-        let from_pubkey = solana_sdk::pubkey::new_rand();
+        let from_pubkey = xandeum_sdk::pubkey::new_rand();
         config.signers = vec![];
         config.command = CliCommand::CreateAddressWithSeed {
             from_pubkey: Some(from_pubkey),
@@ -2273,7 +2273,7 @@ mod tests {
         assert_eq!(address.unwrap(), expected_address.to_string());
 
         // Need airdrop cases
-        let to = solana_sdk::pubkey::new_rand();
+        let to = xandeum_sdk::pubkey::new_rand();
         config.signers = vec![&keypair];
         config.command = CliCommand::Airdrop {
             pubkey: Some(to),

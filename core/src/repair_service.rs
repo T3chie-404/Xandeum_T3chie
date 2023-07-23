@@ -2,8 +2,8 @@
 //! regularly finds missing shreds in the ledger and sends repair requests for those shreds
 #[cfg(test)]
 use {
-    crate::duplicate_repair_status::DuplicateSlotRepairStatus, solana_ledger::shred::Nonce,
-    solana_sdk::clock::DEFAULT_MS_PER_SLOT,
+    crate::duplicate_repair_status::DuplicateSlotRepairStatus, xandeum_ledger::shred::Nonce,
+    xandeum_sdk::clock::DEFAULT_MS_PER_SLOT,
 };
 use {
     crate::{
@@ -17,14 +17,14 @@ use {
     },
     crossbeam_channel::{Receiver as CrossbeamReceiver, Sender as CrossbeamSender},
     lru::LruCache,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::{
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::{
         blockstore::{Blockstore, SlotMeta},
         shred,
     },
-    solana_measure::measure::Measure,
-    solana_runtime::bank_forks::BankForks,
-    solana_sdk::{
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::bank_forks::BankForks,
+    xandeum_sdk::{
         clock::{Slot, DEFAULT_TICKS_PER_SECOND, MS_PER_TICK},
         epoch_schedule::EpochSchedule,
         hash::Hash,
@@ -32,7 +32,7 @@ use {
         signer::keypair::Keypair,
         timing::timestamp,
     },
-    solana_streamer::sendmmsg::{batch_send, SendPktsError},
+    xandeum_streamer::sendmmsg::{batch_send, SendPktsError},
     std::{
         collections::{HashMap, HashSet},
         iter::Iterator,
@@ -853,8 +853,8 @@ pub(crate) fn sleep_shred_deferment_period() {
 mod test {
     use {
         super::*,
-        solana_gossip::{cluster_info::Node, contact_info::ContactInfo},
-        solana_ledger::{
+        xandeum_gossip::{cluster_info::Node, contact_info::ContactInfo},
+        xandeum_ledger::{
             blockstore::{
                 make_chaining_slot_entries, make_many_slot_entries, make_slot_entries, Blockstore,
             },
@@ -862,12 +862,12 @@ mod test {
             get_tmp_ledger_path,
             shred::max_ticks_per_n_shreds,
         },
-        solana_runtime::bank::Bank,
-        solana_sdk::{
+        xandeum_runtime::bank::Bank,
+        xandeum_sdk::{
             signature::{Keypair, Signer},
             timing::timestamp,
         },
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_streamer::socket::SocketAddrSpace,
         std::collections::HashSet,
     };
 

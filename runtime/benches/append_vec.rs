@@ -3,7 +3,7 @@ extern crate test;
 
 use {
     rand::{thread_rng, Rng},
-    solana_runtime::{
+    xandeum_runtime::{
         account_storage::meta::{
             StorableAccountsWithHashesAndWriteVersions, StoredAccountInfo, StoredMeta,
         },
@@ -13,7 +13,7 @@ use {
             AppendVec,
         },
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::Slot,
         hash::Hash,

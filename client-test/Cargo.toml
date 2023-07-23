@@ -1,7 +1,7 @@
 [package]
-name = "solana-client-test"
+name = "xandeum-client-test"
 description = "Solana RPC Test"
-documentation = "https://docs.rs/solana-client-test"
+documentation = "https://docs.rs/xandeum-client-test"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -13,28 +13,28 @@ edition = { workspace = true }
 [dependencies]
 futures-util = { workspace = true }
 serde_json = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-merkle-tree = { workspace = true }
-solana-metrics = { workspace = true }
-solana-perf = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-test-validator = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-merkle-tree = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-perf = { workspace = true }
+xandeum-pubsub-client = { workspace = true }
+xandeum-rayon-threadlimit = { workspace = true }
+xandeum-rpc = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-test-validator = { workspace = true }
+xandeum-transaction-status = { workspace = true }
+xandeum-version = { workspace = true }
 systemstat = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 tungstenite = { workspace = true, features = ["rustls-tls-webpki-roots"] }
 
 [dev-dependencies]
-solana-logger = { workspace = true }
+xandeum-logger = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

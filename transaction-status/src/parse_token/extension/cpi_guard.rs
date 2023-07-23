@@ -41,10 +41,10 @@ mod test {
     use {
         super::*,
         crate::parse_token::test::*,
-        solana_sdk::pubkey::Pubkey,
+        xandeum_sdk::pubkey::Pubkey,
         spl_token_2022::{
             extension::cpi_guard::instruction::{disable_cpi_guard, enable_cpi_guard},
-            solana_program::message::Message,
+            xandeum_program::message::Message,
         },
     };
 

@@ -1,9 +1,9 @@
 #![feature(test)]
 extern crate test;
 use {
-    solana_entry::entry::{self, VerifyRecyclers},
-    solana_perf::test_tx::test_tx,
-    solana_sdk::{
+    xandeum_entry::entry::{self, VerifyRecyclers},
+    xandeum_perf::test_tx::test_tx,
+    xandeum_sdk::{
         hash::Hash,
         transaction::{
             Result, SanitizedTransaction, SimpleAddressLoader, TransactionVerificationMode,

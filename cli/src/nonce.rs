@@ -10,7 +10,7 @@ use {
         spend_utils::{resolve_spend_tx_and_check_account_balance, SpendAmount},
     },
     clap::{App, Arg, ArgMatches, SubCommand},
-    solana_clap_utils::{
+    xandeum_clap_utils::{
         compute_unit_price::{compute_unit_price_arg, COMPUTE_UNIT_PRICE_ARG},
         input_parsers::*,
         input_validators::*,
@@ -18,11 +18,11 @@ use {
         memo::{memo_arg, MEMO_ARG},
         nonce::*,
     },
-    solana_cli_output::CliNonceAccount,
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_nonce_utils::*,
-    solana_sdk::{
+    xandeum_cli_output::CliNonceAccount,
+    xandeum_remote_wallet::remote_wallet::RemoteWalletManager,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_rpc_client_nonce_utils::*,
+    xandeum_sdk::{
         account::Account,
         hash::Hash,
         message::Message,
@@ -664,7 +664,7 @@ mod tests {
     use {
         super::*,
         crate::{clap_app::get_clap_app, cli::parse_command},
-        solana_sdk::{
+        xandeum_sdk::{
             account::Account,
             account_utils::StateMut,
             hash::hash,
@@ -988,7 +988,7 @@ mod tests {
     fn test_check_nonce_account() {
         let durable_nonce = DurableNonce::from_blockhash(&Hash::default());
         let blockhash = *durable_nonce.as_hash();
-        let nonce_pubkey = solana_sdk::pubkey::new_rand();
+        let nonce_pubkey = xandeum_sdk::pubkey::new_rand();
         let data = Versions::new(State::Initialized(nonce::state::Data::new(
             nonce_pubkey,
             durable_nonce,
@@ -1030,7 +1030,7 @@ mod tests {
             );
         }
 
-        let new_nonce_authority = solana_sdk::pubkey::new_rand();
+        let new_nonce_authority = xandeum_sdk::pubkey::new_rand();
         let data = Versions::new(State::Initialized(nonce::state::Data::new(
             new_nonce_authority,
             durable_nonce,

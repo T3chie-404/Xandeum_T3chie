@@ -1,6 +1,6 @@
 //! Example Rust-based SBF realloc test program
 
-use solana_program::{
+use xandeum_program::{
     instruction::{AccountMeta, Instruction},
     pubkey::Pubkey,
 };

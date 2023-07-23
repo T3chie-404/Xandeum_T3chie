@@ -9,33 +9,33 @@ use {
     bip39::{Language, Mnemonic, MnemonicType, Seed},
     clap::{App, AppSettings, Arg, ArgMatches, SubCommand},
     log::*,
-    solana_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
-    solana_bpf_loader_program::syscalls::create_program_runtime_environment,
-    solana_clap_utils::{
+    xandeum_account_decoder::{UiAccountEncoding, UiDataSliceConfig},
+    xandeum_bpf_loader_program::syscalls::create_program_runtime_environment,
+    xandeum_clap_utils::{
         self, hidden_unless_forced, input_parsers::*, input_validators::*, keypair::*,
     },
-    solana_cli_output::{
+    xandeum_cli_output::{
         CliProgram, CliProgramAccountType, CliProgramAuthority, CliProgramBuffer, CliProgramId,
         CliUpgradeableBuffer, CliUpgradeableBuffers, CliUpgradeableProgram,
         CliUpgradeableProgramClosed, CliUpgradeablePrograms,
     },
-    solana_client::{
+    xandeum_client::{
         connection_cache::ConnectionCache,
         tpu_client::{TpuClient, TpuClientConfig},
     },
-    solana_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext},
-    solana_rbpf::{
+    xandeum_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext},
+    xandeum_rbpf::{
         elf::Executable,
         verifier::{RequisiteVerifier, TautologyVerifier},
     },
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    xandeum_remote_wallet::remote_wallet::RemoteWalletManager,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_rpc_client_api::{
         client_error::ErrorKind as ClientErrorKind,
         config::{RpcAccountInfoConfig, RpcProgramAccountsConfig, RpcSendTransactionConfig},
         filter::{Memcmp, RpcFilterType},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::Account,
         account_utils::StateMut,
         bpf_loader, bpf_loader_deprecated,
@@ -419,7 +419,7 @@ impl ProgramSubCommands for App<'_, '_> {
         )
         .subcommand(
             SubCommand::with_name("deploy")
-                .about("Deploy has been removed. Use `solana program deploy` instead to deploy upgradeable programs")
+                .about("Deploy has been removed. Use `xandeum program deploy` instead to deploy upgradeable programs")
                 .setting(AppSettings::Hidden)
         )
     }
@@ -2245,12 +2245,12 @@ fn report_ephemeral_mnemonic(words: usize, mnemonic: bip39::Mnemonic) {
     let phrase: &str = mnemonic.phrase();
     let divider = String::from_utf8(vec![b'='; phrase.len()]).unwrap();
     eprintln!("{divider}\nRecover the intermediate account's ephemeral keypair file with");
-    eprintln!("`solana-keygen recover` and the following {words}-word seed phrase:");
+    eprintln!("`xandeum-keygen recover` and the following {words}-word seed phrase:");
     eprintln!("{divider}\n{phrase}\n{divider}");
     eprintln!("To resume a deploy, pass the recovered keypair as the");
-    eprintln!("[BUFFER_SIGNER] to `solana program deploy` or `solana program write-buffer'.");
+    eprintln!("[BUFFER_SIGNER] to `xandeum program deploy` or `xandeum program write-buffer'.");
     eprintln!("Or to recover the account's lamports, pass it as the");
-    eprintln!("[BUFFER_ACCOUNT_ADDRESS] argument to `solana program close`.\n{divider}");
+    eprintln!("[BUFFER_ACCOUNT_ADDRESS] argument to `xandeum program close`.\n{divider}");
 }
 
 #[cfg(test)]
@@ -2262,8 +2262,8 @@ mod tests {
             cli::{parse_command, process_command},
         },
         serde_json::Value,
-        solana_cli_output::OutputFormat,
-        solana_sdk::signature::write_keypair_file,
+        xandeum_cli_output::OutputFormat,
+        xandeum_sdk::signature::write_keypair_file,
     };
 
     fn make_tmp_path(name: &str) -> String {
@@ -3108,7 +3108,7 @@ mod tests {
 
     #[test]
     fn test_cli_keypair_file() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let default_keypair = Keypair::new();
         let program_pubkey = Keypair::new();

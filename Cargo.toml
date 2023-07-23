@@ -115,9 +115,9 @@ resolver = "2"
 
 [workspace.package]
 version = "1.16.1"
-authors = ["Solana Labs Maintainers <maintainers@solanalabs.com>"]
-repository = "https://github.com/solana-labs/solana"
-homepage = "https://solanalabs.com/"
+authors = ["Solana Labs Maintainers <maintainers@xandeumlabs.com>"]
+repository = "https://github.com/xandeum-labs/xandeum"
+homepage = "https://xandeumlabs.com/"
 license = "Apache-2.0"
 edition = "2021"
 
@@ -288,77 +288,77 @@ signal-hook = "0.3.15"
 smpl_jwt = "0.7.1"
 socket2 = "0.4.9"
 soketto = "0.7"
-solana_rbpf = "=0.5.0"
-solana-account-decoder = { path = "account-decoder", version = "=1.16.1" }
-solana-address-lookup-table-program = { path = "programs/address-lookup-table", version = "=1.16.1" }
-solana-banks-client = { path = "banks-client", version = "=1.16.1" }
-solana-banks-interface = { path = "banks-interface", version = "=1.16.1" }
-solana-banks-server = { path = "banks-server", version = "=1.16.1" }
-solana-bench-tps = { path = "bench-tps", version = "=1.16.1" }
-solana-bloom = { path = "bloom", version = "=1.16.1" }
-solana-bpf-loader-program = { path = "programs/bpf_loader", version = "=1.16.1" }
-solana-bucket-map = { path = "bucket_map", version = "=1.16.1" }
-solana-connection-cache = { path = "connection-cache", version = "=1.16.1", default-features = false }
-solana-clap-utils = { path = "clap-utils", version = "=1.16.1" }
-solana-clap-v3-utils = { path = "clap-v3-utils", version = "=1.16.1" }
-solana-cli = { path = "cli", version = "=1.16.1" }
-solana-cli-config = { path = "cli-config", version = "=1.16.1" }
-solana-cli-output = { path = "cli-output", version = "=1.16.1" }
-solana-client = { path = "client", version = "=1.16.1" }
-solana-compute-budget-program = { path = "programs/compute-budget", version = "=1.16.1" }
-solana-config-program = { path = "programs/config", version = "=1.16.1" }
-solana-core = { path = "core", version = "=1.16.1" }
-solana-download-utils = { path = "download-utils", version = "=1.16.1" }
-solana-entry = { path = "entry", version = "=1.16.1" }
-solana-faucet = { path = "faucet", version = "=1.16.1" }
-solana-frozen-abi = { path = "frozen-abi", version = "=1.16.1" }
-solana-frozen-abi-macro = { path = "frozen-abi/macro", version = "=1.16.1" }
-solana-genesis = { path = "genesis", version = "=1.16.1" }
-solana-genesis-utils = { path = "genesis-utils", version = "=1.16.1" }
-solana-geyser-plugin-interface = { path = "geyser-plugin-interface", version = "=1.16.1" }
-solana-geyser-plugin-manager = { path = "geyser-plugin-manager", version = "=1.16.1" }
-solana-gossip = { path = "gossip", version = "=1.16.1" }
-solana-loader-v4-program = { path = "programs/loader-v4", version = "=1.16.1" }
-solana-ledger = { path = "ledger", version = "=1.16.1" }
-solana-local-cluster = { path = "local-cluster", version = "=1.16.1" }
-solana-logger = { path = "logger", version = "=1.16.1" }
-solana-measure = { path = "measure", version = "=1.16.1" }
-solana-merkle-tree = { path = "merkle-tree", version = "=1.16.1" }
-solana-metrics = { path = "metrics", version = "=1.16.1" }
-solana-net-utils = { path = "net-utils", version = "=1.16.1" }
-solana-notifier = { path = "notifier", version = "=1.16.1" }
-solana-perf = { path = "perf", version = "=1.16.1" }
-solana-poh = { path = "poh", version = "=1.16.1" }
-solana-program = { path = "sdk/program", version = "=1.16.1" }
-solana-program-runtime = { path = "program-runtime", version = "=1.16.1" }
-solana-program-test = { path = "program-test", version = "=1.16.1" }
-solana-pubsub-client = { path = "pubsub-client", version = "=1.16.1" }
-solana-quic-client = { path = "quic-client", version = "=1.16.1" }
-solana-rayon-threadlimit = { path = "rayon-threadlimit", version = "=1.16.1" }
-solana-remote-wallet = { path = "remote-wallet", version = "=1.16.1", default-features = false }
-solana-rpc = { path = "rpc", version = "=1.16.1" }
-solana-rpc-client = { path = "rpc-client", version = "=1.16.1", default-features = false }
-solana-rpc-client-api = { path = "rpc-client-api", version = "=1.16.1" }
-solana-rpc-client-nonce-utils = { path = "rpc-client-nonce-utils", version = "=1.16.1" }
-solana-runtime = { path = "runtime", version = "=1.16.1" }
-solana-sdk = { path = "sdk", version = "=1.16.1" }
-solana-sdk-macro = { path = "sdk/macro", version = "=1.16.1" }
-solana-send-transaction-service = { path = "send-transaction-service", version = "=1.16.1" }
-solana-stake-program = { path = "programs/stake", version = "=1.16.1" }
-solana-storage-bigtable = { path = "storage-bigtable", version = "=1.16.1" }
-solana-storage-proto = { path = "storage-proto", version = "=1.16.1" }
-solana-streamer = { path = "streamer", version = "=1.16.1" }
-solana-system-program = { path = "programs/system", version = "=1.16.1" }
-solana-test-validator = { path = "test-validator", version = "=1.16.1" }
-solana-thin-client = { path = "thin-client", version = "=1.16.1" }
-solana-tpu-client = { path = "tpu-client", version = "=1.16.1", default-features = false }
-solana-transaction-status = { path = "transaction-status", version = "=1.16.1" }
-solana-udp-client = { path = "udp-client", version = "=1.16.1" }
-solana-version = { path = "version", version = "=1.16.1" }
-solana-vote-program = { path = "programs/vote", version = "=1.16.1" }
-solana-zk-keygen = { path = "zk-keygen", version = "=1.16.1" }
-solana-zk-token-proof-program = { path = "programs/zk-token-proof", version = "=1.16.1" }
-solana-zk-token-sdk = { path = "zk-token-sdk", version = "=1.16.1" }
+xandeum_rbpf = "=0.5.0"
+xandeum-account-decoder = { path = "account-decoder", version = "=1.16.1" }
+xandeum-address-lookup-table-program = { path = "programs/address-lookup-table", version = "=1.16.1" }
+xandeum-banks-client = { path = "banks-client", version = "=1.16.1" }
+xandeum-banks-interface = { path = "banks-interface", version = "=1.16.1" }
+xandeum-banks-server = { path = "banks-server", version = "=1.16.1" }
+xandeum-bench-tps = { path = "bench-tps", version = "=1.16.1" }
+xandeum-bloom = { path = "bloom", version = "=1.16.1" }
+xandeum-bpf-loader-program = { path = "programs/bpf_loader", version = "=1.16.1" }
+xandeum-bucket-map = { path = "bucket_map", version = "=1.16.1" }
+xandeum-connection-cache = { path = "connection-cache", version = "=1.16.1", default-features = false }
+xandeum-clap-utils = { path = "clap-utils", version = "=1.16.1" }
+xandeum-clap-v3-utils = { path = "clap-v3-utils", version = "=1.16.1" }
+xandeum-cli = { path = "cli", version = "=1.16.1" }
+xandeum-cli-config = { path = "cli-config", version = "=1.16.1" }
+xandeum-cli-output = { path = "cli-output", version = "=1.16.1" }
+xandeum-client = { path = "client", version = "=1.16.1" }
+xandeum-compute-budget-program = { path = "programs/compute-budget", version = "=1.16.1" }
+xandeum-config-program = { path = "programs/config", version = "=1.16.1" }
+xandeum-core = { path = "core", version = "=1.16.1" }
+xandeum-download-utils = { path = "download-utils", version = "=1.16.1" }
+xandeum-entry = { path = "entry", version = "=1.16.1" }
+xandeum-faucet = { path = "faucet", version = "=1.16.1" }
+xandeum-frozen-abi = { path = "frozen-abi", version = "=1.16.1" }
+xandeum-frozen-abi-macro = { path = "frozen-abi/macro", version = "=1.16.1" }
+xandeum-genesis = { path = "genesis", version = "=1.16.1" }
+xandeum-genesis-utils = { path = "genesis-utils", version = "=1.16.1" }
+xandeum-geyser-plugin-interface = { path = "geyser-plugin-interface", version = "=1.16.1" }
+xandeum-geyser-plugin-manager = { path = "geyser-plugin-manager", version = "=1.16.1" }
+xandeum-gossip = { path = "gossip", version = "=1.16.1" }
+xandeum-loader-v4-program = { path = "programs/loader-v4", version = "=1.16.1" }
+xandeum-ledger = { path = "ledger", version = "=1.16.1" }
+xandeum-local-cluster = { path = "local-cluster", version = "=1.16.1" }
+xandeum-logger = { path = "logger", version = "=1.16.1" }
+xandeum-measure = { path = "measure", version = "=1.16.1" }
+xandeum-merkle-tree = { path = "merkle-tree", version = "=1.16.1" }
+xandeum-metrics = { path = "metrics", version = "=1.16.1" }
+xandeum-net-utils = { path = "net-utils", version = "=1.16.1" }
+xandeum-notifier = { path = "notifier", version = "=1.16.1" }
+xandeum-perf = { path = "perf", version = "=1.16.1" }
+xandeum-poh = { path = "poh", version = "=1.16.1" }
+xandeum-program = { path = "sdk/program", version = "=1.16.1" }
+xandeum-program-runtime = { path = "program-runtime", version = "=1.16.1" }
+xandeum-program-test = { path = "program-test", version = "=1.16.1" }
+xandeum-pubsub-client = { path = "pubsub-client", version = "=1.16.1" }
+xandeum-quic-client = { path = "quic-client", version = "=1.16.1" }
+xandeum-rayon-threadlimit = { path = "rayon-threadlimit", version = "=1.16.1" }
+xandeum-remote-wallet = { path = "remote-wallet", version = "=1.16.1", default-features = false }
+xandeum-rpc = { path = "rpc", version = "=1.16.1" }
+xandeum-rpc-client = { path = "rpc-client", version = "=1.16.1", default-features = false }
+xandeum-rpc-client-api = { path = "rpc-client-api", version = "=1.16.1" }
+xandeum-rpc-client-nonce-utils = { path = "rpc-client-nonce-utils", version = "=1.16.1" }
+xandeum-runtime = { path = "runtime", version = "=1.16.1" }
+xandeum-sdk = { path = "sdk", version = "=1.16.1" }
+xandeum-sdk-macro = { path = "sdk/macro", version = "=1.16.1" }
+xandeum-send-transaction-service = { path = "send-transaction-service", version = "=1.16.1" }
+xandeum-stake-program = { path = "programs/stake", version = "=1.16.1" }
+xandeum-storage-bigtable = { path = "storage-bigtable", version = "=1.16.1" }
+xandeum-storage-proto = { path = "storage-proto", version = "=1.16.1" }
+xandeum-streamer = { path = "streamer", version = "=1.16.1" }
+xandeum-system-program = { path = "programs/system", version = "=1.16.1" }
+xandeum-test-validator = { path = "test-validator", version = "=1.16.1" }
+xandeum-thin-client = { path = "thin-client", version = "=1.16.1" }
+xandeum-tpu-client = { path = "tpu-client", version = "=1.16.1", default-features = false }
+xandeum-transaction-status = { path = "transaction-status", version = "=1.16.1" }
+xandeum-udp-client = { path = "udp-client", version = "=1.16.1" }
+xandeum-version = { path = "version", version = "=1.16.1" }
+xandeum-vote-program = { path = "programs/vote", version = "=1.16.1" }
+xandeum-zk-keygen = { path = "zk-keygen", version = "=1.16.1" }
+xandeum-zk-token-proof-program = { path = "programs/zk-token-proof", version = "=1.16.1" }
+xandeum-zk-token-sdk = { path = "zk-token-sdk", version = "=1.16.1" }
 spl-associated-token-account = "=1.1.3"
 spl-instruction-padding = "0.1"
 spl-memo = "=3.0.1"
@@ -401,12 +401,12 @@ zeroize = { version = "1.3", default-features = false }
 zstd = "0.11.2"
 
 [patch.crates-io]
-# for details, see https://github.com/solana-labs/crossbeam/commit/fd279d707025f0e60951e429bf778b4813d1b6bf
-crossbeam-epoch = { git = "https://github.com/solana-labs/crossbeam", rev = "fd279d707025f0e60951e429bf778b4813d1b6bf" }
+# for details, see https://github.com/xandeum-labs/crossbeam/commit/fd279d707025f0e60951e429bf778b4813d1b6bf
+crossbeam-epoch = { git = "https://github.com/xandeum-labs/crossbeam", rev = "fd279d707025f0e60951e429bf778b4813d1b6bf" }
 
 # Rust 1.69+ broke ntapi v0.3.x, which doesn't contain proper fix:
 #   https://github.com/MSxDOS/ntapi/pull/12
-ntapi = { git = "https://github.com/solana-labs/ntapi", rev = "97ede981a1777883ff86d142b75024b023f04fad" }
+ntapi = { git = "https://github.com/xandeum-labs/ntapi", rev = "97ede981a1777883ff86d142b75024b023f04fad" }
 
 # We include the following crates as our dependencies above from crates.io:
 #
@@ -417,17 +417,17 @@ ntapi = { git = "https://github.com/solana-labs/ntapi", rev = "97ede981a1777883f
 #  * spl-token-2022
 #
 # They, in turn, depend on a number of crates that we also include directly using `path`
-# specifications.  For example, `spl-token` depends on `solana-program`.  And we explicitly specify
-# `solana-program` above as a local path dependency:
+# specifications.  For example, `spl-token` depends on `xandeum-program`.  And we explicitly specify
+# `xandeum-program` above as a local path dependency:
 #
-#     solana-program = { path = "../../sdk/program", version = "=1.16.0" }
+#     xandeum-program = { path = "../../sdk/program", version = "=1.16.0" }
 #
-# Unfortunately, Cargo will try to resolve the `spl-token` `solana-program` dependency only using
+# Unfortunately, Cargo will try to resolve the `spl-token` `xandeum-program` dependency only using
 # what is available on crates.io.  Crates.io normally contains a previous version of these crates,
-# and we end up with two versions of `solana-program` and `solana-zk-token-sdk` and all of their
+# and we end up with two versions of `xandeum-program` and `xandeum-zk-token-sdk` and all of their
 # dependencies in our build tree.
 #
 # There is a similar override in `programs/sbf/Cargo.toml`.  Please keep both comments and the
 # overrides in sync.
-solana-program = { path = "sdk/program" }
-solana-zk-token-sdk = { path = "zk-token-sdk" }
+xandeum-program = { path = "sdk/program" }
+xandeum-zk-token-sdk = { path = "zk-token-sdk" }

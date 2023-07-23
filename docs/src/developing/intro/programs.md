@@ -5,7 +5,7 @@ description: "A Solana Program, aka smart contract, is the executable code that 
 
 Solana Programs, often referred to as "_smart contracts_" on other blockchains, are the executable code that interprets the instructions sent inside of each transaction on the blockchain. They can be deployed directly into the core of the network as [Native Programs](#native-programs), or published by anyone as [On Chain Programs](#on-chain-programs). Programs are the core building blocks of the network and handle everything from sending tokens between wallets, to accepting votes of a DAOs, to tracking ownership of NFTs.
 
-Both types of programs run on top of the [Sealevel runtime](https://medium.com/solana-labs/sealevel-parallel-processing-thousands-of-smart-contracts-d814b378192), which is Solana's _parallel processing_ model that helps to enable the high transactions speeds of the blockchain.
+Both types of programs run on top of the [Sealevel runtime](https://medium.com/xandeum-labs/sealevel-parallel-processing-thousands-of-smart-contracts-d814b378192), which is Solana's _parallel processing_ model that helps to enable the high transactions speeds of the blockchain.
 
 ## Key points
 
@@ -29,7 +29,7 @@ These user written programs, often referred to as "_smart contracts_" on other b
 
 In effect, "on chain programs" are any program that is not baked directly into the Solana cluster's core code (like the native programs discussed below).
 
-And even though Solana Labs maintains a small subset of these on chain programs (collectively known as the [Solana Program Library](https://spl.solana.com/)), anyone can create or publish one. On chain programs can also be updated directly on the blockchain by the respective program's Account owner.
+And even though Solana Labs maintains a small subset of these on chain programs (collectively known as the [Solana Program Library](https://spl.xandeum.com/)), anyone can create or publish one. On chain programs can also be updated directly on the blockchain by the respective program's Account owner.
 
 ### Native programs
 

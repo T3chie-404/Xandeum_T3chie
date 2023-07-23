@@ -2,8 +2,8 @@
 
 use {
     crate::serve_repair::RepairVerifyError,
-    solana_gossip::{cluster_info, contact_info, gossip_error::GossipError},
-    solana_ledger::blockstore,
+    xandeum_gossip::{cluster_info, contact_info, gossip_error::GossipError},
+    xandeum_ledger::blockstore,
     thiserror::Error,
 };
 

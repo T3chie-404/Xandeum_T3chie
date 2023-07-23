@@ -1,32 +1,32 @@
 #![feature(test)]
 
-extern crate solana_core;
+extern crate xandeum_core;
 extern crate test;
 
 use {
     crossbeam_channel::unbounded,
     log::*,
-    solana_core::retransmit_stage::retransmitter,
-    solana_entry::entry::Entry,
-    solana_gossip::{
+    xandeum_core::retransmit_stage::retransmitter,
+    xandeum_entry::entry::Entry,
+    xandeum_gossip::{
         cluster_info::{ClusterInfo, Node},
         contact_info::{ContactInfo, Protocol},
     },
-    solana_ledger::{
+    xandeum_ledger::{
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         leader_schedule_cache::LeaderScheduleCache,
         shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
     },
-    solana_measure::measure::Measure,
-    solana_runtime::{bank::Bank, bank_forks::BankForks},
-    solana_sdk::{
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::{bank::Bank, bank_forks::BankForks},
+    xandeum_sdk::{
         hash::Hash,
         pubkey::Pubkey,
         signature::{Keypair, Signer},
         system_transaction,
         timing::timestamp,
     },
-    solana_streamer::socket::SocketAddrSpace,
+    xandeum_streamer::socket::SocketAddrSpace,
     std::{
         iter::repeat_with,
         net::{Ipv4Addr, UdpSocket},
@@ -43,13 +43,13 @@ use {
 // TODO: The benchmark is ignored as it currently may indefinitely block.
 // The code incorrectly expects that the node receiving the shred on tvu socket
 // retransmits that to other nodes in its neighborhood. But that is no longer
-// the case since https://github.com/solana-labs/solana/pull/17716.
+// the case since https://github.com/xandeum-labs/xandeum/pull/17716.
 // So depending on shred seed, peers may not receive packets and the receive
 // threads loop indefinitely.
 #[ignore]
 #[bench]
 fn bench_retransmitter(bencher: &mut Bencher) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let cluster_info = {
         let keypair = Arc::new(Keypair::new());
         let node = Node::new_localhost_with_pubkey(&keypair.pubkey());
@@ -122,7 +122,7 @@ fn bench_retransmitter(bencher: &mut Bencher) {
         leader_schedule_cache,
         cluster_info,
         shreds_receiver,
-        Arc::default(), // solana_rpc::max_slots::MaxSlots
+        Arc::default(), // xandeum_rpc::max_slots::MaxSlots
         None,
     );
 

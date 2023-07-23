@@ -1,5 +1,5 @@
 [package]
-name = "solana-banking-bench"
+name = "xandeum-banking-bench"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -14,19 +14,19 @@ crossbeam-channel = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-client = { workspace = true }
-solana-core = { workspace = true }
-solana-gossip = { workspace = true }
-solana-ledger = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-version = { workspace = true }
+xandeum-client = { workspace = true }
+xandeum-core = { workspace = true }
+xandeum-gossip = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-perf = { workspace = true }
+xandeum-poh = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-tpu-client = { workspace = true }
+xandeum-version = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

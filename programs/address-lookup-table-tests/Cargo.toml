@@ -1,8 +1,8 @@
 # This package only exists to avoid circular dependencies during cargo publish:
-# solana-runtime -> solana-address-program -> solana-program-test -> solana-runtime
+# xandeum-runtime -> xandeum-address-program -> xandeum-program-test -> xandeum-runtime
 
 [package]
-name = "solana-address-lookup-table-program-tests"
+name = "xandeum-address-lookup-table-program-tests"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -14,9 +14,9 @@ edition = { workspace = true }
 [dev-dependencies]
 assert_matches = { workspace = true }
 bincode = { workspace = true }
-solana-address-lookup-table-program = { workspace = true }
-solana-program-test = { workspace = true }
-solana-sdk = { workspace = true }
+xandeum-address-lookup-table-program = { workspace = true }
+xandeum-program-test = { workspace = true }
+xandeum-sdk = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

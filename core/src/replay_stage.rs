@@ -36,10 +36,10 @@ use {
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
     lazy_static::lazy_static,
     rayon::{prelude::*, ThreadPool},
-    solana_entry::entry::VerifyRecyclers,
-    solana_geyser_plugin_manager::block_metadata_notifier_interface::BlockMetadataNotifierLock,
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::{
+    xandeum_entry::entry::VerifyRecyclers,
+    xandeum_geyser_plugin_manager::block_metadata_notifier_interface::BlockMetadataNotifierLock,
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::{
         block_error::BlockError,
         blockstore::Blockstore,
         blockstore_processor::{
@@ -49,15 +49,15 @@ use {
         leader_schedule_cache::LeaderScheduleCache,
         leader_schedule_utils::first_of_consecutive_leader_slots,
     },
-    solana_measure::measure::Measure,
-    solana_poh::poh_recorder::{PohLeaderStatus, PohRecorder, GRACE_TICKS_FACTOR, MAX_GRACE_SLOTS},
-    solana_program_runtime::timings::ExecuteTimings,
-    solana_rpc::{
+    xandeum_measure::measure::Measure,
+    xandeum_poh::poh_recorder::{PohLeaderStatus, PohRecorder, GRACE_TICKS_FACTOR, MAX_GRACE_SLOTS},
+    xandeum_program_runtime::timings::ExecuteTimings,
+    xandeum_rpc::{
         optimistically_confirmed_bank_tracker::{BankNotification, BankNotificationSenderConfig},
         rpc_subscriptions::RpcSubscriptions,
     },
-    solana_rpc_client_api::response::SlotUpdate,
-    solana_runtime::{
+    xandeum_rpc_client_api::response::SlotUpdate,
+    xandeum_runtime::{
         accounts_background_service::AbsRequestSender,
         bank::{Bank, NewBankOptions},
         bank_forks::{BankForks, MAX_ROOT_DISTANCE_FOR_VOTE_ONLY},
@@ -65,7 +65,7 @@ use {
         prioritization_fee_cache::PrioritizationFeeCache,
         vote_sender_types::ReplayVoteSender,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::{BankId, Slot, MAX_PROCESSING_AGE, NUM_CONSECUTIVE_LEADER_SLOTS},
         feature_set,
         genesis_config::ClusterType,
@@ -76,7 +76,7 @@ use {
         timing::timestamp,
         transaction::Transaction,
     },
-    solana_vote_program::vote_state::VoteTransaction,
+    xandeum_vote_program::vote_state::VoteTransaction,
     std::{
         collections::{HashMap, HashSet},
         result,
@@ -3826,25 +3826,25 @@ pub(crate) mod tests {
         },
         crossbeam_channel::unbounded,
         itertools::Itertools,
-        solana_entry::entry::{self, Entry},
-        solana_gossip::{cluster_info::Node, crds::Cursor},
-        solana_ledger::{
+        xandeum_entry::entry::{self, Entry},
+        xandeum_gossip::{cluster_info::Node, crds::Cursor},
+        xandeum_ledger::{
             blockstore::{entries_to_test_shreds, make_slot_entries, BlockstoreError},
             create_new_tmp_ledger,
             genesis_utils::{create_genesis_config, create_genesis_config_with_leader},
             get_tmp_ledger_path,
             shred::{Shred, ShredFlags, LEGACY_SHRED_DATA_CAPACITY},
         },
-        solana_rpc::{
+        xandeum_rpc::{
             optimistically_confirmed_bank_tracker::OptimisticallyConfirmedBank,
             rpc::{create_test_transaction_entries, populate_blockstore_for_tests},
         },
-        solana_runtime::{
+        xandeum_runtime::{
             accounts_background_service::AbsRequestSender,
             commitment::BlockCommitment,
             genesis_utils::{GenesisConfigInfo, ValidatorVoteKeypairs},
         },
-        solana_sdk::{
+        xandeum_sdk::{
             clock::NUM_CONSECUTIVE_LEADER_SLOTS,
             genesis_config,
             hash::{hash, Hash},
@@ -3854,9 +3854,9 @@ pub(crate) mod tests {
             system_transaction,
             transaction::TransactionError,
         },
-        solana_streamer::socket::SocketAddrSpace,
-        solana_transaction_status::VersionedTransactionWithStatusMeta,
-        solana_vote_program::{
+        xandeum_streamer::socket::SocketAddrSpace,
+        xandeum_transaction_status::VersionedTransactionWithStatusMeta,
+        xandeum_vote_program::{
             vote_state::{self, VoteStateVersions},
             vote_transaction,
         },
@@ -4365,7 +4365,7 @@ pub(crate) mod tests {
 
     #[test]
     fn test_dead_fork_invalid_slot_tick_count() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         // Too many ticks per slot
         let res = check_dead_fork(|_keypair, bank| {
             let blockhash = bank.last_blockhash();
@@ -4594,7 +4594,7 @@ pub(crate) mod tests {
             bank.store_account(pubkey, &leader_vote_account);
         }
 
-        let leader_pubkey = solana_sdk::pubkey::new_rand();
+        let leader_pubkey = xandeum_sdk::pubkey::new_rand();
         let leader_lamports = 3;
         let genesis_config_info =
             create_genesis_config_with_leader(50, &leader_pubkey, leader_lamports);
@@ -4645,7 +4645,7 @@ pub(crate) mod tests {
             let _res = bank.transfer(
                 10,
                 &genesis_config_info.mint_keypair,
-                &solana_sdk::pubkey::new_rand(),
+                &xandeum_sdk::pubkey::new_rand(),
             );
             for _ in 0..genesis_config.ticks_per_slot {
                 bank.register_tick(&Hash::default());
@@ -4714,7 +4714,7 @@ pub(crate) mod tests {
             mut genesis_config,
             mint_keypair,
             ..
-        } = create_genesis_config(solana_sdk::native_token::sol_to_lamports(1000.0));
+        } = create_genesis_config(xandeum_sdk::native_token::sol_to_lamports(1000.0));
         genesis_config.rent.lamports_per_byte_year = 50;
         genesis_config.rent.exemption_threshold = 2.0;
         let (ledger_path, _) = create_new_tmp_ledger!(&genesis_config);

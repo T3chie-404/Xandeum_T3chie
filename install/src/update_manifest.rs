@@ -1,7 +1,7 @@
 use {
     serde::{Deserialize, Serialize},
-    solana_config_program::ConfigState,
-    solana_sdk::{
+    xandeum_config_program::ConfigState,
+    xandeum_sdk::{
         hash::Hash,
         pubkey::Pubkey,
         signature::{Signable, Signature},

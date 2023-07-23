@@ -1,8 +1,8 @@
 [package]
-name = "solana-validator"
+name = "xandeum-validator"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-validator"
-default-run = "solana-validator"
+documentation = "https://docs.rs/xandeum-validator"
+default-run = "xandeum-validator"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -33,39 +33,39 @@ rayon = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }
 serde_yaml = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-core = { workspace = true }
-solana-download-utils = { workspace = true }
-solana-entry = { workspace = true }
-solana-faucet = { workspace = true }
-solana-genesis-utils = { workspace = true }
-solana-geyser-plugin-interface = { workspace = true }
-solana-geyser-plugin-manager = { workspace = true }
-solana-gossip = { workspace = true }
-solana-ledger = { workspace = true }
-solana-logger = { workspace = true }
-solana-metrics = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-send-transaction-service = { workspace = true }
-solana-storage-bigtable = { workspace = true }
-solana-streamer = { workspace = true }
-solana-test-validator = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-version = { workspace = true }
-solana-vote-program = { workspace = true }
+xandeum-clap-utils = { workspace = true }
+xandeum-cli-config = { workspace = true }
+xandeum-core = { workspace = true }
+xandeum-download-utils = { workspace = true }
+xandeum-entry = { workspace = true }
+xandeum-faucet = { workspace = true }
+xandeum-genesis-utils = { workspace = true }
+xandeum-geyser-plugin-interface = { workspace = true }
+xandeum-geyser-plugin-manager = { workspace = true }
+xandeum-gossip = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-perf = { workspace = true }
+xandeum-poh = { workspace = true }
+xandeum-rpc = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-send-transaction-service = { workspace = true }
+xandeum-storage-bigtable = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-test-validator = { workspace = true }
+xandeum-tpu-client = { workspace = true }
+xandeum-version = { workspace = true }
+xandeum-vote-program = { workspace = true }
 symlink = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-solana-account-decoder = { workspace = true }
+xandeum-account-decoder = { workspace = true }
 spl-token-2022 = { workspace = true, features = ["no-entrypoint"] }
 
 [target.'cfg(not(target_env = "msvc"))'.dependencies]

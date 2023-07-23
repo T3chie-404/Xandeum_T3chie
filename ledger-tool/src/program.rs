@@ -4,26 +4,26 @@ use {
     log::*,
     serde::{Deserialize, Serialize},
     serde_json::Result,
-    solana_bpf_loader_program::{
+    xandeum_bpf_loader_program::{
         create_vm, load_program_from_bytes, serialization::serialize_parameters,
         syscalls::create_program_runtime_environment,
     },
-    solana_clap_utils::input_parsers::pubkeys_of,
-    solana_ledger::{
+    xandeum_clap_utils::input_parsers::pubkeys_of,
+    xandeum_ledger::{
         blockstore_options::{AccessType, BlockstoreRecoveryMode},
         blockstore_processor::ProcessOptions,
     },
-    solana_program_runtime::{
+    xandeum_program_runtime::{
         invoke_context::InvokeContext,
         loaded_programs::{LoadProgramMetrics, LoadedProgramType, DELAY_VISIBILITY_SLOT_OFFSET},
         with_mock_invoke_context,
     },
-    solana_rbpf::{
+    xandeum_rbpf::{
         assembler::assemble, elf::Executable, static_analysis::Analysis,
         verifier::RequisiteVerifier,
     },
-    solana_runtime::{bank::Bank, runtime_config::RuntimeConfig},
-    solana_sdk::{
+    xandeum_runtime::{bank::Bank, runtime_config::RuntimeConfig},
+    xandeum_sdk::{
         account::AccountSharedData,
         account_utils::StateMut,
         bpf_loader_upgradeable::{self, UpgradeableLoaderState},
@@ -525,7 +525,7 @@ pub fn program(ledger_path: &Path, matches: &ArgMatches<'_>) {
     let program_index: u16 = instruction_accounts.len().try_into().unwrap();
     transaction_accounts.push((
         loader_id,
-        AccountSharedData::new(0, 0, &solana_sdk::native_loader::id()),
+        AccountSharedData::new(0, 0, &xandeum_sdk::native_loader::id()),
     ));
     transaction_accounts.push((
         program_id, // ID of the loaded program. It can modify accounts with the same owner key

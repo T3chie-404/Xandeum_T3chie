@@ -1,6 +1,6 @@
 //! The [stake native program][np].
 //!
-//! [np]: https://docs.solana.com/developing/runtime-facilities/sysvars#stakehistory
+//! [np]: https://docs.xandeum.com/developing/runtime-facilities/sysvars#stakehistory
 
 pub mod config;
 pub mod instruction;

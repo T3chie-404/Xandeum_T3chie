@@ -12,13 +12,13 @@
 #[cfg(feature = "sbf_rust")]
 use {
     itertools::izip,
-    solana_account_decoder::parse_bpf_loader::{
+    xandeum_account_decoder::parse_bpf_loader::{
         parse_bpf_upgradeable_loader, BpfUpgradeableLoaderAccountType,
     },
-    solana_ledger::token_balances::collect_token_balances,
-    solana_program_runtime::{compute_budget::ComputeBudget, timings::ExecuteTimings},
-    solana_rbpf::vm::ContextObject,
-    solana_runtime::{
+    xandeum_ledger::token_balances::collect_token_balances,
+    xandeum_program_runtime::{compute_budget::ComputeBudget, timings::ExecuteTimings},
+    xandeum_rbpf::vm::ContextObject,
+    xandeum_runtime::{
         bank::{
             DurableNonceFee, InnerInstruction, TransactionBalancesSet, TransactionExecutionDetails,
             TransactionExecutionResult, TransactionResults,
@@ -29,10 +29,10 @@ use {
             upgrade_program,
         },
     },
-    solana_sbf_rust_invoke::instructions::*,
-    solana_sbf_rust_realloc::instructions::*,
-    solana_sbf_rust_realloc_invoke::instructions::*,
-    solana_sdk::{
+    xandeum_sbf_rust_invoke::instructions::*,
+    xandeum_sbf_rust_realloc::instructions::*,
+    xandeum_sbf_rust_realloc_invoke::instructions::*,
+    xandeum_sdk::{
         account::{ReadableAccount, WritableAccount},
         account_utils::StateMut,
         bpf_loader_upgradeable,
@@ -49,15 +49,15 @@ use {
         sysvar::{self, clock, rent},
         transaction::VersionedTransaction,
     },
-    solana_transaction_status::{
+    xandeum_transaction_status::{
         ConfirmedTransactionWithStatusMeta, InnerInstructions, TransactionStatusMeta,
         TransactionWithStatusMeta, VersionedTransactionWithStatusMeta,
     },
     std::collections::HashMap,
 };
 use {
-    solana_program_runtime::invoke_context::mock_process_instruction,
-    solana_runtime::{
+    xandeum_program_runtime::invoke_context::mock_process_instruction,
+    xandeum_runtime::{
         bank::Bank,
         bank_client::BankClient,
         genesis_utils::{
@@ -65,7 +65,7 @@ use {
             create_genesis_config_with_leader_ex, GenesisConfigInfo,
         },
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::AccountSharedData,
         bpf_loader, bpf_loader_deprecated,
         client::SyncClient,
@@ -209,7 +209,7 @@ fn execute_transactions(
                                 index: index as u8,
                                 instructions: instructions
                                     .into_iter()
-                                    .map(|ix| solana_transaction_status::InnerInstruction {
+                                    .map(|ix| xandeum_transaction_status::InnerInstruction {
                                         instruction: ix.instruction,
                                         stack_height: Some(u32::from(ix.stack_height)),
                                     })
@@ -270,7 +270,7 @@ fn load_program_and_advance_slot(
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_program_sbf_sanity() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -298,23 +298,23 @@ fn test_program_sbf_sanity() {
     #[cfg(feature = "sbf_rust")]
     {
         programs.extend_from_slice(&[
-            ("solana_sbf_rust_128bit", true),
-            ("solana_sbf_rust_alloc", true),
-            ("solana_sbf_rust_alt_bn128", true),
-            ("solana_sbf_rust_curve25519", true),
-            ("solana_sbf_rust_custom_heap", true),
-            ("solana_sbf_rust_dep_crate", true),
-            ("solana_sbf_rust_external_spend", false),
-            ("solana_sbf_rust_iter", true),
-            ("solana_sbf_rust_many_args", true),
-            ("solana_sbf_rust_membuiltins", true),
-            ("solana_sbf_rust_noop", true),
-            ("solana_sbf_rust_panic", false),
-            ("solana_sbf_rust_param_passing", true),
-            ("solana_sbf_rust_rand", true),
-            ("solana_sbf_rust_sanity", true),
-            ("solana_sbf_rust_secp256k1_recover", true),
-            ("solana_sbf_rust_sha", true),
+            ("xandeum_sbf_rust_128bit", true),
+            ("xandeum_sbf_rust_alloc", true),
+            ("xandeum_sbf_rust_alt_bn128", true),
+            ("xandeum_sbf_rust_curve25519", true),
+            ("xandeum_sbf_rust_custom_heap", true),
+            ("xandeum_sbf_rust_dep_crate", true),
+            ("xandeum_sbf_rust_external_spend", false),
+            ("xandeum_sbf_rust_iter", true),
+            ("xandeum_sbf_rust_many_args", true),
+            ("xandeum_sbf_rust_membuiltins", true),
+            ("xandeum_sbf_rust_noop", true),
+            ("xandeum_sbf_rust_panic", false),
+            ("xandeum_sbf_rust_param_passing", true),
+            ("xandeum_sbf_rust_rand", true),
+            ("xandeum_sbf_rust_sanity", true),
+            ("xandeum_sbf_rust_secp256k1_recover", true),
+            ("xandeum_sbf_rust_sha", true),
         ]);
     }
 
@@ -354,7 +354,7 @@ fn test_program_sbf_sanity() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_program_sbf_loader_deprecated() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -363,7 +363,7 @@ fn test_program_sbf_loader_deprecated() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_deprecated_loader")]);
+        programs.extend_from_slice(&[("xandeum_sbf_rust_deprecated_loader")]);
     }
 
     for program in programs.iter() {
@@ -376,7 +376,7 @@ fn test_program_sbf_loader_deprecated() {
         } = create_genesis_config(50);
         genesis_config
             .accounts
-            .remove(&solana_sdk::feature_set::disable_deploy_of_alloc_free_syscall::id())
+            .remove(&xandeum_sdk::feature_set::disable_deploy_of_alloc_free_syscall::id())
             .unwrap();
         let bank = Bank::new_for_tests(&genesis_config);
         let program_id = create_program(&bank, &bpf_loader_deprecated::id(), program);
@@ -395,7 +395,7 @@ fn test_program_sbf_loader_deprecated() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_sol_alloc_free_no_longer_deployable() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let program_keypair = Keypair::new();
     let program_address = program_keypair.pubkey();
@@ -408,7 +408,7 @@ fn test_sol_alloc_free_no_longer_deployable() {
     let mut bank = Bank::new_for_tests(&genesis_config);
 
     // Populate loader account with elf that depends on _sol_alloc_free syscall
-    let elf = load_program_from_file("solana_sbf_rust_deprecated_loader");
+    let elf = load_program_from_file("xandeum_sbf_rust_deprecated_loader");
     let mut program_account = AccountSharedData::new(1, elf.len(), &bpf_loader::id());
     program_account
         .data_as_mut_slice()
@@ -449,7 +449,7 @@ fn test_sol_alloc_free_no_longer_deployable() {
     );
 
     // Enable _sol_alloc_free syscall
-    bank.deactivate_feature(&solana_sdk::feature_set::disable_deploy_of_alloc_free_syscall::id());
+    bank.deactivate_feature(&xandeum_sdk::feature_set::disable_deploy_of_alloc_free_syscall::id());
     bank.clear_signatures();
     bank.clear_program_cache();
 
@@ -462,7 +462,7 @@ fn test_sol_alloc_free_no_longer_deployable() {
     assert!(bank.process_transaction(&invoke_tx).is_ok());
 
     // disable _sol_alloc_free
-    bank.activate_feature(&solana_sdk::feature_set::disable_deploy_of_alloc_free_syscall::id());
+    bank.activate_feature(&xandeum_sdk::feature_set::disable_deploy_of_alloc_free_syscall::id());
     bank.clear_signatures();
 
     // invoke should still succeed because cached
@@ -478,7 +478,7 @@ fn test_sol_alloc_free_no_longer_deployable() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_duplicate_accounts() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -487,7 +487,7 @@ fn test_program_sbf_duplicate_accounts() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_dup_accounts")]);
+        programs.extend_from_slice(&[("xandeum_sbf_rust_dup_accounts")]);
     }
 
     for program in programs.iter() {
@@ -582,7 +582,7 @@ fn test_program_sbf_duplicate_accounts() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_error_handling() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -591,7 +591,7 @@ fn test_program_sbf_error_handling() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_error_handling")]);
+        programs.extend_from_slice(&[("xandeum_sbf_rust_error_handling")]);
     }
 
     for program in programs.iter() {
@@ -689,7 +689,7 @@ fn test_program_sbf_error_handling() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_return_data_and_log_data_syscall() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -698,7 +698,7 @@ fn test_return_data_and_log_data_syscall() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_log_data")]);
+        programs.extend_from_slice(&[("xandeum_sbf_rust_log_data")]);
     }
 
     for program in programs.iter() {
@@ -745,7 +745,7 @@ fn test_return_data_and_log_data_syscall() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_sanity() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     #[allow(dead_code)]
     #[derive(Debug)]
@@ -762,9 +762,9 @@ fn test_program_sbf_invoke_sanity() {
     {
         programs.push((
             Languages::Rust,
-            "solana_sbf_rust_invoke",
-            "solana_sbf_rust_invoked",
-            "solana_sbf_rust_noop",
+            "xandeum_sbf_rust_invoke",
+            "xandeum_sbf_rust_invoked",
+            "xandeum_sbf_rust_noop",
         ));
     }
     for program in programs.iter() {
@@ -822,7 +822,7 @@ fn test_program_sbf_invoke_sanity() {
             AccountMeta::new_readonly(derived_key3, false),
             AccountMeta::new_readonly(system_program::id(), false),
             AccountMeta::new(from_keypair.pubkey(), true),
-            AccountMeta::new_readonly(solana_sdk::ed25519_program::id(), false),
+            AccountMeta::new_readonly(xandeum_sdk::ed25519_program::id(), false),
             AccountMeta::new_readonly(invoke_program_id, false),
         ];
 
@@ -1180,13 +1180,13 @@ fn test_program_sbf_program_id_spoofing() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_spoof1",
+        "xandeum_sbf_rust_spoof1",
     );
     let (bank, malicious_system_pubkey) = load_program_and_advance_slot(
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_spoof1_system",
+        "xandeum_sbf_rust_spoof1_system",
     );
 
     let from_pubkey = Pubkey::new_unique();
@@ -1231,13 +1231,13 @@ fn test_program_sbf_caller_has_access_to_cpi_program() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_caller_access",
+        "xandeum_sbf_rust_caller_access",
     );
     let (_, caller2_pubkey) = load_program_and_advance_slot(
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_caller_access",
+        "xandeum_sbf_rust_caller_access",
     );
     let account_metas = vec![
         AccountMeta::new_readonly(caller_pubkey, false),
@@ -1254,7 +1254,7 @@ fn test_program_sbf_caller_has_access_to_cpi_program() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_ro_modify() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1269,7 +1269,7 @@ fn test_program_sbf_ro_modify() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_ro_modify",
+        "xandeum_sbf_rust_ro_modify",
     );
 
     let test_keypair = Keypair::new();
@@ -1309,7 +1309,7 @@ fn test_program_sbf_ro_modify() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_call_depth() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1322,7 +1322,7 @@ fn test_program_sbf_call_depth() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_call_depth",
+        "xandeum_sbf_rust_call_depth",
     );
 
     let instruction = Instruction::new_with_bincode(
@@ -1342,7 +1342,7 @@ fn test_program_sbf_call_depth() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_compute_budget() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1355,7 +1355,7 @@ fn test_program_sbf_compute_budget() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
     let message = Message::new(
         &[
@@ -1373,7 +1373,7 @@ fn test_program_sbf_compute_budget() {
 
 #[test]
 fn assert_instruction_count() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -1397,20 +1397,20 @@ fn assert_instruction_count() {
     #[cfg(feature = "sbf_rust")]
     {
         programs.extend_from_slice(&[
-            ("solana_sbf_rust_128bit", 1218),
-            ("solana_sbf_rust_alloc", 5067),
-            ("solana_sbf_rust_custom_heap", 398),
-            ("solana_sbf_rust_dep_crate", 2),
-            ("solana_sbf_rust_iter", 1013),
-            ("solana_sbf_rust_many_args", 1289),
-            ("solana_sbf_rust_mem", 2067),
-            ("solana_sbf_rust_membuiltins", 1539),
-            ("solana_sbf_rust_noop", 275),
-            ("solana_sbf_rust_param_passing", 146),
-            ("solana_sbf_rust_rand", 378),
-            ("solana_sbf_rust_sanity", 51931),
-            ("solana_sbf_rust_secp256k1_recover", 91185),
-            ("solana_sbf_rust_sha", 24059),
+            ("xandeum_sbf_rust_128bit", 1218),
+            ("xandeum_sbf_rust_alloc", 5067),
+            ("xandeum_sbf_rust_custom_heap", 398),
+            ("xandeum_sbf_rust_dep_crate", 2),
+            ("xandeum_sbf_rust_iter", 1013),
+            ("xandeum_sbf_rust_many_args", 1289),
+            ("xandeum_sbf_rust_mem", 2067),
+            ("xandeum_sbf_rust_membuiltins", 1539),
+            ("xandeum_sbf_rust_noop", 275),
+            ("xandeum_sbf_rust_param_passing", 146),
+            ("xandeum_sbf_rust_rand", 378),
+            ("xandeum_sbf_rust_sanity", 51931),
+            ("xandeum_sbf_rust_secp256k1_recover", 91185),
+            ("xandeum_sbf_rust_sha", 24059),
         ]);
     }
 
@@ -1444,10 +1444,10 @@ fn assert_instruction_count() {
             transaction_accounts,
             instruction_accounts,
             Ok(()),
-            solana_bpf_loader_program::process_instruction,
+            xandeum_bpf_loader_program::process_instruction,
             |invoke_context| {
                 *prev_compute_meter.borrow_mut() = invoke_context.get_remaining();
-                solana_bpf_loader_program::test_utils::load_all_invoked_programs(invoke_context);
+                xandeum_bpf_loader_program::test_utils::load_all_invoked_programs(invoke_context);
             },
             |invoke_context| {
                 let consumption = prev_compute_meter
@@ -1469,7 +1469,7 @@ fn assert_instruction_count() {
 #[test]
 #[cfg(any(feature = "sbf_rust"))]
 fn test_program_sbf_instruction_introspection() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1484,7 +1484,7 @@ fn test_program_sbf_instruction_introspection() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_instruction_introspection",
+        "xandeum_sbf_rust_instruction_introspection",
     );
 
     // Passing transaction
@@ -1527,7 +1527,7 @@ fn test_program_sbf_instruction_introspection() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_test_use_latest_executor() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1540,7 +1540,7 @@ fn test_program_sbf_test_use_latest_executor() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_panic",
+        "xandeum_sbf_rust_panic",
     );
 
     // Write the panic program into the program account
@@ -1549,7 +1549,7 @@ fn test_program_sbf_test_use_latest_executor() {
         &bpf_loader::id(),
         None,
         &mint_keypair,
-        "solana_sbf_rust_panic",
+        "xandeum_sbf_rust_panic",
     );
 
     // Finalize the panic program, but fail the tx
@@ -1574,7 +1574,7 @@ fn test_program_sbf_test_use_latest_executor() {
         &bpf_loader::id(),
         Some(program_keypair),
         &mint_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
     bank_client
         .advance_slot(1, &Pubkey::default())
@@ -1604,7 +1604,7 @@ fn test_program_sbf_test_use_latest_executor() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_upgrade() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1625,7 +1625,7 @@ fn test_program_sbf_upgrade() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "xandeum_sbf_rust_upgradeable",
     );
     bank_client
         .advance_slot(1, &Pubkey::default())
@@ -1649,7 +1649,7 @@ fn test_program_sbf_upgrade() {
         &buffer_keypair,
         &program_id,
         &authority_keypair,
-        "solana_sbf_rust_upgraded",
+        "xandeum_sbf_rust_upgraded",
     );
     bank_client.set_sysvar_for_tests(&clock::Clock {
         slot: 2,
@@ -1685,7 +1685,7 @@ fn test_program_sbf_upgrade() {
         &buffer_keypair,
         &program_id,
         &new_authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "xandeum_sbf_rust_upgradeable",
     );
 
     bank_client
@@ -1743,7 +1743,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
     // assert that the resulting bank hash matches with the expected value.
     // The assert check is commented out by default. Please refer to the last few lines
     // of the test to enable the assertion.
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1782,7 +1782,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
 
     // Deploy indirect invocation program
@@ -1795,7 +1795,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
         &buffer_keypair,
         &indirect_program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     let invoke_instruction =
@@ -1818,7 +1818,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
         &mint_keypair,
         &buffer_keypair,
         &authority_keypair,
-        "solana_sbf_rust_panic",
+        "xandeum_sbf_rust_panic",
     );
     let redeployment_instruction = bpf_loader_upgradeable::upgrade(
         &program_id,
@@ -1917,7 +1917,7 @@ fn test_program_sbf_invoke_stable_genesis_and_bank() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_in_same_tx_as_deployment() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -1942,7 +1942,7 @@ fn test_program_sbf_invoke_in_same_tx_as_deployment() {
         &buffer_keypair,
         &indirect_program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     let invoke_instruction =
@@ -1962,7 +1962,7 @@ fn test_program_sbf_invoke_in_same_tx_as_deployment() {
         &mint_keypair,
         &buffer_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
     let deployment_instructions = bpf_loader_upgradeable::deploy_with_max_program_len(
         &mint_keypair.pubkey(),
@@ -2015,7 +2015,7 @@ fn test_program_sbf_invoke_in_same_tx_as_deployment() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2037,7 +2037,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
 
     // Deploy indirect invocation program
@@ -2048,7 +2048,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
         &buffer_keypair,
         &indirect_program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     // Deploy panic program
@@ -2059,7 +2059,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
         &buffer_keypair,
         &panic_program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_panic",
+        "xandeum_sbf_rust_panic",
     );
 
     let invoke_instruction =
@@ -2086,7 +2086,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
         &mint_keypair,
         &buffer_keypair,
         &authority_keypair,
-        "solana_sbf_rust_panic",
+        "xandeum_sbf_rust_panic",
     );
     let redeployment_instruction = bpf_loader_upgradeable::upgrade(
         &program_id,
@@ -2123,7 +2123,7 @@ fn test_program_sbf_invoke_in_same_tx_as_redeployment() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2145,7 +2145,7 @@ fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
 
     // Deploy indirect invocation program
@@ -2156,7 +2156,7 @@ fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
         &buffer_keypair,
         &indirect_program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     let invoke_instruction =
@@ -2216,7 +2216,7 @@ fn test_program_sbf_invoke_in_same_tx_as_undeployment() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_invoke_upgradeable_via_cpi() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2229,7 +2229,7 @@ fn test_program_sbf_invoke_upgradeable_via_cpi() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     // Deploy upgradeable program
@@ -2243,7 +2243,7 @@ fn test_program_sbf_invoke_upgradeable_via_cpi() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "xandeum_sbf_rust_upgradeable",
     );
 
     bank_client
@@ -2275,7 +2275,7 @@ fn test_program_sbf_invoke_upgradeable_via_cpi() {
         &buffer_keypair,
         &program_id,
         &authority_keypair,
-        "solana_sbf_rust_upgraded",
+        "xandeum_sbf_rust_upgraded",
     );
     bank_client.set_sysvar_for_tests(&clock::Clock {
         slot: 2,
@@ -2311,7 +2311,7 @@ fn test_program_sbf_invoke_upgradeable_via_cpi() {
         &buffer_keypair,
         &program_id,
         &new_authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "xandeum_sbf_rust_upgradeable",
     );
 
     bank_client
@@ -2330,7 +2330,7 @@ fn test_program_sbf_invoke_upgradeable_via_cpi() {
 #[test]
 #[cfg(any(feature = "sbf_c", feature = "sbf_rust"))]
 fn test_program_sbf_disguised_as_sbf_loader() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mut programs = Vec::new();
     #[cfg(feature = "sbf_c")]
@@ -2339,7 +2339,7 @@ fn test_program_sbf_disguised_as_sbf_loader() {
     }
     #[cfg(feature = "sbf_rust")]
     {
-        programs.extend_from_slice(&[("solana_sbf_rust_noop")]);
+        programs.extend_from_slice(&[("xandeum_sbf_rust_noop")]);
     }
 
     for program in programs.iter() {
@@ -2353,10 +2353,10 @@ fn test_program_sbf_disguised_as_sbf_loader() {
         // disable native_programs_consume_cu feature to allow test program
         // not consume units.
         let mut feature_set = FeatureSet::all_enabled();
-        feature_set.deactivate(&solana_sdk::feature_set::native_programs_consume_cu::id());
+        feature_set.deactivate(&xandeum_sdk::feature_set::native_programs_consume_cu::id());
         bank.feature_set = Arc::new(feature_set);
         bank.deactivate_feature(
-            &solana_sdk::feature_set::remove_bpf_loader_incorrect_program_id::id(),
+            &xandeum_sdk::feature_set::remove_bpf_loader_incorrect_program_id::id(),
         );
         let bank_client = BankClient::new(bank);
 
@@ -2374,7 +2374,7 @@ fn test_program_sbf_disguised_as_sbf_loader() {
 #[test]
 #[cfg(feature = "sbf_c")]
 fn test_program_reads_from_program_account() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2400,7 +2400,7 @@ fn test_program_reads_from_program_account() {
 #[test]
 #[cfg(feature = "sbf_c")]
 fn test_program_sbf_c_dup() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2430,7 +2430,7 @@ fn test_program_sbf_c_dup() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_upgrade_via_cpi() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2443,7 +2443,7 @@ fn test_program_sbf_upgrade_via_cpi() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     // Deploy upgradeable program
@@ -2457,7 +2457,7 @@ fn test_program_sbf_upgrade_via_cpi() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "xandeum_sbf_rust_upgradeable",
     );
     bank_client
         .advance_slot(1, &Pubkey::default())
@@ -2498,7 +2498,7 @@ fn test_program_sbf_upgrade_via_cpi() {
         &mint_keypair,
         &buffer_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgraded",
+        "xandeum_sbf_rust_upgraded",
     );
 
     // Upgrade program via CPI
@@ -2540,7 +2540,7 @@ fn test_program_sbf_upgrade_via_cpi() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_set_upgrade_authority_via_cpi() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2555,7 +2555,7 @@ fn test_program_sbf_set_upgrade_authority_via_cpi() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     // Deploy upgradeable program
@@ -2569,7 +2569,7 @@ fn test_program_sbf_set_upgrade_authority_via_cpi() {
         &buffer_keypair,
         &program_keypair,
         &authority_keypair,
-        "solana_sbf_rust_upgradeable",
+        "xandeum_sbf_rust_upgradeable",
     );
 
     bank_client
@@ -2633,7 +2633,7 @@ fn test_program_upgradeable_locks() {
         buffer_keypair: &Keypair,
         program_keypair: &Keypair,
     ) -> (Arc<Bank>, Transaction, Transaction) {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let GenesisConfigInfo {
             genesis_config,
@@ -2650,7 +2650,7 @@ fn test_program_upgradeable_locks() {
             buffer_keypair,
             program_keypair,
             payer_keypair,
-            "solana_sbf_rust_panic",
+            "xandeum_sbf_rust_panic",
         );
 
         // Load the buffer account
@@ -2659,7 +2659,7 @@ fn test_program_upgradeable_locks() {
             &mint_keypair,
             buffer_keypair,
             &payer_keypair,
-            "solana_sbf_rust_noop",
+            "xandeum_sbf_rust_noop",
         );
 
         let bank = bank_client
@@ -2756,7 +2756,7 @@ fn test_program_upgradeable_locks() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_finalize() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2771,7 +2771,7 @@ fn test_program_sbf_finalize() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_finalize",
+        "xandeum_sbf_rust_finalize",
     );
 
     // Write the noop program into the same program account
@@ -2780,7 +2780,7 @@ fn test_program_sbf_finalize() {
         &bpf_loader::id(),
         None,
         &mint_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
 
     bank_client
@@ -2804,7 +2804,7 @@ fn test_program_sbf_finalize() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_ro_account_modify() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -2819,7 +2819,7 @@ fn test_program_sbf_ro_account_modify() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_ro_account_modify",
+        "xandeum_sbf_rust_ro_account_modify",
     );
 
     let argument_keypair = Keypair::new();
@@ -2864,7 +2864,7 @@ fn test_program_sbf_ro_account_modify() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_realloc() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     const START_BALANCE: u64 = 100_000_000_000;
 
@@ -2890,7 +2890,7 @@ fn test_program_sbf_realloc() {
             &mut bank_client,
             &bpf_loader::id(),
             &mint_keypair,
-            "solana_sbf_rust_realloc",
+            "xandeum_sbf_rust_realloc",
         );
 
         let mut bump = 0;
@@ -3101,7 +3101,7 @@ fn test_program_sbf_realloc() {
             )
             .unwrap();
         let account = bank.get_account(&pubkey).unwrap();
-        assert_eq!(&solana_sdk::system_program::id(), account.owner());
+        assert_eq!(&xandeum_sdk::system_program::id(), account.owner());
         let data = bank_client.get_account_data(&pubkey).unwrap().unwrap();
         assert_eq!(MAX_PERMITTED_DATA_INCREASE, data.len());
 
@@ -3131,7 +3131,7 @@ fn test_program_sbf_realloc() {
                             &[REALLOC_AND_ASSIGN_TO_SELF_VIA_SYSTEM_PROGRAM],
                             vec![
                                 AccountMeta::new(pubkey, true),
-                                AccountMeta::new(solana_sdk::system_program::id(), false),
+                                AccountMeta::new(xandeum_sdk::system_program::id(), false),
                             ],
                         )],
                         Some(&mint_pubkey),
@@ -3152,7 +3152,7 @@ fn test_program_sbf_realloc() {
                         &[ASSIGN_TO_SELF_VIA_SYSTEM_PROGRAM_AND_REALLOC],
                         vec![
                             AccountMeta::new(pubkey, true),
-                            AccountMeta::new(solana_sdk::system_program::id(), false),
+                            AccountMeta::new(xandeum_sdk::system_program::id(), false),
                         ],
                     )],
                     Some(&mint_pubkey),
@@ -3197,7 +3197,7 @@ fn test_program_sbf_realloc() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_realloc_invoke() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     const START_BALANCE: u64 = 100_000_000_000;
 
@@ -3218,14 +3218,14 @@ fn test_program_sbf_realloc_invoke() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_realloc",
+        "xandeum_sbf_rust_realloc",
     );
 
     let (bank, realloc_invoke_program_id) = load_program_and_advance_slot(
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_realloc_invoke",
+        "xandeum_sbf_rust_realloc_invoke",
     );
 
     let mut bump = 0;
@@ -3352,7 +3352,7 @@ fn test_program_sbf_realloc_invoke() {
         )
         .unwrap();
     let account = bank.get_account(&pubkey).unwrap();
-    assert_eq!(&solana_sdk::system_program::id(), account.owner());
+    assert_eq!(&xandeum_sdk::system_program::id(), account.owner());
     let data = bank_client.get_account_data(&pubkey).unwrap().unwrap();
     assert_eq!(MAX_PERMITTED_DATA_INCREASE, data.len());
 
@@ -3383,7 +3383,7 @@ fn test_program_sbf_realloc_invoke() {
                         vec![
                             AccountMeta::new(pubkey, true),
                             AccountMeta::new_readonly(realloc_program_id, false),
-                            AccountMeta::new_readonly(solana_sdk::system_program::id(), false),
+                            AccountMeta::new_readonly(xandeum_sdk::system_program::id(), false),
                         ],
                     )],
                     Some(&mint_pubkey),
@@ -3405,7 +3405,7 @@ fn test_program_sbf_realloc_invoke() {
                     vec![
                         AccountMeta::new(pubkey, true),
                         AccountMeta::new_readonly(realloc_program_id, false),
-                        AccountMeta::new_readonly(solana_sdk::system_program::id(), false),
+                        AccountMeta::new_readonly(xandeum_sdk::system_program::id(), false),
                     ],
                 )],
                 Some(&mint_pubkey),
@@ -3477,7 +3477,7 @@ fn test_program_sbf_realloc_invoke() {
                     vec![
                         AccountMeta::new(mint_pubkey, true),
                         AccountMeta::new(new_pubkey, true),
-                        AccountMeta::new(solana_sdk::system_program::id(), false),
+                        AccountMeta::new(xandeum_sdk::system_program::id(), false),
                         AccountMeta::new_readonly(realloc_invoke_program_id, false),
                     ],
                 )],
@@ -3719,7 +3719,7 @@ fn test_program_sbf_realloc_invoke() {
 #[test]
 #[cfg(any(feature = "sbf_rust"))]
 fn test_program_sbf_processed_inner_instruction() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -3734,25 +3734,25 @@ fn test_program_sbf_processed_inner_instruction() {
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_sibling_instructions",
+        "xandeum_sbf_rust_sibling_instructions",
     );
     let sibling_inner_program_id = load_program(
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_sibling_inner_instructions",
+        "xandeum_sbf_rust_sibling_inner_instructions",
     );
     let noop_program_id = load_program(
         &bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
     let (_, invoke_and_return_program_id) = load_program_and_advance_slot(
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_invoke_and_return",
+        "xandeum_sbf_rust_invoke_and_return",
     );
 
     let instruction2 = Instruction::new_with_bytes(
@@ -3793,7 +3793,7 @@ fn test_program_sbf_processed_inner_instruction() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_fees() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let congestion_multiplier = 1;
 
@@ -3814,7 +3814,7 @@ fn test_program_fees() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_noop",
+        "xandeum_sbf_rust_noop",
     );
 
     let pre_balance = bank_client.get_balance(&mint_keypair.pubkey()).unwrap();
@@ -3887,7 +3887,7 @@ fn test_get_minimum_delegation() {
         &mut bank_client,
         &bpf_loader::id(),
         &mint_keypair,
-        "solana_sbf_rust_get_minimum_delegation",
+        "xandeum_sbf_rust_get_minimum_delegation",
     );
 
     let account_metas = vec![AccountMeta::new_readonly(stake::program::id(), false)];
@@ -3899,7 +3899,7 @@ fn test_get_minimum_delegation() {
 #[test]
 #[cfg(feature = "sbf_rust")]
 fn test_program_sbf_inner_instruction_alignment_checks() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let GenesisConfigInfo {
         genesis_config,
@@ -3907,11 +3907,11 @@ fn test_program_sbf_inner_instruction_alignment_checks() {
         ..
     } = create_genesis_config(50);
     let bank = Bank::new_for_tests(&genesis_config);
-    let noop = create_program(&bank, &bpf_loader_deprecated::id(), "solana_sbf_rust_noop");
+    let noop = create_program(&bank, &bpf_loader_deprecated::id(), "xandeum_sbf_rust_noop");
     let inner_instruction_alignment_check = create_program(
         &bank,
         &bpf_loader_deprecated::id(),
-        "solana_sbf_rust_inner_instruction_alignment_check",
+        "xandeum_sbf_rust_inner_instruction_alignment_check",
     );
 
     // invoke unaligned program, which will call aligned program twice,

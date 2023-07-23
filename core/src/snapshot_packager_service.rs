@@ -2,10 +2,10 @@ mod snapshot_gossip_manager;
 use {
     crossbeam_channel::{Receiver, Sender},
     snapshot_gossip_manager::SnapshotGossipManager,
-    solana_gossip::cluster_info::{ClusterInfo, MAX_LEGACY_SNAPSHOT_HASHES},
-    solana_measure::measure_us,
-    solana_perf::thread::renice_this_thread,
-    solana_runtime::{
+    xandeum_gossip::cluster_info::{ClusterInfo, MAX_LEGACY_SNAPSHOT_HASHES},
+    xandeum_measure::measure_us,
+    xandeum_perf::thread::renice_this_thread,
+    xandeum_runtime::{
         snapshot_archive_info::SnapshotArchiveInfoGetter,
         snapshot_config::SnapshotConfig,
         snapshot_hash::StartingSnapshotHashes,
@@ -193,13 +193,13 @@ mod tests {
     use {
         super::*,
         rand::seq::SliceRandom,
-        solana_runtime::{
+        xandeum_runtime::{
             snapshot_archive_info::SnapshotArchiveInfo,
             snapshot_hash::SnapshotHash,
             snapshot_package::{SnapshotPackage, SnapshotType},
             snapshot_utils::{self, ArchiveFormat, SnapshotVersion},
         },
-        solana_sdk::{clock::Slot, genesis_config::GenesisConfig, hash::Hash},
+        xandeum_sdk::{clock::Slot, genesis_config::GenesisConfig, hash::Hash},
         std::{
             fs::{self, remove_dir_all},
             path::{Path, PathBuf},

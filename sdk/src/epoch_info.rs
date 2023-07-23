@@ -2,7 +2,7 @@
 //!
 //! As returned by the [`getEpochInfo`] RPC method.
 //!
-//! [`getEpochInfo`]: https://docs.solana.com/developing/clients/jsonrpc-api#getepochinfo
+//! [`getEpochInfo`]: https://docs.xandeum.com/developing/clients/jsonrpc-api#getepochinfo
 
 use crate::clock::{Epoch, Slot};
 

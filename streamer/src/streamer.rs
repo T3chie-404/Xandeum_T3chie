@@ -10,7 +10,7 @@ use {
     crossbeam_channel::{Receiver, RecvTimeoutError, SendError, Sender},
     histogram::Histogram,
     itertools::Itertools,
-    solana_sdk::{packet::Packet, pubkey::Pubkey, timing::timestamp},
+    xandeum_sdk::{packet::Packet, pubkey::Pubkey, timing::timestamp},
     std::{
         cmp::Reverse,
         collections::HashMap,
@@ -436,7 +436,7 @@ mod test {
             streamer::{receiver, responder},
         },
         crossbeam_channel::unbounded,
-        solana_perf::recycler::Recycler,
+        xandeum_perf::recycler::Recycler,
         std::{
             io,
             io::Write,

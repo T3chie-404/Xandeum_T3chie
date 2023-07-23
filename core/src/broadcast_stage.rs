@@ -14,22 +14,22 @@ use {
     },
     crossbeam_channel::{unbounded, Receiver, RecvError, RecvTimeoutError, Sender},
     itertools::Itertools,
-    solana_gossip::{
+    xandeum_gossip::{
         cluster_info::{ClusterInfo, ClusterInfoError},
         contact_info::Protocol,
     },
-    solana_ledger::{blockstore::Blockstore, shred::Shred},
-    solana_measure::measure::Measure,
-    solana_metrics::{inc_new_counter_error, inc_new_counter_info},
-    solana_poh::poh_recorder::WorkingBankEntry,
-    solana_runtime::bank_forks::BankForks,
-    solana_sdk::{
+    xandeum_ledger::{blockstore::Blockstore, shred::Shred},
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::{inc_new_counter_error, inc_new_counter_info},
+    xandeum_poh::poh_recorder::WorkingBankEntry,
+    xandeum_runtime::bank_forks::BankForks,
+    xandeum_sdk::{
         clock::Slot,
         pubkey::Pubkey,
         signature::Keypair,
         timing::{timestamp, AtomicInterval},
     },
-    solana_streamer::{
+    xandeum_streamer::{
         sendmmsg::{batch_send, SendPktsError},
         socket::SocketAddrSpace,
     },
@@ -278,7 +278,7 @@ impl BroadcastStage {
             let bank_forks = bank_forks.clone();
             let run_transmit = move || loop {
                 let res = bs_transmit.transmit(&socket_receiver, &cluster_info, &sock, &bank_forks);
-                let res = Self::handle_error(res, "solana-broadcaster-transmit");
+                let res = Self::handle_error(res, "xandeum-broadcaster-transmit");
                 if let Some(res) = res {
                     return res;
                 }
@@ -296,7 +296,7 @@ impl BroadcastStage {
                 let btree = blockstore.clone();
                 let run_record = move || loop {
                     let res = bs_record.record(&blockstore_receiver, &btree);
-                    let res = Self::handle_error(res, "solana-broadcaster-record");
+                    let res = Self::handle_error(res, "xandeum-broadcaster-record");
                     if let Some(res) = res {
                         return res;
                     }
@@ -317,7 +317,7 @@ impl BroadcastStage {
                         &retransmit_slots_receiver,
                         &socket_sender,
                     ),
-                    "solana-broadcaster-retransmit-check_retransmit_signals",
+                    "xandeum-broadcaster-retransmit-check_retransmit_signals",
                 ) {
                     return res;
                 }
@@ -441,16 +441,16 @@ pub mod test {
     use {
         super::*,
         crossbeam_channel::unbounded,
-        solana_entry::entry::create_ticks,
-        solana_gossip::cluster_info::{ClusterInfo, Node},
-        solana_ledger::{
+        xandeum_entry::entry::create_ticks,
+        xandeum_gossip::cluster_info::{ClusterInfo, Node},
+        xandeum_ledger::{
             blockstore::Blockstore,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
             get_tmp_ledger_path,
             shred::{max_ticks_per_n_shreds, ProcessShredsStats, ReedSolomonCache, Shredder},
         },
-        solana_runtime::bank::Bank,
-        solana_sdk::{
+        xandeum_runtime::bank::Bank,
+        xandeum_sdk::{
             hash::Hash,
             signature::{Keypair, Signer},
         },
@@ -631,7 +631,7 @@ pub mod test {
 
     #[test]
     fn test_broadcast_ledger() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let ledger_path = get_tmp_ledger_path!();
 
         {

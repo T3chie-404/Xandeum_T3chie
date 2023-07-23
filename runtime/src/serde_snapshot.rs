@@ -26,8 +26,8 @@ use {
     bincode::{self, config::Options, Error},
     log::*,
     serde::{de::DeserializeOwned, Deserialize, Serialize},
-    solana_measure::measure::Measure,
-    solana_sdk::{
+    xandeum_measure::measure::Measure,
+    xandeum_sdk::{
         clock::{Epoch, Slot, UnixTimestamp},
         deserialize_utils::default_on_eof,
         epoch_schedule::EpochSchedule,
@@ -554,7 +554,7 @@ impl<'a, C: TypeContext<'a>> Serialize for SerializableAccountsDb<'a, C> {
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl<'a, C> solana_frozen_abi::abi_example::IgnoreAsHelper for SerializableAccountsDb<'a, C> {}
+impl<'a, C> xandeum_frozen_abi::abi_example::IgnoreAsHelper for SerializableAccountsDb<'a, C> {}
 
 #[allow(clippy::too_many_arguments)]
 fn reconstruct_bank_from_fields<E>(

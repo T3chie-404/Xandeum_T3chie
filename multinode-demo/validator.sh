@@ -64,7 +64,7 @@ while [[ -n $1 ]]; do
     elif [[ $1 = --no-airdrop ]]; then
       airdrops_enabled=0
       shift
-    # solana-validator options
+    # xandeum-validator options
     elif [[ $1 = --expected-genesis-hash ]]; then
       args+=("$1" "$2")
       shift 2
@@ -267,9 +267,9 @@ if [[ $maybeRequireTower = true ]]; then
 fi
 
 if [[ -n $SOLANA_CUDA ]]; then
-  program=$solana_validator_cuda
+  program=$xandeum_validator_cuda
 else
-  program=$solana_validator
+  program=$xandeum_validator
 fi
 
 set -e
@@ -298,7 +298,7 @@ trap 'kill_node_and_exit' INT TERM ERR
 wallet() {
   (
     set -x
-    $solana_cli --keypair "$identity" --url "$rpc_url" "$@"
+    $xandeum_cli --keypair "$identity" --url "$rpc_url" "$@"
   )
 }
 
@@ -314,7 +314,7 @@ setup_validator_accounts() {
       echo "Adding $node_sol to validator identity account:"
       (
         set -x
-        $solana_cli \
+        $xandeum_cli \
           --keypair "$SOLANA_CONFIG_DIR/faucet.json" --url "$rpc_url" \
           transfer --allow-unfunded-recipient "$identity" "$node_sol"
       ) || return $?
@@ -332,11 +332,11 @@ setup_validator_accounts() {
 }
 
 # shellcheck disable=SC2086
-rpc_url=$($solana_gossip --allow-private-addr rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
+rpc_url=$($xandeum_gossip --allow-private-addr rpc-url --timeout 180 --entrypoint "$gossip_entrypoint")
 
-[[ -r "$identity" ]] || $solana_keygen new --no-passphrase -so "$identity"
-[[ -r "$vote_account" ]] || $solana_keygen new --no-passphrase -so "$vote_account"
-[[ -r "$authorized_withdrawer" ]] || $solana_keygen new --no-passphrase -so "$authorized_withdrawer"
+[[ -r "$identity" ]] || $xandeum_keygen new --no-passphrase -so "$identity"
+[[ -r "$vote_account" ]] || $xandeum_keygen new --no-passphrase -so "$vote_account"
+[[ -r "$authorized_withdrawer" ]] || $xandeum_keygen new --no-passphrase -so "$authorized_withdrawer"
 
 setup_validator_accounts "$node_sol"
 

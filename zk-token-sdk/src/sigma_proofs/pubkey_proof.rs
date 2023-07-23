@@ -3,7 +3,7 @@
 //! The protocol guarantees computational soundness (by the hardness of discrete log) and perfect
 //! zero-knowledge in the random oracle model.
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 use {
     crate::encryption::{
         elgamal::{ElGamalKeypair, ElGamalPubkey},
@@ -37,7 +37,7 @@ pub struct PubkeyValidityProof {
 }
 
 #[allow(non_snake_case)]
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 impl PubkeyValidityProof {
     /// Public-key proof constructor.
     ///
@@ -140,7 +140,7 @@ impl PubkeyValidityProof {
 mod test {
     use {
         super::*,
-        solana_sdk::{pubkey::Pubkey, signature::Keypair},
+        xandeum_sdk::{pubkey::Pubkey, signature::Keypair},
     };
 
     #[test]

@@ -58,12 +58,12 @@ impl From<u64> for PubkeyError {
 /// addresses_][pdas] &mdash; or the secret key is not relevant to the operation
 /// of a program, and may have even been disposed of. As running Solana programs
 /// can not safely create or manage secret keys, the full [`Keypair`] is not
-/// defined in `solana-program` but in `solana-sdk`.
+/// defined in `xandeum-program` but in `xandeum-sdk`.
 ///
-/// [acc]: https://docs.solana.com/developing/programming-model/accounts
+/// [acc]: https://docs.xandeum.com/developing/programming-model/accounts
 /// [ed25519]: https://ed25519.cr.yp.to/
-/// [pdas]: https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses
-/// [`Keypair`]: https://docs.rs/solana-sdk/latest/solana_sdk/signer/keypair/struct.Keypair.html
+/// [pdas]: https://docs.xandeum.com/developing/programming-model/calling-between-programs#program-derived-addresses
+/// [`Keypair`]: https://docs.rs/xandeum-sdk/latest/xandeum_sdk/signer/keypair/struct.Keypair.html
 #[wasm_bindgen]
 #[repr(transparent)]
 #[derive(
@@ -160,13 +160,13 @@ impl TryFrom<&str> for Pubkey {
 
 #[allow(clippy::used_underscore_binding)]
 pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     {
         curve25519_dalek::edwards::CompressedEdwardsY::from_slice(_bytes.as_ref())
             .decompress()
             .is_some()
     }
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "xandeum")]
     unimplemented!();
 }
 
@@ -184,7 +184,7 @@ impl Pubkey {
     }
 
     #[deprecated(since = "1.3.9", note = "Please use 'Pubkey::new_unique' instead")]
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     pub fn new_rand() -> Self {
         // Consider removing Pubkey::new_rand() entirely in the v1.5 or v1.6 timeframe
         Pubkey::from(rand::random::<[u8; 32]>())
@@ -225,7 +225,7 @@ impl Pubkey {
 
     /// Find a valid [program derived address][pda] and its corresponding bump seed.
     ///
-    /// [pda]: https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses
+    /// [pda]: https://docs.xandeum.com/developing/programming-model/calling-between-programs#program-derived-addresses
     ///
     /// Program derived addresses (PDAs) are account keys that only the program,
     /// `program_id`, has the authority to sign. The address is of the same form
@@ -312,7 +312,7 @@ impl Pubkey {
     ///
     /// ```
     /// # use borsh::{BorshSerialize, BorshDeserialize};
-    /// # use solana_program::{
+    /// # use xandeum_program::{
     /// #     pubkey::Pubkey,
     /// #     entrypoint::ProgramResult,
     /// #     program::invoke_signed,
@@ -391,20 +391,20 @@ impl Pubkey {
     ///
     /// ```
     /// # use borsh::{BorshSerialize, BorshDeserialize};
-    /// # use solana_program::example_mocks::{solana_sdk, solana_rpc_client};
-    /// # use solana_program::{
+    /// # use xandeum_program::example_mocks::{xandeum_sdk, xandeum_rpc_client};
+    /// # use xandeum_program::{
     /// #     pubkey::Pubkey,
     /// #     instruction::Instruction,
     /// #     hash::Hash,
     /// #     instruction::AccountMeta,
     /// #     system_program,
     /// # };
-    /// # use solana_sdk::{
+    /// # use xandeum_sdk::{
     /// #     signature::Keypair,
     /// #     signature::{Signer, Signature},
     /// #     transaction::Transaction,
     /// # };
-    /// # use solana_rpc_client::rpc_client::RpcClient;
+    /// # use xandeum_rpc_client::rpc_client::RpcClient;
     /// # use std::convert::TryFrom;
     /// # use anyhow::Result;
     /// #
@@ -481,7 +481,7 @@ impl Pubkey {
 
     /// Find a valid [program derived address][pda] and its corresponding bump seed.
     ///
-    /// [pda]: https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses
+    /// [pda]: https://docs.xandeum.com/developing/programming-model/calling-between-programs#program-derived-addresses
     ///
     /// The only difference between this method and [`find_program_address`]
     /// is that this one returns `None` in the statistically improbable event
@@ -495,7 +495,7 @@ impl Pubkey {
     pub fn try_find_program_address(seeds: &[&[u8]], program_id: &Pubkey) -> Option<(Pubkey, u8)> {
         // Perform the calculation inline, calling this from within a program is
         // not supported
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "xandeum"))]
         {
             let mut bump_seed = [std::u8::MAX];
             for _ in 0..std::u8::MAX {
@@ -513,7 +513,7 @@ impl Pubkey {
             None
         }
         // Call via a system call to perform the calculation
-        #[cfg(target_os = "solana")]
+        #[cfg(target_os = "xandeum")]
         {
             let mut bytes = [0; 32];
             let mut bump_seed = std::u8::MAX;
@@ -535,7 +535,7 @@ impl Pubkey {
 
     /// Create a valid [program derived address][pda] without searching for a bump seed.
     ///
-    /// [pda]: https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses
+    /// [pda]: https://docs.xandeum.com/developing/programming-model/calling-between-programs#program-derived-addresses
     ///
     /// Because this function does not create a bump seed, it may unpredictably
     /// return an error for any given set of seeds and is not generally suitable
@@ -568,7 +568,7 @@ impl Pubkey {
     /// that the returned `Pubkey` has the expected value.
     ///
     /// ```
-    /// # use solana_program::pubkey::Pubkey;
+    /// # use xandeum_program::pubkey::Pubkey;
     /// # let program_id = Pubkey::new_unique();
     /// let (expected_pda, bump_seed) = Pubkey::find_program_address(&[b"vault"], &program_id);
     /// let actual_pda = Pubkey::create_program_address(&[b"vault", &[bump_seed]], &program_id)?;
@@ -590,7 +590,7 @@ impl Pubkey {
 
         // Perform the calculation inline, calling this from within a program is
         // not supported
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "xandeum"))]
         {
             let mut hasher = crate::hash::Hasher::default();
             for seed in seeds.iter() {
@@ -606,7 +606,7 @@ impl Pubkey {
             Ok(Pubkey::from(hash.to_bytes()))
         }
         // Call via a system call to perform the calculation
-        #[cfg(target_os = "solana")]
+        #[cfg(target_os = "xandeum")]
         {
             let mut bytes = [0; 32];
             let result = unsafe {
@@ -634,12 +634,12 @@ impl Pubkey {
 
     /// Log a `Pubkey` from a program
     pub fn log(&self) {
-        #[cfg(target_os = "solana")]
+        #[cfg(target_os = "xandeum")]
         unsafe {
             crate::syscalls::sol_log_pubkey(self.as_ref() as *const _ as *const u8)
         };
 
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "xandeum"))]
         crate::program_stubs::sol_log(&self.to_string());
     }
 }

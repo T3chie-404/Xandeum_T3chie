@@ -6,12 +6,12 @@
 use {
     crate::banking_stage::{committer::CommitTransactionDetails, BatchedTransactionDetails},
     crossbeam_channel::{unbounded, Receiver, Sender},
-    solana_measure::measure::Measure,
-    solana_runtime::{
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::{
         bank::Bank,
         cost_model::{CostModel, TransactionCost},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot,
         feature_set::FeatureSet,
         saturating_add_assign,
@@ -628,18 +628,18 @@ mod tests {
     use {
         super::*,
         itertools::Itertools,
-        solana_runtime::genesis_utils::{create_genesis_config, GenesisConfigInfo},
-        solana_sdk::{
+        xandeum_runtime::genesis_utils::{create_genesis_config, GenesisConfigInfo},
+        xandeum_sdk::{
             hash::Hash,
             signature::{Keypair, Signer},
             system_transaction,
         },
-        solana_vote_program::vote_transaction,
+        xandeum_vote_program::vote_transaction,
     };
 
     #[test]
     fn test_compute_transaction_costs() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         // make a vec of txs
         let keypair = Keypair::new();
@@ -682,7 +682,7 @@ mod tests {
 
     #[test]
     fn test_select_transactions_per_cost() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(10);
         let bank = Arc::new(Bank::new_for_tests(&genesis_config));
 
@@ -734,7 +734,7 @@ mod tests {
 
     #[test]
     fn test_update_or_remove_transaction_costs_commited() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(10);
         let bank = Arc::new(Bank::new_for_tests(&genesis_config));
 
@@ -795,7 +795,7 @@ mod tests {
 
     #[test]
     fn test_update_or_remove_transaction_costs_not_commited() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(10);
         let bank = Arc::new(Bank::new_for_tests(&genesis_config));
 
@@ -836,7 +836,7 @@ mod tests {
 
     #[test]
     fn test_update_or_remove_transaction_costs_mixed_execution() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(10);
         let bank = Arc::new(Bank::new_for_tests(&genesis_config));
 

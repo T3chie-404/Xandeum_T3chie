@@ -2,8 +2,8 @@
 
 #![allow(clippy::integer_arithmetic)]
 
-extern crate solana_program;
-use solana_program::{
+extern crate xandeum_program;
+use xandeum_program::{
     custom_heap_default, custom_panic_default, entrypoint::SUCCESS, log::sol_log_64,
 };
 

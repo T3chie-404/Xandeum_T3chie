@@ -1,7 +1,7 @@
 [package]
-name = "solana-streamer"
+name = "xandeum-streamer"
 description = "Solana Streamer"
-documentation = "https://docs.rs/solana-streamer"
+documentation = "https://docs.rs/xandeum-streamer"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -29,19 +29,19 @@ quinn-udp = { workspace = true }
 rand = { workspace = true }
 rcgen = { workspace = true }
 rustls = { workspace = true, features = ["dangerous_configuration"] }
-solana-metrics = { workspace = true }
-solana-perf = { workspace = true }
-solana-sdk = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-perf = { workspace = true }
+xandeum-sdk = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 x509-parser = { workspace = true }
 
 [dev-dependencies]
-solana-logger = { workspace = true }
+xandeum-logger = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_streamer"
+name = "xandeum_streamer"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

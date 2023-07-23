@@ -1,7 +1,7 @@
 [package]
-name = "solana-poh"
+name = "xandeum-poh"
 description = "Solana PoH"
-documentation = "https://docs.rs/solana-poh"
+documentation = "https://docs.rs/xandeum-poh"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,24 +13,24 @@ edition = { workspace = true }
 core_affinity = { workspace = true }
 crossbeam-channel = { workspace = true }
 log = { workspace = true }
-solana-entry = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
+xandeum-entry = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
 bincode = { workspace = true }
 matches = { workspace = true }
 rand = { workspace = true }
-solana-logger = { workspace = true }
-solana-perf = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-perf = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_poh"
+name = "xandeum_poh"
 
 [[bench]]
 name = "poh"

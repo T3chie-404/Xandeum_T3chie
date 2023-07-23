@@ -4,20 +4,20 @@ use {
     bincode::serialize,
     futures_util::{future::join_all, stream::StreamExt},
     log::*,
-    solana_connection_cache::{
+    xandeum_connection_cache::{
         connection_cache::{
             ConnectionCache, ConnectionManager, ConnectionPool, NewConnectionConfig, Protocol,
             DEFAULT_CONNECTION_POOL_SIZE,
         },
         nonblocking::client_connection::ClientConnection,
     },
-    solana_pubsub_client::nonblocking::pubsub_client::{PubsubClient, PubsubClientError},
-    solana_rpc_client::nonblocking::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    xandeum_pubsub_client::nonblocking::pubsub_client::{PubsubClient, PubsubClientError},
+    xandeum_rpc_client::nonblocking::rpc_client::RpcClient,
+    xandeum_rpc_client_api::{
         client_error::{Error as ClientError, Result as ClientResult},
         response::{RpcContactInfo, SlotUpdate},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot,
         commitment_config::CommitmentConfig,
         epoch_info::EpochInfo,
@@ -46,9 +46,9 @@ use {
 use {
     crate::tpu_client::{SEND_TRANSACTION_INTERVAL, TRANSACTION_RESEND_INTERVAL},
     indicatif::ProgressBar,
-    solana_rpc_client::spinner,
-    solana_rpc_client_api::request::MAX_GET_SIGNATURE_STATUSES_QUERY_ITEMS,
-    solana_sdk::{message::Message, signers::Signers, transaction::TransactionError},
+    xandeum_rpc_client::spinner,
+    xandeum_rpc_client_api::request::MAX_GET_SIGNATURE_STATUSES_QUERY_ITEMS,
+    xandeum_sdk::{message::Message, signers::Signers, transaction::TransactionError},
 };
 
 #[cfg(feature = "spinner")]

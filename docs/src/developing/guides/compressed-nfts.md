@@ -88,7 +88,7 @@ happen in 3 primary steps:
 - create an NFT collection (or use an existing one)
 - create a
   [concurrent merkle tree](../../learn/state-compression.md#what-is-a-concurrent-merkle-tree)
-  (using the `@solana/spl-account-compression` SDK)
+  (using the `@xandeum/spl-account-compression` SDK)
 - mint compressed NFTs into your tree (to any owner's address you want)
 
 ### How to transfer a compressed NFT
@@ -120,12 +120,12 @@ collection we are going to create:
 Before we start creating our compressed NFT collection, we need to install a few
 packages:
 
-- [`@solana/web3.js`](https://www.npmjs.com/package/@solana/web3.js) - the base
+- [`@xandeum/web3.js`](https://www.npmjs.com/package/@xandeum/web3.js) - the base
   Solana JS SDK for interacting with the blockchain, including making our RPC
   connection and sending transactions
-- [`@solana/spl-token`](https://www.npmjs.com/package/@solana/spl-token) - used
+- [`@xandeum/spl-token`](https://www.npmjs.com/package/@xandeum/spl-token) - used
   in creating our collection and mint on-chain
-- [`@solana/spl-account-compression`](https://www.npmjs.com/package/@solana/spl-account-compression) -
+- [`@xandeum/spl-account-compression`](https://www.npmjs.com/package/@xandeum/spl-account-compression) -
   used to create the on-chain tree to store our compressed NFTs
 - [`@metaplex-foundation/mpl-bubblegum`](https://www.npmjs.com/package/@metaplex-foundation/mpl-bubblegum) -
   used to get the types and helper functions for minting and transferring
@@ -138,7 +138,7 @@ Using your preferred package manager (e.g. npm, yarn, pnpm, etc), install these
 packages into your project:
 
 ```sh
-yarn add @solana/web3.js @solana/spl-token @solana/spl-account-compression
+yarn add @xandeum/web3.js @xandeum/spl-token @xandeum/spl-account-compression
 ```
 
 ```sh
@@ -157,7 +157,7 @@ and explorers.
 Under the hood, an NFT collection acts similar to any other token on Solana.
 More specifically, a Collection is effectively a uncompressed NFT. So we
 actually create them following the same process of creating an
-[SPL token](https://spl.solana.com/token):
+[SPL token](https://spl.xandeum.com/token):
 
 - create a new token "mint"
 - create a associated token account (`ata`) for our token mint
@@ -199,7 +199,7 @@ generally considered an anti-pattern and is not recommended.
 :::
 
 Using the helper functions provided by the
-[`@solana/spl-account-compression`](https://www.npmjs.com/package/@solana/spl-account-compression)
+[`@xandeum/spl-account-compression`](https://www.npmjs.com/package/@xandeum/spl-account-compression)
 SDK, we can create our tree in the following steps:
 
 - decide on our tree size
@@ -245,7 +245,7 @@ Setting a `maxDepth` of `14` will allow our tree to hold up to `16,384`
 compressed NFTs, more than exceeding our `10k` collection size.
 
 Since only specific
-[`ValidDepthSizePair`](https://solana-labs.github.io/solana-program-library/account-compression/sdk/docs/modules/index.html#ValidDepthSizePair)
+[`ValidDepthSizePair`](https://xandeum-labs.github.io/xandeum-program-library/account-compression/sdk/docs/modules/index.html#ValidDepthSizePair)
 pairs are allowed, simply set the `maxBufferSize` to the corresponding value
 tied to your desired `maxDepth`.
 
@@ -282,7 +282,7 @@ two related instructions:
 2. actually create the tree, owned by the Bubblegum program
 
 Using the
-[`createAllocTreeIx`](https://solana-labs.github.io/solana-program-library/account-compression/sdk/docs/modules/index.html#createAllocTreeIx)
+[`createAllocTreeIx`](https://xandeum-labs.github.io/xandeum-program-library/account-compression/sdk/docs/modules/index.html#createAllocTreeIx)
 helper function, we allocate enough space on-chain for our tree.
 
 ```ts
@@ -742,8 +742,8 @@ we need to know the tree's `canopyDepth`.
 
 Once we have our compressed NFT's tree address (the `tree_id` value from
 `getAssetProof`), we can use the
-[`ConcurrentMerkleTreeAccount`](https://solana-labs.github.io/solana-program-library/account-compression/sdk/docs/classes/index.ConcurrentMerkleTreeAccount.html)
-class, from the `@solana/spl-account-compression` SDK:
+[`ConcurrentMerkleTreeAccount`](https://xandeum-labs.github.io/xandeum-program-library/account-compression/sdk/docs/classes/index.ConcurrentMerkleTreeAccount.html)
+class, from the `@xandeum/spl-account-compression` SDK:
 
 ```ts
 // retrieve the merkle tree's account from the blockchain
@@ -836,7 +836,7 @@ helper function.
 
 Since each of these hash values resemble and are formatted similar to
 PublicKeys, we can use the
-[`PublicKey`](https://solana-labs.github.io/solana-web3.js/classes/PublicKey.html)
+[`PublicKey`](https://xandeum-labs.github.io/xandeum-web3.js/classes/PublicKey.html)
 class in web3.js to convert them into a accepted byte array format.
 
 #### Send the transaction
@@ -859,4 +859,4 @@ compressed NFT.
 ## Example code repository
 
 You can find an example code repository for this developer guide on the Solana
-Developers GitHub: https://github.com/solana-developers/compressed-nfts
+Developers GitHub: https://github.com/xandeum-developers/compressed-nfts

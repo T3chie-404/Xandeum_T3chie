@@ -1,5 +1,5 @@
 [package]
-name = "solana-test-validator"
+name = "xandeum-test-validator"
 description = "Blockchain, Rebuilt for Scale"
 readme = "../README.md"
 version = { workspace = true }
@@ -16,22 +16,22 @@ crossbeam-channel = { workspace = true }
 log = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-client = { workspace = true }
-solana-core = { workspace = true }
-solana-geyser-plugin-manager = { workspace = true }
-solana-gossip = { workspace = true }
-solana-ledger = { workspace = true }
-solana-logger = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-program-test = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-tpu-client = { workspace = true }
+xandeum-cli-output = { workspace = true }
+xandeum-client = { workspace = true }
+xandeum-core = { workspace = true }
+xandeum-geyser-plugin-manager = { workspace = true }
+xandeum-gossip = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-program-runtime = { workspace = true }
+xandeum-program-test = { workspace = true }
+xandeum-rpc = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-tpu-client = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [package.metadata.docs.rs]

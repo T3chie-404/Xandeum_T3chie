@@ -60,14 +60,14 @@ function APIPage() {
               />
 
               <Card
-                to="https://solana-labs.github.io/solana-web3.js/"
+                to="https://xandeum-labs.github.io/xandeum-web3.js/"
                 header={{
                   label: "Web3.js",
                   translateId: "api-web3.js",
                 }}
                 body={{
                   label:
-                    "Use the @solana/web3.js library to interact with a Solana node inside a JavaScript application.",
+                    "Use the @xandeum/web3.js library to interact with a Solana node inside a JavaScript application.",
                   translateId: "learn-web3.js",
                 }}
               />

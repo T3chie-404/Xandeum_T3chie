@@ -10,7 +10,7 @@ public RPC endpoints currently available and recommended for each public cluster
 
 #### Endpoint
 
-- `https://api.devnet.solana.com` - single Solana-hosted api node; rate-limited
+- `https://api.devnet.xandeum.com` - single Solana-hosted api node; rate-limited
 
 #### Rate Limits
 
@@ -24,7 +24,7 @@ public RPC endpoints currently available and recommended for each public cluster
 
 #### Endpoint
 
-- `https://api.testnet.solana.com` - single Solana-hosted api node; rate-limited
+- `https://api.testnet.xandeum.com` - single Solana-hosted api node; rate-limited
 
 #### Rate Limits
 
@@ -38,7 +38,7 @@ public RPC endpoints currently available and recommended for each public cluster
 
 #### Endpoints\*
 
-- `https://api.mainnet-beta.solana.com` - Solana-hosted api node cluster, backed by a load balancer; rate-limited
+- `https://api.mainnet-beta.xandeum.com` - Solana-hosted api node cluster, backed by a load balancer; rate-limited
 
 #### Rate Limits
 

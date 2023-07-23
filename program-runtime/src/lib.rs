@@ -7,9 +7,9 @@
 extern crate eager;
 
 #[macro_use]
-extern crate solana_metrics;
+extern crate xandeum_metrics;
 
-pub use solana_rbpf;
+pub use xandeum_rbpf;
 pub mod accounts_data_meter;
 pub mod compute_budget;
 pub mod invoke_context;

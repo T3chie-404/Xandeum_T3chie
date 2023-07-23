@@ -1,11 +1,11 @@
 //! Example Rust-based SBF program that tests sysvar use
 
-extern crate solana_program;
+extern crate xandeum_program;
 #[allow(deprecated)]
-use solana_program::sysvar::fees::Fees;
+use xandeum_program::sysvar::fees::Fees;
 #[allow(deprecated)]
-use solana_program::sysvar::recent_blockhashes::RecentBlockhashes;
-use solana_program::{
+use xandeum_program::sysvar::recent_blockhashes::RecentBlockhashes;
+use xandeum_program::{
     account_info::AccountInfo,
     entrypoint::ProgramResult,
     instruction::{AccountMeta, Instruction},
@@ -18,7 +18,7 @@ use solana_program::{
     },
 };
 
-solana_program::entrypoint!(process_instruction);
+xandeum_program::entrypoint!(process_instruction);
 #[allow(clippy::unnecessary_wraps)]
 pub fn process_instruction(
     program_id: &Pubkey,

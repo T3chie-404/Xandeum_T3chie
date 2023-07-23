@@ -1,7 +1,7 @@
 [package]
-name = "solana-quic-client"
+name = "xandeum-quic-client"
 description = "Solana Quic Client"
-documentation = "https://docs.rs/solana-quic-client"
+documentation = "https://docs.rs/xandeum-quic-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -21,17 +21,17 @@ quinn-proto = { workspace = true }
 quinn-udp = { workspace = true }
 rcgen = { workspace = true }
 rustls = { workspace = true, features = ["dangerous_configuration"] }
-solana-connection-cache = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
+xandeum-connection-cache = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [dev-dependencies]
 crossbeam-channel = { workspace = true }
-solana-logger = { workspace = true }
-solana-perf = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-perf = { workspace = true }

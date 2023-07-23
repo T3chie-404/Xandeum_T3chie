@@ -1,7 +1,7 @@
 use {
     crate::id,
     serde::{Deserialize, Serialize},
-    solana_program::{
+    xandeum_program::{
         clock::Slot,
         instruction::{AccountMeta, Instruction},
         pubkey::Pubkey,

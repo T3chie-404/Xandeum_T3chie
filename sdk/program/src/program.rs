@@ -6,7 +6,7 @@
 //!
 //! [`invoke`]: invoke
 //! [`invoke_signed`]: invoke_signed
-//! [cpi]: https://docs.solana.com/developing/programming-model/calling-between-programs
+//! [cpi]: https://docs.xandeum.com/developing/programming-model/calling-between-programs
 
 use crate::{
     account_info::AccountInfo, entrypoint::ProgramResult, instruction::Instruction, pubkey::Pubkey,
@@ -91,7 +91,7 @@ use crate::{
 /// A simple example of transferring lamports via CPI:
 ///
 /// ```
-/// use solana_program::{
+/// use xandeum_program::{
 ///     account_info::{next_account_info, AccountInfo},
 ///     entrypoint,
 ///     entrypoint::ProgramResult,
@@ -174,7 +174,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// PDA from the seeds and the calling program's ID, and if it matches one of
 /// the accounts in `account_info`, will consider that account "signed".
 ///
-/// [pda]: https://docs.solana.com/developing/programming-model/calling-between-programs#program-derived-addresses
+/// [pda]: https://docs.xandeum.com/developing/programming-model/calling-between-programs#program-derived-addresses
 ///
 /// See the documentation for [`Pubkey::find_program_address`] for more
 /// about program derived addresses.
@@ -184,7 +184,7 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// A simple example of creating an account for a PDA:
 ///
 /// ```
-/// use solana_program::{
+/// use xandeum_program::{
 ///     account_info::{next_account_info, AccountInfo},
 ///     entrypoint,
 ///     entrypoint::ProgramResult,
@@ -291,7 +291,7 @@ pub fn invoke_signed_unchecked(
     account_infos: &[AccountInfo],
     signers_seeds: &[&[&[u8]]],
 ) -> ProgramResult {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "xandeum")]
     {
         let instruction = StableInstruction::from(instruction.clone());
         let result = unsafe {
@@ -309,7 +309,7 @@ pub fn invoke_signed_unchecked(
         }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     crate::program_stubs::sol_invoke_signed(instruction, account_infos, signers_seeds)
 }
 
@@ -324,12 +324,12 @@ pub const MAX_RETURN_DATA: usize = 1024;
 /// The maximum size of return data is [`MAX_RETURN_DATA`]. Return data is
 /// retrieved by the caller with [`get_return_data`].
 pub fn set_return_data(data: &[u8]) {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "xandeum")]
     unsafe {
         crate::syscalls::sol_set_return_data(data.as_ptr(), data.len() as u64)
     };
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     crate::program_stubs::sol_set_return_data(data)
 }
 
@@ -361,9 +361,9 @@ pub fn set_return_data(data: &[u8]) {
 ///
 /// For more about return data see the [documentation for the return data proposal][rdp].
 ///
-/// [rdp]: https://docs.solana.com/proposals/return-data
+/// [rdp]: https://docs.xandeum.com/proposals/return-data
 pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "xandeum")]
     {
         use std::cmp::min;
 
@@ -386,7 +386,7 @@ pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
         }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "xandeum"))]
     crate::program_stubs::sol_get_return_data()
 }
 

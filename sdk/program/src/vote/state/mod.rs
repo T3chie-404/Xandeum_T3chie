@@ -2,7 +2,7 @@
 
 #[cfg(test)]
 use crate::epoch_schedule::MAX_LEADER_SCHEDULE_EPOCH_OFFSET;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 use bincode::deserialize;
 use {
     crate::{
@@ -343,13 +343,13 @@ impl VoteState {
 
     #[allow(clippy::used_underscore_binding)]
     pub fn deserialize(_input: &[u8]) -> Result<Self, InstructionError> {
-        #[cfg(not(target_os = "solana"))]
+        #[cfg(not(target_os = "xandeum"))]
         {
             deserialize::<VoteStateVersions>(_input)
                 .map(|versioned| versioned.convert_to_current())
                 .map_err(|_| InstructionError::InvalidAccountData)
         }
-        #[cfg(target_os = "solana")]
+        #[cfg(target_os = "xandeum")]
         unimplemented!();
     }
 
@@ -1202,7 +1202,7 @@ mod tests {
 
     #[test]
     fn test_minimum_balance() {
-        let rent = solana_program::rent::Rent::default();
+        let rent = xandeum_program::rent::Rent::default();
         let minimum_balance = rent.minimum_balance(VoteState::size_of());
         // golden, may need updating when vote_state grows
         assert!(minimum_balance as f64 / 10f64.powf(9.0) < 0.04)

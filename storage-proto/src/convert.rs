@@ -1,7 +1,7 @@
 use {
     crate::{StoredExtendedRewards, StoredTransactionStatusMeta},
-    solana_account_decoder::parse_token::{real_number_string_trimmed, UiTokenAmount},
-    solana_sdk::{
+    xandeum_account_decoder::parse_token::{real_number_string_trimmed, UiTokenAmount},
+    xandeum_sdk::{
         hash::Hash,
         instruction::{CompiledInstruction, InstructionError},
         message::{
@@ -14,7 +14,7 @@ use {
         transaction::{Transaction, TransactionError, VersionedTransaction},
         transaction_context::TransactionReturnData,
     },
-    solana_transaction_status::{
+    xandeum_transaction_status::{
         ConfirmedBlock, InnerInstruction, InnerInstructions, Reward, RewardType,
         TransactionByAddrInfo, TransactionStatusMeta, TransactionTokenBalance,
         TransactionWithStatusMeta, VersionedConfirmedBlock, VersionedTransactionWithStatusMeta,
@@ -29,7 +29,7 @@ use {
 pub mod generated {
     include!(concat!(
         env!("OUT_DIR"),
-        "/solana.storage.confirmed_block.rs"
+        "/xandeum.storage.confirmed_block.rs"
     ));
 }
 
@@ -37,7 +37,7 @@ pub mod generated {
 pub mod tx_by_addr {
     include!(concat!(
         env!("OUT_DIR"),
-        "/solana.storage.transaction_by_addr.rs"
+        "/xandeum.storage.transaction_by_addr.rs"
     ));
 }
 

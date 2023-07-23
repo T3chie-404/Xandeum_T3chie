@@ -1,11 +1,11 @@
 //! Example Rust-based SBF program tests loop iteration
 
-extern crate solana_program;
+extern crate xandeum_program;
 use {
-    solana_program::{
+    xandeum_program::{
         custom_heap_default, custom_panic_default, entrypoint::SUCCESS, log::sol_log_64,
     },
-    solana_sbf_rust_param_passing_dep::{Data, TestDep},
+    xandeum_sbf_rust_param_passing_dep::{Data, TestDep},
 };
 
 #[no_mangle]

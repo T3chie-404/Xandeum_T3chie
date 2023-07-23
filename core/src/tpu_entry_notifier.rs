@@ -1,8 +1,8 @@
 use {
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_entry::entry::EntrySummary,
-    solana_ledger::entry_notifier_service::{EntryNotification, EntryNotifierSender},
-    solana_poh::poh_recorder::WorkingBankEntry,
+    xandeum_entry::entry::EntrySummary,
+    xandeum_ledger::entry_notifier_service::{EntryNotification, EntryNotifierSender},
+    xandeum_poh::poh_recorder::WorkingBankEntry,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},

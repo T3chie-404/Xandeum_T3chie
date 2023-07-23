@@ -1,7 +1,7 @@
 [package]
-name = "solana-cli"
+name = "xandeum-cli"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-cli"
+documentation = "https://docs.rs/xandeum-cli"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -28,39 +28,39 @@ semver = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-account-decoder = { workspace = true }
-solana-address-lookup-table-program = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-cli-output = { workspace = true }
-solana-client = { workspace = true }
-solana-config-program = { workspace = true }
-solana-faucet = { workspace = true }
-solana-logger = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-pubsub-client = { workspace = true }
-solana-remote-wallet = { workspace = true, features = ["default"] }
-solana-rpc-client = { workspace = true, features = ["default"] }
-solana-rpc-client-api = { workspace = true }
-solana-rpc-client-nonce-utils = { workspace = true }
-solana-sdk = { workspace = true }
-solana-tpu-client = { workspace = true, features = ["default"] }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
-solana-vote-program = { workspace = true }
-solana_rbpf = { workspace = true }
+xandeum-account-decoder = { workspace = true }
+xandeum-address-lookup-table-program = { workspace = true }
+xandeum-bpf-loader-program = { workspace = true }
+xandeum-clap-utils = { workspace = true }
+xandeum-cli-config = { workspace = true }
+xandeum-cli-output = { workspace = true }
+xandeum-client = { workspace = true }
+xandeum-config-program = { workspace = true }
+xandeum-faucet = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-program-runtime = { workspace = true }
+xandeum-pubsub-client = { workspace = true }
+xandeum-remote-wallet = { workspace = true, features = ["default"] }
+xandeum-rpc-client = { workspace = true, features = ["default"] }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-rpc-client-nonce-utils = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-tpu-client = { workspace = true, features = ["default"] }
+xandeum-transaction-status = { workspace = true }
+xandeum-version = { workspace = true }
+xandeum-vote-program = { workspace = true }
+xandeum_rbpf = { workspace = true }
 spl-memo = { workspace = true, features = ["no-entrypoint"] }
 thiserror = { workspace = true }
 tiny-bip39 = { workspace = true }
 
 [dev-dependencies]
-solana-streamer = { workspace = true }
-solana-test-validator = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-test-validator = { workspace = true }
 tempfile = { workspace = true }
 
 [[bin]]
-name = "solana"
+name = "xandeum"
 path = "src/main.rs"
 
 [package.metadata.docs.rs]

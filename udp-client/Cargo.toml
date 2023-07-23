@@ -1,7 +1,7 @@
 [package]
-name = "solana-udp-client"
+name = "xandeum-udp-client"
 description = "Solana UDP Client"
-documentation = "https://docs.rs/solana-udp-client"
+documentation = "https://docs.rs/xandeum-udp-client"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -11,9 +11,9 @@ edition = { workspace = true }
 
 [dependencies]
 async-trait = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
+xandeum-connection-cache = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }

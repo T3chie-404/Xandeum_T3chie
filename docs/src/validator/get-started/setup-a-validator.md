@@ -21,35 +21,35 @@ To start this guide, you will be running commands on your trusted computer, not 
 
 To create your validator vote account, you need to install the [Solana command line interface](../../cli.md) on your local computer.
 
-You can either use [Solana's Install Tool](../../cli/install-solana-cli-tools#use-solanas-install-tool) section from the Solana docs to install the CLI, or alternatively, you can also [build from source](../../cli/install-solana-cli-tools#build-from-source).
+You can either use [Solana's Install Tool](../../cli/install-xandeum-cli-tools#use-xandeums-install-tool) section from the Solana docs to install the CLI, or alternatively, you can also [build from source](../../cli/install-xandeum-cli-tools#build-from-source).
 
 > Building from source is a great option for those that want a more secure and potentially more performant executable.
 
 Once the Solana CLI is installed, you can return to this document once you are able to run the following command and get an answer on your terminal:
 
 ```
-solana --version
+xandeum --version
 ```
 
 You should see an output that looks similar to this (note your version number may be higher):
 
 ```
-solana-cli 1.14.17 (src:b29a37cf; feat:3488713414)
+xandeum-cli 1.14.17 (src:b29a37cf; feat:3488713414)
 ```
 
 Once you have successfully installed the cli, the next step is to change your config so that it is making requests to the `testnet` cluster:
 
 ```
-solana config set --url https://api.testnet.solana.com
+xandeum config set --url https://api.testnet.xandeum.com
 ```
 
 To verify that your config has change run:
 
 ```
-solana config get
+xandeum config get
 ```
 
-You should see a line that says: `RPC URL: https://api.testnet.solana.com`
+You should see a line that says: `RPC URL: https://api.testnet.xandeum.com`
 
 ## Create Keys
 
@@ -58,15 +58,15 @@ On your local computer, create the 3 keypairs that you will need to run your val
 > **NOTE** Some operators choose to make vanity keypairs for their identity and vote account using the `grind` sub command ([docs for reference](../../running-validator/validator-start#vanity-keypair)).
 
 ```
-solana-keygen new -o validator-keypair.json
+xandeum-keygen new -o validator-keypair.json
 ```
 
 ```
-solana-keygen new -o vote-account-keypair.json
+xandeum-keygen new -o vote-account-keypair.json
 ```
 
 ```
-solana-keygen new -o authorized-withdrawer-keypair.json
+xandeum-keygen new -o authorized-withdrawer-keypair.json
 ```
 
 > **IMPORTANT** the `authorized-withdrawer-keypair.json` should be considered very sensitive information.  Many operators choose to use a multisig, hardware wallet, or paper wallet for the authorized withdrawer keypair.  A keypair is created on disk in this example for simplicity. Additionally, the withdrawer keypair should always be stored safely. The authorized withdrawer keypair should **never** be stored on the remote machine that the validator software runs on.  For more information, see [validator secuirty best practices](../best-practices/security.md#do-not-store-your-withdrawer-key-on-your-validator)
@@ -78,19 +78,19 @@ Before you can create your vote account, you need to configure the Solana comman
 The below command sets the default keypair that the Solana CLI uses to the `validator-keypair.json` file that you just created in the terminal:
 
 ```
-solana config set --keypair ./validator-keypair.json
+xandeum config set --keypair ./validator-keypair.json
 ```
 
 Now verify your account balance of `0`:
 
 ```
-solana balance
+xandeum balance
 ```
 
 Next, you need to deposit some SOL into that keypair account in order create a transaction (in this case, making your vote account):
 
 ```
-solana airdrop 1
+xandeum airdrop 1
 ```
 
 > **NOTE** The `airdrop` sub command does not work on mainnet, so you will have to acquire SOL and transfer it into this keypair's account if you are setting up a mainnet validator.
@@ -100,14 +100,14 @@ Now, use the Solana cluster to create a vote account.
 As a reminder, all commands mentioned so far **should be done on your trusted computer** and **NOT** on a server where you intend to run your validator. It is especially important that the following command is done on a **trusted computer**:
 
 ```
-solana create-vote-account -ut \
+xandeum create-vote-account -ut \
     --fee-payer ./validator-keypair.json \
     ./vote-account-keypair.json \
     ./validator-keypair.json \
     ./authorized-withdrawer-keypair.json
 ```
 
-> Note `-ut` tells the cli command that we would like to use the testnet cluster.  `--fee-payer` specifies the keypair that will be used to pay the transaction fees.  Both flags are not necessary if you configured the solana cli properly above but they are useful to ensure you're using the intended cluster and keypair.
+> Note `-ut` tells the cli command that we would like to use the testnet cluster.  `--fee-payer` specifies the keypair that will be used to pay the transaction fees.  Both flags are not necessary if you configured the xandeum cli properly above but they are useful to ensure you're using the intended cluster and keypair.
 
 ## Save the Withdrawer Keypair Securely
 
@@ -245,7 +245,7 @@ Your system will need to be tuned in order to run properly. Your validator may n
 #### **Optimize sysctl knobs**
 
 ```bash
-sudo bash -c "cat >/etc/sysctl.d/21-solana-validator.conf <<EOF
+sudo bash -c "cat >/etc/sysctl.d/21-xandeum-validator.conf <<EOF
 # Increase UDP buffer sizes
 net.core.rmem_default = 134217728
 net.core.rmem_max = 134217728
@@ -261,7 +261,7 @@ EOF"
 ```
 
 ```bash
-sudo sysctl -p /etc/sysctl.d/21-solana-validator.conf
+sudo sysctl -p /etc/sysctl.d/21-xandeum-validator.conf
 ```
 
 #### **Increase systemd and session file limits**
@@ -286,7 +286,7 @@ sudo systemctl daemon-reload
 ```
 
 ```bash
-sudo bash -c "cat >/etc/security/limits.d/90-solana-nofiles.conf <<EOF
+sudo bash -c "cat >/etc/security/limits.d/90-xandeum-nofiles.conf <<EOF
 # Increase process file descriptor count limit
 * - nofile 1000000
 EOF"
@@ -317,7 +317,7 @@ su - sol
 
 ## Install The Solana CLI on Remote Machine
 
-Your remote machine will need the Solana cli installed to run the validator software.  Refer again to [Solana's Install Tool](../../cli/install-solana-cli-tools#use-solanas-install-tool) or [build from source](../../cli/install-solana-cli-tools#build-from-source).  It is best for operators to build from source rather than using the pre built binaries.
+Your remote machine will need the Solana cli installed to run the validator software.  Refer again to [Solana's Install Tool](../../cli/install-xandeum-cli-tools#use-xandeums-install-tool) or [build from source](../../cli/install-xandeum-cli-tools#build-from-source).  It is best for operators to build from source rather than using the pre built binaries.
 
 ## Create A Validator Startup Script
 
@@ -338,7 +338,7 @@ nano /home/sol/bin/validator.sh
 Copy and paste the following contents into `validator.sh` then save the file:
 
 ```
-exec solana-validator \
+exec xandeum-validator \
     --identity validator-keypair.json \
     --vote-account vote-account-keypair.json \
     --known-validator 5D1fNXzvv5NjV1ysLjirC4WY92RNsVH18vjmcszZd8on \
@@ -346,19 +346,19 @@ exec solana-validator \
     --known-validator Ft5fbkqNa76vnsjYNwjDZUXoTWpP7VYm3mtsaQckQADN \
     --known-validator 9QxCLckBiJc783jnMvXZubK4wH86Eqqvashtrwvcsgkv \
     --only-known-rpc \
-    --log /home/sol/solana-validator.log \
+    --log /home/sol/xandeum-validator.log \
     --ledger /mnt/ledger \
     --rpc-port 8899 \
     --dynamic-port-range 8000-8020 \
-    --entrypoint entrypoint.testnet.solana.com:8001 \
-    --entrypoint entrypoint2.testnet.solana.com:8001 \
-    --entrypoint entrypoint3.testnet.solana.com:8001 \
+    --entrypoint entrypoint.testnet.xandeum.com:8001 \
+    --entrypoint entrypoint2.testnet.xandeum.com:8001 \
+    --entrypoint entrypoint3.testnet.xandeum.com:8001 \
     --expected-genesis-hash 4uhcVJyU9pJkvQyS88uRDiswHXSCkY3zQawwpjk2NsNY \
     --wal-recovery-mode skip_any_corrupted_record \
     --limit-ledger-size
 ```
 
-Refer to `solana-validator --help` for more information on what each flag is doing in this script. Also refer to the section on [best practices for operating a validator](../best-practices/operations.md).
+Refer to `xandeum-validator --help` for more information on what each flag is doing in this script. Also refer to the section on [best practices for operating a validator](../best-practices/operations.md).
 
 ## Verifying Your Validator Is Working
 
@@ -368,13 +368,13 @@ Test that your `validator.sh` file is running properly by executing the `validat
 /home/sol/bin/validator.sh
 ```
 
-The script should execute the `solana-validator` process. In a new terminal window, shh into your server, then verify that the process is running:
+The script should execute the `xandeum-validator` process. In a new terminal window, shh into your server, then verify that the process is running:
 
 ```
-ps aux | grep solana-validator
+ps aux | grep xandeum-validator
 ```
 
-You should see a line in the output that includes `solana-validator` with all the flags that were added to your `validator.sh` script.
+You should see a line in the output that includes `xandeum-validator` with all the flags that were added to your `validator.sh` script.
 
 Next, we need to look at the logs to make sure everything is operating properly.
 
@@ -386,7 +386,7 @@ In a new terminal window, ssh into your validator machine, switch users to the `
 
 ```
 su - sol
-tail -f solana-validator.log
+tail -f xandeum-validator.log
 ```
 
 The `tail` command will continue to display the output of a file as the file changes. You should see a continuous stream of log output as your validator runs. Keep an eye out for any lines that say `_ERROR_`.
@@ -400,13 +400,13 @@ Gossip is a protocol used in the Solana clusters to communicate between validato
 In a new terminal window, connect to your server via ssh. Identify your validator's pubkey:
 
 ```
-solana-keygen pubkey ~/validator-keypair.json
+xandeum-keygen pubkey ~/validator-keypair.json
 ```
 
-The command `solana gossip` lists all validators that have registered with the protocol. To check that the newly setup validator is in gossip, we will `grep` for our pubkey in the output:
+The command `xandeum gossip` lists all validators that have registered with the protocol. To check that the newly setup validator is in gossip, we will `grep` for our pubkey in the output:
 
 ```
-solana gossip | grep <pubkey>
+xandeum gossip | grep <pubkey>
 ```
 
 After running the command, you should see a single line that looks like this:
@@ -419,10 +419,10 @@ If you do not see any output after grep-ing the output of gossip, your validator
 
 ### Solana Validators
 
-After you have verified that your validator is in gossip, you can verify that your validator has joined the network using the `solana validators` command. The command lists all validators in the network, but like before, we can `grep` the output for the validator we care about:
+After you have verified that your validator is in gossip, you can verify that your validator has joined the network using the `xandeum validators` command. The command lists all validators in the network, but like before, we can `grep` the output for the validator we care about:
 
 ```
-solana validators | grep <pubkey>
+xandeum validators | grep <pubkey>
 ```
 
 You should see a line of output that looks like this:
@@ -433,15 +433,15 @@ You should see a line of output that looks like this:
 
 ### Solana Catchup
 
-The `solana catchup` command is a useful tool for seeing how quickly your validator is processing blocks. The Solana network has the capability to produce many transactions per second. Since your validator is new to the network, it has to ask another validator (listed as a `--known-validator` in your startup script) for a recent snapshot of the ledger. By the time you receive the snapshot, you may already be behind the network. Many transactions may have been processed and finalized in that time. In order for your validator to participate in consensus, it must _catchup_ to the rest of the network by asking for the more recent transactions that it does not have.
+The `xandeum catchup` command is a useful tool for seeing how quickly your validator is processing blocks. The Solana network has the capability to produce many transactions per second. Since your validator is new to the network, it has to ask another validator (listed as a `--known-validator` in your startup script) for a recent snapshot of the ledger. By the time you receive the snapshot, you may already be behind the network. Many transactions may have been processed and finalized in that time. In order for your validator to participate in consensus, it must _catchup_ to the rest of the network by asking for the more recent transactions that it does not have.
 
-The `solana catchup` command is a tool that tells you how far behind the network your validator is and how quickly you are catching up:
+The `xandeum catchup` command is a tool that tells you how far behind the network your validator is and how quickly you are catching up:
 
 ```
-solana catchup <pubkey>
+xandeum catchup <pubkey>
 ```
 
-If you see a message about trying to connect, your validator may not be part of the network yet. Make sure to check the logs and double check `solana gossip` and `solana validators` to make sure your validator is running properly.
+If you see a message about trying to connect, your validator may not be part of the network yet. Make sure to check the logs and double check `xandeum gossip` and `xandeum validators` to make sure your validator is running properly.
 
 Once you are happy that the validator can start up without errors, the next step is to create a system service to run the `validator.sh` file automatically. Stop the currently running validator by pressing `CTRL+C` in the window where `validator.sh` is running.
 
@@ -458,12 +458,12 @@ sudo systemctl enable --now sol
 Now verify that the validator is running properly by tailing the logs and using the commands mentioned earlier to check gossip and Solana validators:
 
 ```
-tail -f /home/sol/solana-validator*.log
+tail -f /home/sol/xandeum-validator*.log
 ```
 
 ## Monitoring
 
-`solana-watchtower` is a command you can run on a separate machine to monitor your server. You can read more about handling [automatic restarts and monitoring](../best-practices/monitoring.md#solana-watchtower) using Solana Watchtower here in the docs.
+`xandeum-watchtower` is a command you can run on a separate machine to monitor your server. You can read more about handling [automatic restarts and monitoring](../best-practices/monitoring.md#xandeum-watchtower) using Solana Watchtower here in the docs.
 
 ## Common issues
 

@@ -1,14 +1,14 @@
 use {
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::signature::{Keypair, Signer},
-    solana_streamer::socket::SocketAddrSpace,
-    solana_test_validator::TestValidator,
-    solana_tokens::commands::test_process_distribute_tokens_with_client,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_sdk::signature::{Keypair, Signer},
+    xandeum_streamer::socket::SocketAddrSpace,
+    xandeum_test_validator::TestValidator,
+    xandeum_tokens::commands::test_process_distribute_tokens_with_client,
 };
 
 #[test]
 fn test_process_distribute_with_rpc_client() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let mint_keypair = Keypair::new();
     let test_validator =

@@ -1,5 +1,5 @@
 [package]
-name = "solana-transaction-dos"
+name = "xandeum-transaction-dos"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -14,24 +14,24 @@ clap = { workspace = true }
 log = { workspace = true }
 rand = { workspace = true }
 rayon = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli = { workspace = true }
-solana-client = { workspace = true }
-solana-core = { workspace = true }
-solana-faucet = { workspace = true }
-solana-gossip = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
+xandeum-clap-utils = { workspace = true }
+xandeum-cli = { workspace = true }
+xandeum-client = { workspace = true }
+xandeum-core = { workspace = true }
+xandeum-faucet = { workspace = true }
+xandeum-gossip = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-transaction-status = { workspace = true }
+xandeum-version = { workspace = true }
 
 [dev-dependencies]
-solana-local-cluster = { workspace = true }
+xandeum-local-cluster = { workspace = true }
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

@@ -1,7 +1,7 @@
 [package]
-name = "solana-merkle-tree"
+name = "xandeum-merkle-tree"
 description = "Solana Merkle Tree"
-documentation = "https://docs.rs/solana-merkle-tree"
+documentation = "https://docs.rs/xandeum-merkle-tree"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -11,7 +11,7 @@ edition = { workspace = true }
 
 [dependencies]
 fast-math = { workspace = true }
-solana-program = { workspace = true }
+xandeum-program = { workspace = true }
 
 # This can go once the SBF toolchain target Rust 1.42.0+
 [target.bpfel-unknown-unknown.dependencies]
@@ -22,7 +22,7 @@ hex = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_merkle_tree"
+name = "xandeum_merkle_tree"
 
 [package.metadata.docs.rs]
 targets = ["x86_64-unknown-linux-gnu"]

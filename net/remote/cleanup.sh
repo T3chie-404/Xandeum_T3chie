@@ -8,18 +8,18 @@ if sudo true; then
 fi
 
 echo "pwd: $(pwd)"
-for pid in solana/*.pid; do
+for pid in xandeum/*.pid; do
   pgid=$(ps opgid= "$(cat "$pid")" | tr -d '[:space:]')
   if [[ -n $pgid ]]; then
     $sudo kill -- -"$pgid"
   fi
 done
-if [[ -f solana/netem.cfg ]]; then
-  solana/scripts/netem.sh delete < solana/netem.cfg
-  rm -f solana/netem.cfg
+if [[ -f xandeum/netem.cfg ]]; then
+  xandeum/scripts/netem.sh delete < xandeum/netem.cfg
+  rm -f xandeum/netem.cfg
 fi
-solana/scripts/net-shaper.sh cleanup
-for pattern in validator.sh boostrap-leader.sh solana- remote- iftop validator client node; do
+xandeum/scripts/net-shaper.sh cleanup
+for pattern in validator.sh boostrap-leader.sh xandeum- remote- iftop validator client node; do
   echo "killing $pattern"
   pkill -f $pattern
 done

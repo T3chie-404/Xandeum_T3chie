@@ -4,34 +4,34 @@
 #![allow(clippy::integer_arithmetic)]
 
 use {
-    solana_rbpf::memory_region::MemoryState,
-    solana_sdk::feature_set::bpf_account_data_direct_mapping, std::slice,
+    xandeum_rbpf::memory_region::MemoryState,
+    xandeum_sdk::feature_set::bpf_account_data_direct_mapping, std::slice,
 };
 
 extern crate test;
 
 use {
     byteorder::{ByteOrder, LittleEndian, WriteBytesExt},
-    solana_bpf_loader_program::{
+    xandeum_bpf_loader_program::{
         create_vm, serialization::serialize_parameters,
         syscalls::create_program_runtime_environment,
     },
-    solana_measure::measure::Measure,
-    solana_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext},
-    solana_rbpf::{
+    xandeum_measure::measure::Measure,
+    xandeum_program_runtime::{compute_budget::ComputeBudget, invoke_context::InvokeContext},
+    xandeum_rbpf::{
         ebpf::MM_INPUT_START,
         elf::Executable,
         memory_region::MemoryRegion,
         verifier::{RequisiteVerifier, TautologyVerifier},
         vm::ContextObject,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         bank::Bank,
         bank_client::BankClient,
         genesis_utils::{create_genesis_config, GenesisConfigInfo},
         loader_utils::{load_program, load_program_from_file},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::AccountSharedData,
         bpf_loader,
         client::SyncClient,
@@ -72,7 +72,7 @@ macro_rules! with_mock_invoke_context {
             is_signer: false,
             is_writable: true,
         }];
-        solana_program_runtime::with_mock_invoke_context!(
+        xandeum_program_runtime::with_mock_invoke_context!(
             $invoke_context,
             transaction_context,
             transaction_accounts

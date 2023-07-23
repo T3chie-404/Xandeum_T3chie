@@ -1,12 +1,12 @@
 use {
     crate::crds_value::sanitize_wallclock,
     itertools::Itertools,
-    solana_ledger::{
+    xandeum_ledger::{
         blockstore::BlockstoreError,
         blockstore_meta::DuplicateSlotProof,
         shred::{self, Shred, ShredType},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot,
         pubkey::Pubkey,
         sanitize::{Sanitize, SanitizeError},
@@ -259,9 +259,9 @@ pub(crate) mod tests {
     use {
         super::*,
         rand::Rng,
-        solana_entry::entry::Entry,
-        solana_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
-        solana_sdk::{
+        xandeum_entry::entry::Entry,
+        xandeum_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
+        xandeum_sdk::{
             hash,
             signature::{Keypair, Signer},
             system_transaction,

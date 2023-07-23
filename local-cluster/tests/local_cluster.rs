@@ -6,8 +6,8 @@ use {
     gag::BufferRedirect,
     log::*,
     serial_test::serial,
-    solana_client::thin_client::ThinClient,
-    solana_core::{
+    xandeum_client::thin_client::ThinClient,
+    xandeum_core::{
         broadcast_stage::{
             broadcast_duplicates_run::BroadcastDuplicatesConfig, BroadcastStageType,
         },
@@ -17,28 +17,28 @@ use {
         tower_storage::FileTowerStorage,
         validator::ValidatorConfig,
     },
-    solana_download_utils::download_snapshot_archive,
-    solana_gossip::{contact_info::LegacyContactInfo, gossip_service::discover_cluster},
-    solana_ledger::{
+    xandeum_download_utils::download_snapshot_archive,
+    xandeum_gossip::{contact_info::LegacyContactInfo, gossip_service::discover_cluster},
+    xandeum_ledger::{
         ancestor_iterator::AncestorIterator, bank_forks_utils, blockstore::Blockstore,
         blockstore_processor::ProcessOptions, leader_schedule::FixedSchedule,
     },
-    solana_local_cluster::{
+    xandeum_local_cluster::{
         cluster::{Cluster, ClusterValidatorInfo},
         cluster_tests,
         local_cluster::{ClusterConfig, LocalCluster},
         validator_configs::*,
     },
-    solana_pubsub_client::pubsub_client::PubsubClient,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{
+    xandeum_pubsub_client::pubsub_client::PubsubClient,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_rpc_client_api::{
         config::{
             RpcBlockSubscribeConfig, RpcBlockSubscribeFilter, RpcProgramAccountsConfig,
             RpcSignatureSubscribeConfig,
         },
         response::RpcSignatureResult,
     },
-    solana_runtime::{
+    xandeum_runtime::{
         commitment::VOTE_THRESHOLD_SIZE,
         hardened_unpack::open_genesis_config,
         snapshot_archive_info::SnapshotArchiveInfoGetter,
@@ -49,7 +49,7 @@ use {
         },
         vote_parser,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::AccountSharedData,
         client::{AsyncClient, SyncClient},
         clock::{self, Slot, DEFAULT_TICKS_PER_SLOT, MAX_PROCESSING_AGE},
@@ -64,8 +64,8 @@ use {
         system_program, system_transaction,
         vote::state::VoteStateUpdate,
     },
-    solana_streamer::socket::SocketAddrSpace,
-    solana_vote_program::{vote_state::MAX_LOCKOUT_HISTORY, vote_transaction},
+    xandeum_streamer::socket::SocketAddrSpace,
+    xandeum_vote_program::{vote_state::MAX_LOCKOUT_HISTORY, vote_transaction},
     std::{
         collections::{BTreeSet, HashMap, HashSet},
         fs,
@@ -87,7 +87,7 @@ mod common;
 
 #[test]
 fn test_local_cluster_start_and_exit() {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let num_nodes = 1;
     let cluster = LocalCluster::new_with_equal_stakes(
         num_nodes,
@@ -100,7 +100,7 @@ fn test_local_cluster_start_and_exit() {
 
 #[test]
 fn test_local_cluster_start_and_exit_with_config() {
-    solana_logger::setup();
+    xandeum_logger::setup();
     const NUM_NODES: usize = 1;
     let mut config = ClusterConfig {
         validator_configs: make_identical_validator_configs(
@@ -121,7 +121,7 @@ fn test_local_cluster_start_and_exit_with_config() {
 #[test]
 #[serial]
 fn test_spend_and_verify_all_nodes_1() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_spend_and_verify_all_nodes_1");
     let num_nodes = 1;
     let local = LocalCluster::new_with_equal_stakes(
@@ -143,7 +143,7 @@ fn test_spend_and_verify_all_nodes_1() {
 #[test]
 #[serial]
 fn test_spend_and_verify_all_nodes_2() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_spend_and_verify_all_nodes_2");
     let num_nodes = 2;
     let local = LocalCluster::new_with_equal_stakes(
@@ -165,7 +165,7 @@ fn test_spend_and_verify_all_nodes_2() {
 #[test]
 #[serial]
 fn test_spend_and_verify_all_nodes_3() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_spend_and_verify_all_nodes_3");
     let num_nodes = 3;
     let local = LocalCluster::new_with_equal_stakes(
@@ -188,7 +188,7 @@ fn test_spend_and_verify_all_nodes_3() {
 #[serial]
 #[ignore]
 fn test_local_cluster_signature_subscribe() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let num_nodes = 2;
     let cluster = LocalCluster::new_with_equal_stakes(
         num_nodes,
@@ -218,7 +218,7 @@ fn test_local_cluster_signature_subscribe() {
 
     let mut transaction = system_transaction::transfer(
         &cluster.funding_keypair,
-        &solana_sdk::pubkey::new_rand(),
+        &xandeum_sdk::pubkey::new_rand(),
         10,
         blockhash,
     );
@@ -273,7 +273,7 @@ fn test_local_cluster_signature_subscribe() {
 #[allow(unused_attributes)]
 #[ignore]
 fn test_spend_and_verify_all_nodes_env_num_nodes() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let num_nodes: usize = std::env::var("NUM_NODES")
         .expect("please set environment variable NUM_NODES")
         .parse()
@@ -297,7 +297,7 @@ fn test_spend_and_verify_all_nodes_env_num_nodes() {
 #[test]
 #[serial]
 fn test_two_unbalanced_stakes() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_two_unbalanced_stakes");
     let validator_config = ValidatorConfig::default_for_test();
     let num_ticks_per_second = 100;
@@ -333,7 +333,7 @@ fn test_two_unbalanced_stakes() {
 #[test]
 #[serial]
 fn test_forwarding() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // Set up a cluster where one node is never the leader, so all txs sent to this node
     // will be have to be forwarded in order to be confirmed
     let mut config = ClusterConfig {
@@ -375,7 +375,7 @@ fn test_forwarding() {
 #[test]
 #[serial]
 fn test_restart_node() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_restart_node");
     let slots_per_epoch = MINIMUM_SLOTS_PER_EPOCH * 2;
     let ticks_per_slot = 16;
@@ -418,7 +418,7 @@ fn test_restart_node() {
 #[test]
 #[serial]
 fn test_mainnet_beta_cluster_type() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     let mut config = ClusterConfig {
         cluster_type: ClusterType::MainnetBeta,
@@ -448,13 +448,13 @@ fn test_mainnet_beta_cluster_type() {
 
     // Programs that are available at epoch 0
     for program_id in [
-        &solana_config_program::id(),
-        &solana_sdk::system_program::id(),
-        &solana_sdk::stake::program::id(),
-        &solana_vote_program::id(),
-        &solana_sdk::bpf_loader_deprecated::id(),
-        &solana_sdk::bpf_loader::id(),
-        &solana_sdk::bpf_loader_upgradeable::id(),
+        &xandeum_config_program::id(),
+        &xandeum_sdk::system_program::id(),
+        &xandeum_sdk::stake::program::id(),
+        &xandeum_vote_program::id(),
+        &xandeum_sdk::bpf_loader_deprecated::id(),
+        &xandeum_sdk::bpf_loader::id(),
+        &xandeum_sdk::bpf_loader_upgradeable::id(),
     ]
     .iter()
     {
@@ -486,7 +486,7 @@ fn test_mainnet_beta_cluster_type() {
 #[test]
 #[serial]
 fn test_snapshot_download() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // First set up the cluster with 1 node
     let snapshot_interval_slots = 50;
     let num_account_paths = 3;
@@ -562,7 +562,7 @@ fn test_snapshot_download() {
 #[test]
 #[serial]
 fn test_incremental_snapshot_download() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // First set up the cluster with 1 node
     let accounts_hash_interval = 3;
     let incremental_snapshot_interval = accounts_hash_interval * 3;
@@ -737,7 +737,7 @@ fn test_incremental_snapshot_download() {
 #[test]
 #[serial]
 fn test_incremental_snapshot_download_with_crossing_full_snapshot_interval_at_startup() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // If these intervals change, also make sure to change the loop timers accordingly.
     let accounts_hash_interval = 3;
     let incremental_snapshot_interval = accounts_hash_interval * 3;
@@ -1235,7 +1235,7 @@ fn test_incremental_snapshot_download_with_crossing_full_snapshot_interval_at_st
 #[test]
 #[serial]
 fn test_snapshot_restart_tower() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // First set up the cluster with 2 nodes
     let snapshot_interval_slots = 10;
     let num_account_paths = 2;
@@ -1309,7 +1309,7 @@ fn test_snapshot_restart_tower() {
 #[test]
 #[serial]
 fn test_snapshots_blockstore_floor() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // First set up the cluster with 1 snapshotting leader
     let snapshot_interval_slots = 100;
     let num_account_paths = 4;
@@ -1414,7 +1414,7 @@ fn test_snapshots_blockstore_floor() {
 #[test]
 #[serial]
 fn test_snapshots_restart_validity() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let snapshot_interval_slots = 100;
     let num_account_paths = 1;
     let mut snapshot_test_config =
@@ -1534,7 +1534,7 @@ fn test_fake_shreds_broadcast_leader() {
 
 #[test]
 fn test_wait_for_max_stake() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let validator_config = ValidatorConfig::default_for_test();
     let mut config = ClusterConfig {
         cluster_lamports: DEFAULT_CLUSTER_LAMPORTS,
@@ -1555,7 +1555,7 @@ fn test_wait_for_max_stake() {
 // Test that when a leader is leader for banks B_i..B_{i+n}, and B_i is not
 // votable, then B_{i+1} still chains to B_i
 fn test_no_voting() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let validator_config = ValidatorConfig {
         voting_disabled: true,
         ..ValidatorConfig::default_for_test()
@@ -1595,7 +1595,7 @@ fn test_no_voting() {
 #[test]
 #[serial]
 fn test_optimistic_confirmation_violation_detection() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // First set up the cluster with 2 nodes
     let slots_per_epoch = 2048;
     let node_stakes = vec![50 * DEFAULT_NODE_STAKE, 51 * DEFAULT_NODE_STAKE];
@@ -1734,7 +1734,7 @@ fn test_optimistic_confirmation_violation_detection() {
 #[test]
 #[serial]
 fn test_validator_saves_tower() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     let validator_config = ValidatorConfig {
         require_tower: true,
@@ -1878,7 +1878,7 @@ enum ClusterMode {
 }
 
 fn do_test_future_tower(cluster_mode: ClusterMode) {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     // First set up the cluster with 4 nodes
     let slots_per_epoch = 2048;
@@ -2046,7 +2046,7 @@ fn restart_whole_cluster_after_hard_fork(
 
 #[test]
 fn test_hard_fork_invalidates_tower() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     // First set up the cluster with 2 nodes
     let slots_per_epoch = 2048;
@@ -2107,10 +2107,10 @@ fn test_hard_fork_invalidates_tower() {
     // persistent tower's lockout behavior...
     let hard_fork_slot = min_root - 5;
     let hard_fork_slots = Some(vec![hard_fork_slot]);
-    let mut hard_forks = solana_sdk::hard_forks::HardForks::default();
+    let mut hard_forks = xandeum_sdk::hard_forks::HardForks::default();
     hard_forks.register(hard_fork_slot);
 
-    let expected_shred_version = solana_sdk::shred_version::compute_shred_version(
+    let expected_shred_version = xandeum_sdk::shred_version::compute_shred_version(
         &cluster.lock().unwrap().genesis_config.hash(),
         Some(&hard_forks),
     );
@@ -2215,7 +2215,7 @@ fn create_snapshot_to_hard_fork(
 #[test]
 #[serial]
 fn test_hard_fork_with_gap_in_roots() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     // First set up the cluster with 2 nodes
     let slots_per_epoch = 2048;
@@ -2287,19 +2287,19 @@ fn test_hard_fork_with_gap_in_roots() {
     let mut hard_forks = HardForks::default();
     hard_forks.register(hard_fork_slot);
 
-    let expected_shred_version = solana_sdk::shred_version::compute_shred_version(
+    let expected_shred_version = xandeum_sdk::shred_version::compute_shred_version(
         &cluster.lock().unwrap().genesis_config.hash(),
         Some(&hard_forks),
     );
 
     // create hard-forked snapshot only for validator a, emulating the manual cluster restart
-    // procedure with `solana-ledger-tool create-snapshot`
+    // procedure with `xandeum-ledger-tool create-snapshot`
     let genesis_slot = 0;
     {
         let blockstore_a = Blockstore::open(&val_a_ledger_path).unwrap();
         create_snapshot_to_hard_fork(&blockstore_a, hard_fork_slot, vec![hard_fork_slot]);
 
-        // Intentionally make solana-validator unbootable by replaying blocks from the genesis to
+        // Intentionally make xandeum-validator unbootable by replaying blocks from the genesis to
         // ensure the hard-forked snapshot is used always.  Otherwise, we couldn't create a gap
         // in the ledger roots column family reliably.
         // There was a bug which caused the hard-forked snapshot at an unrooted slot to forget
@@ -2382,7 +2382,7 @@ fn test_restart_tower_rollback() {
     // Test node crashing and failing to save its tower before restart
     // Cluster continues to make progress, this node is able to rejoin with
     // outdated tower post restart.
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     // First set up the cluster with 2 nodes
     let slots_per_epoch = 2048;
@@ -2608,7 +2608,7 @@ fn test_rpc_block_subscribe() {
 #[serial]
 #[allow(unused_attributes)]
 fn test_oc_bad_signatures() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
 
     let total_stake = 100 * DEFAULT_NODE_STAKE;
     let leader_stake = (total_stake as f64 * VOTE_THRESHOLD_SIZE) as u64;
@@ -2964,7 +2964,7 @@ fn setup_transfer_scan_threads(
 }
 
 fn run_test_load_program_accounts(scan_commitment: CommitmentConfig) {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     // First set up the cluster with 2 nodes
     let slots_per_epoch = 2048;
     let node_stakes = vec![51 * DEFAULT_NODE_STAKE, 50 * DEFAULT_NODE_STAKE];
@@ -3082,7 +3082,7 @@ fn test_optimistic_confirmation_violation_without_tower() {
 //    `A` should not be able to generate a switching proof.
 //
 fn do_test_optimistic_confirmation_violation_with_or_without_tower(with_tower: bool) {
-    solana_logger::setup_with("debug");
+    xandeum_logger::setup_with("debug");
 
     // First set up the cluster with 4 nodes
     let slots_per_epoch = 2048;
@@ -3389,7 +3389,7 @@ fn do_test_optimistic_confirmation_violation_with_or_without_tower(with_tower: b
 // stalling the network.
 
 fn test_fork_choice_refresh_old_votes() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let max_switch_threshold_failure_pct = 1.0 - 2.0 * SWITCH_FORK_THRESHOLD;
     let total_stake = 100 * DEFAULT_NODE_STAKE;
     let max_failures_stake = (max_switch_threshold_failure_pct * total_stake as f64) as u64;
@@ -3871,7 +3871,7 @@ fn test_duplicate_shreds_broadcast_leader() {
 #[serial]
 #[ignore]
 fn test_switch_threshold_uses_gossip_votes() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     let total_stake = 100 * DEFAULT_NODE_STAKE;
 
     // Minimum stake needed to generate a switching proof
@@ -4214,7 +4214,7 @@ fn test_cluster_partition_1_1_1() {
 #[test]
 #[serial]
 fn test_leader_failure_4() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_leader_failure_4");
     let num_nodes = 4;
     let validator_config = ValidatorConfig::default_for_test();
@@ -4245,7 +4245,7 @@ fn test_leader_failure_4() {
 #[test]
 #[serial]
 fn test_ledger_cleanup_service() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     error!("test_ledger_cleanup_service");
     let num_nodes = 3;
     let validator_config = ValidatorConfig {
@@ -4311,8 +4311,8 @@ fn test_ledger_cleanup_service() {
 
 #[test]
 fn test_slot_hash_expiry() {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
-    solana_sdk::slot_hashes::set_entries_for_tests_only(64);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_sdk::slot_hashes::set_entries_for_tests_only(64);
 
     let slots_per_epoch = 2048;
     let node_stakes = vec![60 * DEFAULT_NODE_STAKE, 40 * DEFAULT_NODE_STAKE];
@@ -4415,14 +4415,14 @@ fn test_slot_hash_expiry() {
 
     info!(
         "Run A on majority fork until it reaches slot hash expiry {}",
-        solana_sdk::slot_hashes::get_entries()
+        xandeum_sdk::slot_hashes::get_entries()
     );
     let mut last_vote_on_a;
     // Keep A running for a while longer so the majority fork has some decent size
     loop {
         last_vote_on_a = wait_for_last_vote_in_tower_to_land_in_ledger(&a_ledger_path, &a_pubkey);
         if last_vote_on_a
-            >= common_ancestor_slot + 2 * (solana_sdk::slot_hashes::get_entries() as u64)
+            >= common_ancestor_slot + 2 * (xandeum_sdk::slot_hashes::get_entries() as u64)
         {
             let blockstore = open_blockstore(&a_ledger_path);
             info!(
@@ -4524,8 +4524,8 @@ fn test_slot_hash_expiry() {
 #[test]
 #[serial]
 fn test_duplicate_with_pruned_ancestor() {
-    solana_logger::setup_with("info,solana_metrics=off");
-    solana_core::duplicate_repair_status::set_ancestor_hash_repair_sample_size_for_tests_only(3);
+    xandeum_logger::setup_with("info,xandeum_metrics=off");
+    xandeum_core::duplicate_repair_status::set_ancestor_hash_repair_sample_size_for_tests_only(3);
 
     let majority_leader_stake = 10_000_000 * DEFAULT_NODE_STAKE;
     let minority_leader_stake = 2_000_000 * DEFAULT_NODE_STAKE;

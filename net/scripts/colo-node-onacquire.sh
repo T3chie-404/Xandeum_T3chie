@@ -18,24 +18,24 @@ if [[ ! -f "${SOLANA_LOCK_FILE}" ]]; then
     echo "export SOLANA_LOCK_USER=${SOLANA_USER}"
     echo "export SOLANA_LOCK_INSTANCENAME=${INSTANCE_NAME}"
     echo "export PREEMPTIBLE=${PREEMPTIBLE}"
-    echo "[[ -v SSH_TTY && -f \"${HOME}/.solana-motd\" ]] && cat \"${HOME}/.solana-motd\" 1>&2"
+    echo "[[ -v SSH_TTY && -f \"${HOME}/.xandeum-motd\" ]] && cat \"${HOME}/.xandeum-motd\" 1>&2"
   } >&9
   exec 9>&-
-  cat > /solana-scratch/id_ecdsa <<EOF
+  cat > /xandeum-scratch/id_ecdsa <<EOF
 ${SSH_PRIVATE_KEY_TEXT}
 EOF
-  cat > /solana-scratch/id_ecdsa.pub <<EOF
+  cat > /xandeum-scratch/id_ecdsa.pub <<EOF
 ${SSH_PUBLIC_KEY_TEXT}
 EOF
-  chmod 0600 /solana-scratch/id_ecdsa
-  cat > /solana-scratch/authorized_keys <<EOF
+  chmod 0600 /xandeum-scratch/id_ecdsa
+  cat > /xandeum-scratch/authorized_keys <<EOF
 ${SSH_AUTHORIZED_KEYS}
 ${SSH_PUBLIC_KEY_TEXT}
 EOF
-  cp /solana-scratch/id_ecdsa "${HOME}/.ssh/id_ecdsa"
-  cp /solana-scratch/id_ecdsa.pub "${HOME}/.ssh/id_ecdsa.pub"
-  cp /solana-scratch/authorized_keys "${HOME}/.ssh/authorized_keys"
-  cat > "${HOME}/.solana-motd" <<EOF
+  cp /xandeum-scratch/id_ecdsa "${HOME}/.ssh/id_ecdsa"
+  cp /xandeum-scratch/id_ecdsa.pub "${HOME}/.ssh/id_ecdsa.pub"
+  cp /xandeum-scratch/authorized_keys "${HOME}/.ssh/authorized_keys"
+  cat > "${HOME}/.xandeum-motd" <<EOF
 
 
 ${NETWORK_INFO}
@@ -43,7 +43,7 @@ ${CREATION_INFO}
 EOF
 
   # Stamp creation MUST be last!
-  touch /solana-scratch/.instance-startup-complete
+  touch /xandeum-scratch/.instance-startup-complete
 else
   # shellcheck disable=SC1090
   exec 9<"${SOLANA_LOCK_FILE}" && flock -s 9 && . "${SOLANA_LOCK_FILE}" && exec 9>&-

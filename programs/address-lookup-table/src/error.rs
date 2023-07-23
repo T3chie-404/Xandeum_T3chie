@@ -1,5 +1,5 @@
-#[cfg(not(target_os = "solana"))]
-use solana_program::message::AddressLoaderError;
+#[cfg(not(target_os = "xandeum"))]
+use xandeum_program::message::AddressLoaderError;
 use thiserror::Error;
 
 #[derive(Debug, Error, PartialEq, Eq, Clone)]
@@ -21,7 +21,7 @@ pub enum AddressLookupError {
     InvalidLookupIndex,
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "xandeum"))]
 impl From<AddressLookupError> for AddressLoaderError {
     fn from(err: AddressLookupError) -> Self {
         match err {

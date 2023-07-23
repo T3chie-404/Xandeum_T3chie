@@ -34,8 +34,8 @@
 //! on behalf of the caller, and a low-level API for when they have
 //! already been signed and verified.
 #[allow(deprecated)]
-use solana_sdk::recent_blockhashes_account;
-pub use solana_sdk::reward_type::RewardType;
+use xandeum_sdk::recent_blockhashes_account;
+pub use xandeum_sdk::reward_type::RewardType;
 use {
     crate::{
         account_overrides::AccountOverrides,
@@ -90,10 +90,10 @@ use {
         iter::{IntoParallelIterator, IntoParallelRefIterator, ParallelIterator},
         ThreadPool, ThreadPoolBuilder,
     },
-    solana_bpf_loader_program::syscalls::create_program_runtime_environment,
-    solana_measure::{measure, measure::Measure, measure_us},
-    solana_perf::perf_libs,
-    solana_program_runtime::{
+    xandeum_bpf_loader_program::syscalls::create_program_runtime_environment,
+    xandeum_measure::{measure, measure::Measure, measure_us},
+    xandeum_perf::perf_libs,
+    xandeum_program_runtime::{
         accounts_data_meter::MAX_ACCOUNTS_DATA_LEN,
         compute_budget::{self, ComputeBudget},
         invoke_context::ProcessInstructionWithContext,
@@ -105,7 +105,7 @@ use {
         sysvar_cache::SysvarCache,
         timings::{ExecuteDetailsTimings, ExecuteTimingType, ExecuteTimings},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::{
             create_account_shared_data_with_fields as create_account, from_account, Account,
             AccountSharedData, InheritableAccountFields, ReadableAccount, WritableAccount,
@@ -164,11 +164,11 @@ use {
             ExecutionRecord, TransactionAccount, TransactionContext, TransactionReturnData,
         },
     },
-    solana_stake_program::stake_state::{
+    xandeum_stake_program::stake_state::{
         self, InflationPointCalculationEvent, PointValue, StakeState,
     },
-    solana_system_program::{get_system_account_kind, SystemAccountKind},
-    solana_vote_program::vote_state::{VoteState, VoteStateVersions},
+    xandeum_system_program::{get_system_account_kind, SystemAccountKind},
+    xandeum_vote_program::vote_state::{VoteState, VoteStateVersions},
     std::{
         borrow::Cow,
         cell::RefCell,
@@ -260,7 +260,7 @@ pub struct BankRc {
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-use solana_frozen_abi::abi_example::AbiExample;
+use xandeum_frozen_abi::abi_example::AbiExample;
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
 impl AbiExample for BankRc {
@@ -2580,7 +2580,7 @@ impl Bank {
                         let cached_vote_account = cached_vote_accounts.get(vote_pubkey);
                         let vote_account = match self.get_account_with_fixed_root(vote_pubkey) {
                             Some(vote_account) => {
-                                if vote_account.owner() != &solana_vote_program::id() {
+                                if vote_account.owner() != &xandeum_vote_program::id() {
                                     invalid_vote_keys
                                         .insert(*vote_pubkey, InvalidCacheEntryReason::WrongOwner);
                                     if cached_vote_account.is_some() {
@@ -2633,7 +2633,7 @@ impl Bank {
                             stake_pubkey,
                             &InflationPointCalculationEvent::Delegation(
                                 delegation,
-                                solana_vote_program::id(),
+                                xandeum_vote_program::id(),
                             ),
                         ));
                     }
@@ -2664,7 +2664,7 @@ impl Bank {
         {
             let num_stake_delegations = stakes.stake_delegations().len();
             let min_stake_delegation =
-                solana_stake_program::get_minimum_delegation(&self.feature_set)
+                xandeum_stake_program::get_minimum_delegation(&self.feature_set)
                     .max(LAMPORTS_PER_SOL);
 
             let (stake_delegations, filter_timer) = measure!(stakes
@@ -2718,7 +2718,7 @@ impl Bank {
         });
         // Obtain vote-accounts for unique voter pubkeys.
         let cached_vote_accounts = stakes.vote_accounts();
-        let solana_vote_program: Pubkey = solana_vote_program::id();
+        let xandeum_vote_program: Pubkey = xandeum_vote_program::id();
         let vote_accounts_cache_miss_count = AtomicUsize::default();
         let get_vote_account = |vote_pubkey: &Pubkey| -> Option<VoteAccount> {
             if let Some(vote_account) = cached_vote_accounts.get(vote_pubkey) {
@@ -2729,7 +2729,7 @@ impl Bank {
             // below is only for sanity check, and can be removed once
             // vote_accounts_cache_miss_count is shown to be always zero.
             let account = self.get_account_with_fixed_root(vote_pubkey)?;
-            if account.owner() == &solana_vote_program
+            if account.owner() == &xandeum_vote_program
                 && VoteState::deserialize(account.data()).is_ok()
             {
                 vote_accounts_cache_miss_count.fetch_add(1, Relaxed);
@@ -2745,7 +2745,7 @@ impl Bank {
                     return None;
                 }
             };
-            if vote_account.owner() != &solana_vote_program {
+            if vote_account.owner() != &xandeum_vote_program {
                 invalid_vote_keys.insert(vote_pubkey, InvalidCacheEntryReason::WrongOwner);
                 return None;
             }
@@ -2780,7 +2780,7 @@ impl Bank {
                 };
             if let Some(reward_calc_tracer) = reward_calc_tracer.as_ref() {
                 let delegation =
-                    InflationPointCalculationEvent::Delegation(delegation, solana_vote_program);
+                    InflationPointCalculationEvent::Delegation(delegation, xandeum_vote_program);
                 let event = RewardCalculationEvent::Staking(stake_pubkey, &delegation);
                 reward_calc_tracer(&event);
             }
@@ -4120,7 +4120,7 @@ impl Bank {
             }
             Err(TransactionError::ProgramAccountNotFound)
         } else if loader_v4::check_id(program.owner()) {
-            let state = solana_loader_v4_program::get_state(program.data())
+            let state = xandeum_loader_v4_program::get_state(program.data())
                 .map_err(|_| TransactionError::ProgramAccountNotFound)?;
             Ok(state.slot)
         } else {
@@ -4192,7 +4192,7 @@ impl Bank {
             .unwrap()
             .program_runtime_environment_v1
             .clone();
-        solana_bpf_loader_program::load_program_from_account(
+        xandeum_bpf_loader_program::load_program_from_account(
             &self.feature_set,
             None, // log_collector
             &program,
@@ -5539,7 +5539,7 @@ impl Bank {
         let can_skip_rewrites = self.bank_hash_skips_rent_rewrites();
         let set_exempt_rent_epoch_max: bool = self
             .feature_set
-            .is_active(&solana_sdk::feature_set::set_exempt_rent_epoch_max::id());
+            .is_active(&xandeum_sdk::feature_set::set_exempt_rent_epoch_max::id());
         for (pubkey, account, _loaded_slot) in accounts.iter_mut() {
             let (rent_collected_info, measure) =
                 measure!(self.rent_collector.collect_from_existing_account(
@@ -5874,7 +5874,7 @@ impl Bank {
     fn use_multi_epoch_collection_cycle(&self, epoch: Epoch) -> bool {
         // Force normal behavior, disabling multi epoch collection cycle for manual local testing
         #[cfg(not(test))]
-        if self.slot_count_per_normal_epoch() == solana_sdk::epoch_schedule::MINIMUM_SLOTS_PER_EPOCH
+        if self.slot_count_per_normal_epoch() == xandeum_sdk::epoch_schedule::MINIMUM_SLOTS_PER_EPOCH
         {
             return false;
         }
@@ -5886,7 +5886,7 @@ impl Bank {
     pub(crate) fn use_fixed_collection_cycle(&self) -> bool {
         // Force normal behavior, disabling fixed collection cycle for manual local testing
         #[cfg(not(test))]
-        if self.slot_count_per_normal_epoch() == solana_sdk::epoch_schedule::MINIMUM_SLOTS_PER_EPOCH
+        if self.slot_count_per_normal_epoch() == xandeum_sdk::epoch_schedule::MINIMUM_SLOTS_PER_EPOCH
         {
             return false;
         }
@@ -7673,7 +7673,7 @@ impl Bank {
         };
 
         if reconfigure_token2_native_mint {
-            let mut native_mint_account = solana_sdk::account::AccountSharedData::from(Account {
+            let mut native_mint_account = xandeum_sdk::account::AccountSharedData::from(Account {
                 owner: inline_spl_token::id(),
                 data: inline_spl_token::native_mint::ACCOUNT_DATA.to_vec(),
                 lamports: sol_to_lamports(1.),
@@ -7682,14 +7682,14 @@ impl Bank {
             });
 
             // As a workaround for
-            // https://github.com/solana-labs/solana-program-library/issues/374, ensure that the
+            // https://github.com/xandeum-labs/xandeum-program-library/issues/374, ensure that the
             // spl-token 2 native mint account is owned by the spl-token 2 program.
             let old_account_data_size;
             let store = if let Some(existing_native_mint_account) =
                 self.get_account_with_fixed_root(&inline_spl_token::native_mint::id())
             {
                 old_account_data_size = existing_native_mint_account.data().len();
-                if existing_native_mint_account.owner() == &solana_sdk::system_program::id() {
+                if existing_native_mint_account.owner() == &xandeum_sdk::system_program::id() {
                     native_mint_account.set_lamports(existing_native_mint_account.lamports());
                     true
                 } else {
@@ -7974,8 +7974,8 @@ impl Drop for Bank {
 pub mod test_utils {
     use {
         super::Bank,
-        solana_sdk::{hash::hashv, pubkey::Pubkey},
-        solana_vote_program::vote_state::{self, BlockTimestamp, VoteStateVersions},
+        xandeum_sdk::{hash::hashv, pubkey::Pubkey},
+        xandeum_vote_program::vote_state::{self, BlockTimestamp, VoteStateVersions},
     };
     pub fn goto_end_of_slot(bank: &mut Bank) {
         let mut tick_hash = bank.last_blockhash();

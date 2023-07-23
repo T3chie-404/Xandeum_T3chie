@@ -23,4 +23,4 @@ of an auto-delegation bot as described above. As stakes earn rewards, the pool a
 grow proportionally in value. Finally, pool token holders can send SPL tokens
 back to the stake pool to redeem SOL, thereby participating in decentralization with much
 less work required. More information can be found at the
-[SPL stake pool documentation](https://spl.solana.com/stake-pool).
+[SPL stake pool documentation](https://spl.xandeum.com/stake-pool).

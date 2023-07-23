@@ -19,12 +19,12 @@ To utilize an Address Lookup Table inside a transaction, developers must use v0 
 
 ## How to create an address lookup table
 
-Creating a new lookup table with the `@solana/web3.js` library is similar to the older `legacy` transactions, but with some differences.
+Creating a new lookup table with the `@xandeum/web3.js` library is similar to the older `legacy` transactions, but with some differences.
 
-Using the `@solana/web3.js` library, you can use the [`createLookupTable`](https://solana-labs.github.io/solana-web3.js/classes/AddressLookupTableProgram.html#createLookupTable) function to construct the instruction needed to create a new lookup table, as well as determine its address:
+Using the `@xandeum/web3.js` library, you can use the [`createLookupTable`](https://xandeum-labs.github.io/xandeum-web3.js/classes/AddressLookupTableProgram.html#createLookupTable) function to construct the instruction needed to create a new lookup table, as well as determine its address:
 
 ```js
-const web3 = require("@solana/web3.js");
+const web3 = require("@xandeum/web3.js");
 
 // connect to a cluster and get the current `slot`
 const connection = new web3.Connection(web3.clusterApiUrl("devnet"));
@@ -51,7 +51,7 @@ console.log("lookup table address:", lookupTableAddress.toBase58());
 
 ## Add addresses to a lookup table
 
-Adding addresses to a lookup table is known as "_extending_". Using the `@solana/web3.js` library, you can create a new _extend_ instruction using the [`extendLookupTable`](https://solana-labs.github.io/solana-web3.js/classes/AddressLookupTableProgram.html#extendLookupTable) method:
+Adding addresses to a lookup table is known as "_extending_". Using the `@xandeum/web3.js` library, you can create a new _extend_ instruction using the [`extendLookupTable`](https://xandeum-labs.github.io/xandeum-web3.js/classes/AddressLookupTableProgram.html#extendLookupTable) method:
 
 ```js
 // add addresses to the `lookupTableAddress` table via an `extend` instruction
@@ -77,7 +77,7 @@ Once these addresses have been inserted into the table, and stored on chain, you
 
 ## Fetch an Address Lookup Table
 
-Similar to requesting another account (or PDA) from the cluster, you can fetch a complete Address Lookup Table with the [`getAddressLookupTable`](https://solana-labs.github.io/solana-web3.js/classes/Connection.html#getAddressLookupTable) method:
+Similar to requesting another account (or PDA) from the cluster, you can fetch a complete Address Lookup Table with the [`getAddressLookupTable`](https://xandeum-labs.github.io/xandeum-web3.js/classes/Connection.html#getAddressLookupTable) method:
 
 ```js
 // define the `PublicKey` of the lookup table to fetch
@@ -135,7 +135,7 @@ transactionV0.sign([payer]);
 const txid = await web3.sendAndConfirmTransaction(connection, transactionV0);
 
 console.log(
-  `Transaction: https://explorer.solana.com/tx/${txidV0}?cluster=devnet`,
+  `Transaction: https://explorer.xandeum.com/tx/${txidV0}?cluster=devnet`,
 );
 ```
 

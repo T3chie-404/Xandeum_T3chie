@@ -4,15 +4,15 @@ use {
     log::*,
     rand::{thread_rng, Rng},
     rayon::prelude::*,
-    solana_clap_utils::{
+    xandeum_clap_utils::{
         hidden_unless_forced, input_parsers::pubkey_of, input_validators::is_url_or_moniker,
     },
-    solana_cli_config::{ConfigInput, CONFIG_FILE},
-    solana_client::transaction_executor::TransactionExecutor,
-    solana_gossip::gossip_service::discover,
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_runtime::inline_spl_token,
-    solana_sdk::{
+    xandeum_cli_config::{ConfigInput, CONFIG_FILE},
+    xandeum_client::transaction_executor::TransactionExecutor,
+    xandeum_gossip::gossip_service::discover,
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_runtime::inline_spl_token,
+    xandeum_sdk::{
         commitment_config::CommitmentConfig,
         hash::Hash,
         instruction::{AccountMeta, Instruction},
@@ -22,7 +22,7 @@ use {
         system_instruction, system_program,
         transaction::Transaction,
     },
-    solana_streamer::socket::SocketAddrSpace,
+    xandeum_streamer::socket::SocketAddrSpace,
     std::{
         cmp::min,
         process::exit,
@@ -486,10 +486,10 @@ fn run_accounts_bench(
 }
 
 fn main() {
-    solana_logger::setup_with_default("solana=info");
+    xandeum_logger::setup_with_default("xandeum=info");
     let matches = App::new(crate_name!())
         .about(crate_description!())
-        .version(solana_version::version!())
+        .version(xandeum_version::version!())
         .arg({
             let arg = Arg::with_name("config_file")
                 .short("C")
@@ -635,7 +635,7 @@ fn main() {
     }
 
     let client = if let Some(addr) = matches.value_of("entrypoint") {
-        let entrypoint_addr = solana_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
+        let entrypoint_addr = xandeum_net_utils::parse_host_port(addr).unwrap_or_else(|e| {
             eprintln!("failed to parse entrypoint address: {e}");
             exit(1)
         });
@@ -671,9 +671,9 @@ fn main() {
         ))
     } else {
         let config = if let Some(config_file) = matches.value_of("config_file") {
-            solana_cli_config::Config::load(config_file).unwrap_or_default()
+            xandeum_cli_config::Config::load(config_file).unwrap_or_default()
         } else {
-            solana_cli_config::Config::default()
+            xandeum_cli_config::Config::default()
         };
         let (_, json_rpc_url) = ConfigInput::compute_json_rpc_url_setting(
             matches.value_of("json_rpc_url").unwrap_or(""),
@@ -703,24 +703,24 @@ fn main() {
 pub mod test {
     use {
         super::*,
-        solana_core::validator::ValidatorConfig,
-        solana_faucet::faucet::run_local_faucet,
-        solana_local_cluster::{
+        xandeum_core::validator::ValidatorConfig,
+        xandeum_faucet::faucet::run_local_faucet,
+        xandeum_local_cluster::{
             local_cluster::{ClusterConfig, LocalCluster},
             validator_configs::make_identical_validator_configs,
         },
-        solana_measure::measure::Measure,
-        solana_sdk::{native_token::sol_to_lamports, poh_config::PohConfig},
-        solana_test_validator::TestValidator,
+        xandeum_measure::measure::Measure,
+        xandeum_sdk::{native_token::sol_to_lamports, poh_config::PohConfig},
+        xandeum_test_validator::TestValidator,
         spl_token::{
-            solana_program::program_pack::Pack,
+            xandeum_program::program_pack::Pack,
             state::{Account, Mint},
         },
     };
 
     #[test]
     fn test_accounts_cluster_bench() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let validator_config = ValidatorConfig::default_for_test();
         let num_nodes = 1;
         let mut config = ClusterConfig {
@@ -762,7 +762,7 @@ pub mod test {
 
     #[test]
     fn test_create_then_reclaim_spl_token_accounts() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let mint_keypair = Keypair::new();
         let mint_pubkey = mint_keypair.pubkey();
         let faucet_addr = run_local_faucet(mint_keypair, None);

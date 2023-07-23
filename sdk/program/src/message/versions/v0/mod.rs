@@ -7,7 +7,7 @@
 //!
 //! [`legacy`]: crate::message::legacy
 //! [`v0`]: crate::message::v0
-//! [future message format]: https://docs.solana.com/proposals/versioned-transactions
+//! [future message format]: https://docs.xandeum.com/proposals/versioned-transactions
 
 use crate::{
     address_lookup_table_account::AddressLookupTableAccount,
@@ -182,25 +182,25 @@ impl Message {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_address_lookup_table_program`], [`solana_rpc_client`], [`solana_sdk`], and [`anyhow`] crates.
+    /// This example uses the [`xandeum_address_lookup_table_program`], [`xandeum_rpc_client`], [`xandeum_sdk`], and [`anyhow`] crates.
     ///
-    /// [`solana_address_lookup_table_program`]: https://docs.rs/solana-address-lookup-table-program
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
-    /// [`solana_sdk`]: https://docs.rs/solana-sdk
+    /// [`xandeum_address_lookup_table_program`]: https://docs.rs/xandeum-address-lookup-table-program
+    /// [`xandeum_rpc_client`]: https://docs.rs/xandeum-rpc-client
+    /// [`xandeum_sdk`]: https://docs.rs/xandeum-sdk
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_program::example_mocks::{
-    /// #     solana_address_lookup_table_program,
-    /// #     solana_rpc_client,
-    /// #     solana_sdk,
+    /// # use xandeum_program::example_mocks::{
+    /// #     xandeum_address_lookup_table_program,
+    /// #     xandeum_rpc_client,
+    /// #     xandeum_sdk,
     /// # };
     /// # use std::borrow::Cow;
-    /// # use solana_sdk::account::Account;
+    /// # use xandeum_sdk::account::Account;
     /// use anyhow::Result;
-    /// use solana_address_lookup_table_program::state::AddressLookupTable;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_sdk::{
+    /// use xandeum_address_lookup_table_program::state::AddressLookupTable;
+    /// use xandeum_rpc_client::rpc_client::RpcClient;
+    /// use xandeum_sdk::{
     ///      address_lookup_table_account::AddressLookupTableAccount,
     ///      instruction::{AccountMeta, Instruction},
     ///      message::{VersionedMessage, v0},
@@ -220,7 +220,7 @@ impl Message {
     ///     #   data: AddressLookupTable {
     ///     #     addresses: Cow::Owned(instruction.accounts.iter().map(|meta| meta.pubkey).collect()),
     ///     #   }.serialize_for_tests().unwrap(),
-    ///     #   owner: solana_address_lookup_table_program::ID,
+    ///     #   owner: xandeum_address_lookup_table_program::ID,
     ///     #   executable: false,
     ///     #   rent_epoch: 1,
     ///     # });

@@ -92,15 +92,15 @@ mod tests {
             immutable_deserialized_packet::ImmutableDeserializedPacket,
         },
         crossbeam_channel::unbounded,
-        solana_client::connection_cache::ConnectionCache,
-        solana_ledger::{
+        xandeum_client::connection_cache::ConnectionCache,
+        xandeum_ledger::{
             blockstore::Blockstore, genesis_utils::GenesisConfigInfo,
             get_tmp_ledger_path_auto_delete, leader_schedule_cache::LeaderScheduleCache,
         },
-        solana_perf::packet::to_packet_batches,
-        solana_poh::poh_recorder::{PohRecorder, WorkingBankEntry},
-        solana_runtime::{bank::Bank, bank_forks::BankForks},
-        solana_sdk::{
+        xandeum_perf::packet::to_packet_batches,
+        xandeum_poh::poh_recorder::{PohRecorder, WorkingBankEntry},
+        xandeum_runtime::{bank::Bank, bank_forks::BankForks},
+        xandeum_sdk::{
             genesis_config::GenesisConfig, poh_config::PohConfig, pubkey::Pubkey,
             signature::Keypair, system_transaction,
         },

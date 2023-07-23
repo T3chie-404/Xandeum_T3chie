@@ -10,24 +10,24 @@ use {
     crossbeam_channel::{unbounded, Receiver, Sender},
     jsonrpc_core::{futures::future, types::error, BoxFuture, Error, Metadata, Result},
     jsonrpc_derive::rpc,
-    solana_account_decoder::{
+    xandeum_account_decoder::{
         parse_token::{is_known_spl_token_id, token_amount_to_ui_amount, UiTokenAmount},
         UiAccount, UiAccountEncoding, UiDataSliceConfig, MAX_BASE58_BYTES,
     },
-    solana_client::connection_cache::{ConnectionCache, Protocol},
-    solana_entry::entry::Entry,
-    solana_faucet::faucet::request_airdrop_transaction,
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfo},
-    solana_ledger::{
+    xandeum_client::connection_cache::{ConnectionCache, Protocol},
+    xandeum_entry::entry::Entry,
+    xandeum_faucet::faucet::request_airdrop_transaction,
+    xandeum_gossip::{cluster_info::ClusterInfo, contact_info::ContactInfo},
+    xandeum_ledger::{
         blockstore::{Blockstore, SignatureInfosForAddress},
         blockstore_db::BlockstoreError,
         blockstore_meta::{PerfSample, PerfSampleV1, PerfSampleV2},
         get_tmp_ledger_path,
         leader_schedule_cache::LeaderScheduleCache,
     },
-    solana_metrics::inc_new_counter_info,
-    solana_perf::packet::PACKET_DATA_SIZE,
-    solana_rpc_client_api::{
+    xandeum_metrics::inc_new_counter_info,
+    xandeum_perf::packet::PACKET_DATA_SIZE,
+    xandeum_rpc_client_api::{
         config::*,
         custom_error::RpcCustomError,
         deprecated_config::*,
@@ -41,7 +41,7 @@ use {
         },
         response::{Response as RpcResponse, *},
     },
-    solana_runtime::{
+    xandeum_runtime::{
         accounts::AccountAddressFilter,
         accounts_index::{AccountIndex, AccountSecondaryIndexes, IndexKey, ScanConfig},
         bank::{Bank, TransactionSimulationResult},
@@ -54,7 +54,7 @@ use {
         snapshot_config::SnapshotConfig,
         snapshot_utils,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::{AccountSharedData, ReadableAccount},
         account_utils::StateMut,
         clock::{Slot, UnixTimestamp, MAX_RECENT_BLOCKHASHES},
@@ -77,23 +77,23 @@ use {
             VersionedTransaction, MAX_TX_ACCOUNT_LOCKS,
         },
     },
-    solana_send_transaction_service::{
+    xandeum_send_transaction_service::{
         send_transaction_service::{SendTransactionService, TransactionInfo},
         tpu_info::NullTpuInfo,
     },
-    solana_stake_program,
-    solana_storage_bigtable::Error as StorageError,
-    solana_streamer::socket::SocketAddrSpace,
-    solana_transaction_status::{
+    xandeum_stake_program,
+    xandeum_storage_bigtable::Error as StorageError,
+    xandeum_streamer::socket::SocketAddrSpace,
+    xandeum_transaction_status::{
         BlockEncodingOptions, ConfirmedBlock, ConfirmedTransactionStatusWithSignature,
         ConfirmedTransactionWithStatusMeta, EncodedConfirmedTransactionWithStatusMeta, Reward,
         RewardType, TransactionBinaryEncoding, TransactionConfirmationStatus, TransactionStatus,
         UiConfirmedBlock, UiTransactionEncoding,
     },
-    solana_vote_program::vote_state::{VoteState, MAX_LOCKOUT_HISTORY},
+    xandeum_vote_program::vote_state::{VoteState, MAX_LOCKOUT_HISTORY},
     spl_token_2022::{
         extension::StateWithExtensions,
-        solana_program::program_pack::Pack,
+        xandeum_program::program_pack::Pack,
         state::{Account as TokenAccount, Mint},
     },
     std::{
@@ -169,8 +169,8 @@ pub struct RpcBigtableConfig {
 
 impl Default for RpcBigtableConfig {
     fn default() -> Self {
-        let bigtable_instance_name = solana_storage_bigtable::DEFAULT_INSTANCE_NAME.to_string();
-        let bigtable_app_profile_id = solana_storage_bigtable::DEFAULT_APP_PROFILE_ID.to_string();
+        let bigtable_instance_name = xandeum_storage_bigtable::DEFAULT_INSTANCE_NAME.to_string();
+        let bigtable_app_profile_id = xandeum_storage_bigtable::DEFAULT_APP_PROFILE_ID.to_string();
         Self {
             enable_bigtable_ledger_upload: false,
             bigtable_instance_name,
@@ -193,7 +193,7 @@ pub struct JsonRpcRequestProcessor {
     cluster_info: Arc<ClusterInfo>,
     genesis_hash: Hash,
     transaction_sender: Arc<Mutex<Sender<TransactionInfo>>>,
-    bigtable_ledger_storage: Option<solana_storage_bigtable::LedgerStorage>,
+    bigtable_ledger_storage: Option<xandeum_storage_bigtable::LedgerStorage>,
     optimistically_confirmed_bank: Arc<RwLock<OptimisticallyConfirmedBank>>,
     largest_accounts_cache: Arc<RwLock<LargestAccountsCache>>,
     max_slots: Arc<MaxSlots>,
@@ -276,7 +276,7 @@ impl JsonRpcRequestProcessor {
             // BlockCommitmentCache should hold an `Arc<Bank>` everywhere it currently holds
             // a slot.
             //
-            // For more information, see https://github.com/solana-labs/solana/issues/11078
+            // For more information, see https://github.com/xandeum-labs/xandeum/issues/11078
             warn!(
                 "Bank with {:?} not found at slot: {:?}",
                 commitment.commitment, slot
@@ -300,7 +300,7 @@ impl JsonRpcRequestProcessor {
         health: Arc<RpcHealth>,
         cluster_info: Arc<ClusterInfo>,
         genesis_hash: Hash,
-        bigtable_ledger_storage: Option<solana_storage_bigtable::LedgerStorage>,
+        bigtable_ledger_storage: Option<xandeum_storage_bigtable::LedgerStorage>,
         optimistically_confirmed_bank: Arc<RwLock<OptimisticallyConfirmedBank>>,
         largest_accounts_cache: Arc<RwLock<LargestAccountsCache>>,
         max_slots: Arc<MaxSlots>,
@@ -352,7 +352,7 @@ impl JsonRpcRequestProcessor {
             let keypair = Arc::new(Keypair::new());
             let contact_info = ContactInfo::new_localhost(
                 &keypair.pubkey(),
-                solana_sdk::timing::timestamp(), // wallclock
+                xandeum_sdk::timing::timestamp(), // wallclock
             );
             ClusterInfo::new(contact_info, keypair, socket_addr_space)
         });
@@ -1046,9 +1046,9 @@ impl JsonRpcRequestProcessor {
 
     fn check_bigtable_result<T>(
         &self,
-        result: &std::result::Result<T, solana_storage_bigtable::Error>,
+        result: &std::result::Result<T, xandeum_storage_bigtable::Error>,
     ) -> Result<()> {
-        if let Err(solana_storage_bigtable::Error::BlockNotFound(slot)) = result {
+        if let Err(xandeum_storage_bigtable::Error::BlockNotFound(slot)) = result {
             return Err(RpcCustomError::LongTermStorageSlotSkipped { slot: *slot }.into());
         }
         Ok(())
@@ -1547,7 +1547,7 @@ impl JsonRpcRequestProcessor {
     ) -> Vec<Signature> {
         if self.config.enable_rpc_transaction_history {
             // TODO: Add bigtable_ledger_storage support as a part of
-            // https://github.com/solana-labs/solana/pull/10928
+            // https://github.com/xandeum-labs/xandeum/pull/10928
             let end_slot = min(
                 end_slot,
                 self.block_commitment_cache
@@ -1719,7 +1719,7 @@ impl JsonRpcRequestProcessor {
             min_context_slot: config.min_context_slot,
         })?;
         let epoch = config.epoch.unwrap_or_else(|| bank.epoch());
-        if bank.epoch().saturating_sub(epoch) > solana_sdk::stake_history::MAX_ENTRIES as u64 {
+        if bank.epoch().saturating_sub(epoch) > xandeum_sdk::stake_history::MAX_ENTRIES as u64 {
             return Err(Error::invalid_params(format!(
                 "Invalid param: epoch {epoch:?} is too far in the past"
             )));
@@ -1760,7 +1760,7 @@ impl JsonRpcRequestProcessor {
             .get_account(&stake_history::id())
             .ok_or_else(Error::internal_error)?;
         let stake_history =
-            solana_sdk::account::from_account::<StakeHistory, _>(&stake_history_account)
+            xandeum_sdk::account::from_account::<StakeHistory, _>(&stake_history_account)
                 .ok_or_else(Error::internal_error)?;
 
         let StakeActivationStatus {
@@ -2159,7 +2159,7 @@ impl JsonRpcRequestProcessor {
     fn get_stake_minimum_delegation(&self, config: RpcContextConfig) -> Result<RpcResponse<u64>> {
         let bank = self.get_bank_with_config(config)?;
         let stake_minimum_delegation =
-            solana_stake_program::get_minimum_delegation(&bank.feature_set);
+            xandeum_stake_program::get_minimum_delegation(&bank.feature_set);
         Ok(new_response(&bank, stake_minimum_delegation))
     }
 
@@ -2541,7 +2541,7 @@ pub mod rpc_minimal {
         #[rpc(meta, name = "getVersion")]
         fn get_version(&self, meta: Self::Metadata) -> Result<RpcVersionInfo>;
 
-        // TODO: Refactor `solana-validator wait-for-restart-window` to not require this method, so
+        // TODO: Refactor `xandeum-validator wait-for-restart-window` to not require this method, so
         //       it can be removed from rpc_minimal
         #[rpc(meta, name = "getVoteAccounts")]
         fn get_vote_accounts(
@@ -2550,7 +2550,7 @@ pub mod rpc_minimal {
             config: Option<RpcGetVoteAccountsConfig>,
         ) -> Result<RpcVoteAccountStatus>;
 
-        // TODO: Refactor `solana-validator wait-for-restart-window` to not require this method, so
+        // TODO: Refactor `xandeum-validator wait-for-restart-window` to not require this method, so
         //       it can be removed from rpc_minimal
         #[rpc(meta, name = "getLeaderSchedule")]
         fn get_leader_schedule(
@@ -2669,14 +2669,14 @@ pub mod rpc_minimal {
 
         fn get_version(&self, _: Self::Metadata) -> Result<RpcVersionInfo> {
             debug!("get_version rpc request received");
-            let version = solana_version::Version::default();
+            let version = xandeum_version::Version::default();
             Ok(RpcVersionInfo {
-                solana_core: version.to_string(),
+                xandeum_core: version.to_string(),
                 feature_set: Some(version.feature_set),
             })
         }
 
-        // TODO: Refactor `solana-validator wait-for-restart-window` to not require this method, so
+        // TODO: Refactor `xandeum-validator wait-for-restart-window` to not require this method, so
         //       it can be removed from rpc_minimal
         fn get_vote_accounts(
             &self,
@@ -2687,7 +2687,7 @@ pub mod rpc_minimal {
             meta.get_vote_accounts(config)
         }
 
-        // TODO: Refactor `solana-validator wait-for-restart-window` to not require this method, so
+        // TODO: Refactor `xandeum-validator wait-for-restart-window` to not require this method, so
         //       it can be removed from rpc_minimal
         fn get_leader_schedule(
             &self,
@@ -2713,7 +2713,7 @@ pub mod rpc_minimal {
                 .get_epoch_leader_schedule(epoch)
                 .map(|leader_schedule| {
                     let mut schedule_by_identity =
-                        solana_ledger::leader_schedule_utils::leader_schedule_by_identity(
+                        xandeum_ledger::leader_schedule_utils::leader_schedule_by_identity(
                             leader_schedule.get_slot_leaders().iter().enumerate(),
                         );
                     if let Some(identity) = config.identity {
@@ -2916,7 +2916,7 @@ pub mod rpc_bank {
                 }
 
                 let mut entry = block_production.entry(identity).or_default();
-                if slot_history.check(slot) == solana_sdk::slot_history::Check::Found {
+                if slot_history.check(slot) == xandeum_sdk::slot_history::Check::Found {
                     entry.1 += 1; // Increment blocks_produced
                 }
                 entry.0 += 1; // Increment leader_slots
@@ -2980,7 +2980,7 @@ pub mod rpc_accounts {
         ) -> Result<RpcStakeActivation>;
 
         // SPL Token-specific RPC endpoints
-        // See https://github.com/solana-labs/solana-program-library/releases/tag/token-v2.0.0 for
+        // See https://github.com/xandeum-labs/xandeum-program-library/releases/tag/token-v2.0.0 for
         // program details
 
         #[rpc(meta, name = "getTokenAccountBalance")]
@@ -3124,7 +3124,7 @@ pub mod rpc_accounts_scan {
         ) -> Result<RpcResponse<RpcSupply>>;
 
         // SPL Token-specific RPC endpoints
-        // See https://github.com/solana-labs/solana-program-library/releases/tag/token-v2.0.0 for
+        // See https://github.com/xandeum-labs/xandeum-program-library/releases/tag/token-v2.0.0 for
         // program details
 
         #[rpc(meta, name = "getTokenLargestAccounts")]
@@ -3260,7 +3260,7 @@ pub mod rpc_accounts_scan {
 pub mod rpc_full {
     use {
         super::*,
-        solana_sdk::message::{SanitizedVersionedMessage, VersionedMessage},
+        xandeum_sdk::message::{SanitizedVersionedMessage, VersionedMessage},
     };
     #[rpc]
     pub trait Full {
@@ -4547,23 +4547,23 @@ pub fn create_test_transaction_entries(
     let mut signatures = Vec::new();
     // Generate transactions for processing
     // Successful transaction
-    let success_tx = solana_sdk::system_transaction::transfer(
+    let success_tx = xandeum_sdk::system_transaction::transfer(
         mint_keypair,
         &keypair1.pubkey(),
         rent_exempt_amount,
         blockhash,
     );
     signatures.push(success_tx.signatures[0]);
-    let entry_1 = solana_entry::entry::next_entry(&blockhash, 1, vec![success_tx]);
+    let entry_1 = xandeum_entry::entry::next_entry(&blockhash, 1, vec![success_tx]);
     // Failed transaction, InstructionError
-    let ix_error_tx = solana_sdk::system_transaction::transfer(
+    let ix_error_tx = xandeum_sdk::system_transaction::transfer(
         keypair2,
         &keypair3.pubkey(),
         2 * rent_exempt_amount,
         blockhash,
     );
     signatures.push(ix_error_tx.signatures[0]);
-    let entry_2 = solana_entry::entry::next_entry(&entry_1.hash, 1, vec![ix_error_tx]);
+    let entry_2 = xandeum_entry::entry::next_entry(&entry_1.hash, 1, vec![ix_error_tx]);
     (vec![entry_1, entry_2], signatures)
 }
 
@@ -4575,7 +4575,7 @@ pub fn populate_blockstore_for_tests(
 ) {
     let slot = bank.slot();
     let parent_slot = bank.parent_slot();
-    let shreds = solana_ledger::blockstore::entries_to_test_shreds(
+    let shreds = xandeum_ledger::blockstore::entries_to_test_shreds(
         &entries,
         slot,
         parent_slot,
@@ -4602,12 +4602,12 @@ pub fn populate_blockstore_for_tests(
     // Check that process_entries successfully writes can_commit transactions statuses, and
     // that they are matched properly by get_rooted_block
     assert_eq!(
-        solana_ledger::blockstore_processor::process_entries_for_tests(
+        xandeum_ledger::blockstore_processor::process_entries_for_tests(
             &bank,
             entries,
             true,
             Some(
-                &solana_ledger::blockstore_processor::TransactionStatusSender {
+                &xandeum_ledger::blockstore_processor::TransactionStatusSender {
                     sender: transaction_status_sender,
                 },
             ),
@@ -4636,15 +4636,15 @@ pub mod tests {
         jsonrpc_core::{futures, ErrorCode, MetaIoHandler, Output, Response, Value},
         jsonrpc_core_client::transports::local,
         serde::de::DeserializeOwned,
-        solana_address_lookup_table_program::state::{AddressLookupTable, LookupTableMeta},
-        solana_entry::entry::next_versioned_entry,
-        solana_gossip::socketaddr,
-        solana_ledger::{
+        xandeum_address_lookup_table_program::state::{AddressLookupTable, LookupTableMeta},
+        xandeum_entry::entry::next_versioned_entry,
+        xandeum_gossip::socketaddr,
+        xandeum_ledger::{
             blockstore_meta::PerfSampleV2,
             blockstore_processor::fill_blockstore_slot_with_ticks,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
         },
-        solana_rpc_client_api::{
+        xandeum_rpc_client_api::{
             custom_error::{
                 JSON_RPC_SERVER_ERROR_BLOCK_NOT_AVAILABLE,
                 JSON_RPC_SERVER_ERROR_TRANSACTION_HISTORY_NOT_AVAILABLE,
@@ -4652,12 +4652,12 @@ pub mod tests {
             },
             filter::{Memcmp, MemcmpEncodedBytes},
         },
-        solana_runtime::{
+        xandeum_runtime::{
             accounts_background_service::AbsRequestSender, bank::BankTestConfig,
             commitment::BlockCommitment, inline_spl_token,
             non_circulating_supply::non_circulating_accounts,
         },
-        solana_sdk::{
+        xandeum_sdk::{
             account::{Account, WritableAccount},
             clock::MAX_RECENT_BLOCKHASHES,
             compute_budget::ComputeBudgetInstruction,
@@ -4678,11 +4678,11 @@ pub mod tests {
                 self, SimpleAddressLoader, Transaction, TransactionError, TransactionVersion,
             },
         },
-        solana_transaction_status::{
+        xandeum_transaction_status::{
             EncodedConfirmedBlock, EncodedTransaction, EncodedTransactionWithStatusMeta,
             TransactionDetails,
         },
-        solana_vote_program::{
+        xandeum_vote_program::{
             vote_instruction,
             vote_state::{self, Vote, VoteInit, VoteStateVersions, MAX_LOCKOUT_HISTORY},
         },
@@ -4692,7 +4692,7 @@ pub mod tests {
                 mint_close_authority::MintCloseAuthority, ExtensionType, StateWithExtensionsMut,
             },
             pod::OptionalNonZeroPubkey,
-            solana_program::{program_option::COption, pubkey::Pubkey as SplTokenPubkey},
+            xandeum_program::{program_option::COption, pubkey::Pubkey as SplTokenPubkey},
             state::{AccountState as TokenAccountState, Mint},
         },
         std::{borrow::Cow, collections::HashMap, net::Ipv4Addr},
@@ -4706,7 +4706,7 @@ pub mod tests {
         let keypair = Arc::new(Keypair::new());
         let contact_info = ContactInfo::new_localhost(
             &keypair.pubkey(),
-            solana_sdk::timing::timestamp(), // wallclock
+            xandeum_sdk::timing::timestamp(), // wallclock
         );
         ClusterInfo::new(contact_info, keypair, SocketAddrSpace::Unspecified)
     }
@@ -4940,7 +4940,7 @@ pub mod tests {
                 AccountSharedData::create(
                     min_balance_lamports,
                     address_table_data,
-                    solana_address_lookup_table_program::id(),
+                    xandeum_address_lookup_table_program::id(),
                     false,
                     0,
                 )
@@ -5022,7 +5022,7 @@ pub mod tests {
             let space = VoteState::size_of();
             let balance = bank.get_minimum_balance_for_rent_exemption(space);
             let mut vote_account =
-                AccountSharedData::new(balance, space, &solana_vote_program::id());
+                AccountSharedData::new(balance, space, &xandeum_vote_program::id());
             vote_state::to(&versioned, &mut vote_account).unwrap();
             bank.store_account(vote_pubkey, &vote_account);
         }
@@ -5052,7 +5052,7 @@ pub mod tests {
 
     #[test]
     fn test_rpc_request_processor_new() {
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = xandeum_sdk::pubkey::new_rand();
         let genesis = create_genesis_config(100);
         let bank = Arc::new(Bank::new_for_tests(&genesis.genesis_config));
         bank.transfer(20, &genesis.mint_keypair, &bob_pubkey)
@@ -5222,7 +5222,7 @@ pub mod tests {
 
     #[test]
     fn test_rpc_get_tx_count() {
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = xandeum_sdk::pubkey::new_rand();
         let genesis = create_genesis_config(10);
         let bank = Arc::new(Bank::new_for_tests(&genesis.genesis_config));
         // Add 4 transactions
@@ -5852,7 +5852,7 @@ pub mod tests {
             ref meta, ref io, ..
         } = rpc;
 
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = xandeum_sdk::pubkey::new_rand();
         let mut tx = system_transaction::transfer(
             &rpc.mint_keypair,
             &bob_pubkey,
@@ -5885,7 +5885,7 @@ pub mod tests {
                  ]
             }}"#,
             tx_serialized_encoded,
-            solana_sdk::pubkey::new_rand(),
+            xandeum_sdk::pubkey::new_rand(),
             bob_pubkey,
         );
         let res = io.handle_request_sync(&req, meta.clone());
@@ -6169,7 +6169,7 @@ pub mod tests {
         assert_eq!(None, result.confirmations);
 
         // Test getSignatureStatus request on unprocessed tx
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = xandeum_sdk::pubkey::new_rand();
         let tx = system_transaction::transfer(
             &mint_keypair,
             &bob_pubkey,
@@ -6363,7 +6363,7 @@ pub mod tests {
         let RpcHandler { meta, io, .. } = RpcHandler::start();
 
         // Expect internal error because no faucet is available
-        let bob_pubkey = solana_sdk::pubkey::new_rand();
+        let bob_pubkey = xandeum_sdk::pubkey::new_rand();
         let req = format!(
             r#"{{"jsonrpc":"2.0","id":1,"method":"requestAirdrop","params":["{bob_pubkey}", 50]}}"#
         );
@@ -6458,7 +6458,7 @@ pub mod tests {
 
         let mut bad_transaction = system_transaction::transfer(
             &mint_keypair,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             42,
             Hash::default(),
         );
@@ -6493,7 +6493,7 @@ pub mod tests {
         );
         let mut bad_transaction = system_transaction::transfer(
             &mint_keypair,
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             42,
             recent_blockhash,
         );
@@ -6574,7 +6574,7 @@ pub mod tests {
 
     #[test]
     fn test_rpc_verify_pubkey() {
-        let pubkey = solana_sdk::pubkey::new_rand();
+        let pubkey = xandeum_sdk::pubkey::new_rand();
         assert_eq!(verify_pubkey(&pubkey.to_string()).unwrap(), pubkey);
         let bad_pubkey = "a1b2c3d4";
         assert_eq!(
@@ -6587,7 +6587,7 @@ pub mod tests {
     fn test_rpc_verify_signature() {
         let tx = system_transaction::transfer(
             &Keypair::new(),
-            &solana_sdk::pubkey::new_rand(),
+            &xandeum_sdk::pubkey::new_rand(),
             20,
             hash(&[0]),
         );
@@ -6660,9 +6660,9 @@ pub mod tests {
         let request = create_test_request("getVersion", None);
         let result: Value = parse_success_result(rpc.handle_request_sync(request));
         let expected = {
-            let version = solana_version::Version::default();
+            let version = xandeum_version::Version::default();
             json!({
-                "solana-core": version.to_string(),
+                "xandeum-core": version.to_string(),
                 "feature-set": version.feature_set,
             })
         };
@@ -7420,15 +7420,15 @@ pub mod tests {
 
     #[test]
     fn test_token_rpcs() {
-        for program_id in solana_account_decoder::parse_token::spl_token_ids() {
+        for program_id in xandeum_account_decoder::parse_token::spl_token_ids() {
             let rpc = RpcHandler::start();
             let bank = rpc.working_bank();
             let RpcHandler { io, meta, .. } = rpc;
             let mint = SplTokenPubkey::new_from_array([2; 32]);
             let owner = SplTokenPubkey::new_from_array([3; 32]);
             let delegate = SplTokenPubkey::new_from_array([4; 32]);
-            let token_account_pubkey = solana_sdk::pubkey::new_rand();
-            let token_with_different_mint_pubkey = solana_sdk::pubkey::new_rand();
+            let token_account_pubkey = xandeum_sdk::pubkey::new_rand();
+            let token_with_different_mint_pubkey = xandeum_sdk::pubkey::new_rand();
             let new_mint = SplTokenPubkey::new_from_array([5; 32]);
             if program_id == inline_spl_token_2022::id() {
                 // Add the token account
@@ -7500,7 +7500,7 @@ pub mod tests {
                 bank.store_account(&Pubkey::from_str(&mint.to_string()).unwrap(), &mint_account);
 
                 // Add another token account with the same owner, delegate, and mint
-                let other_token_account_pubkey = solana_sdk::pubkey::new_rand();
+                let other_token_account_pubkey = xandeum_sdk::pubkey::new_rand();
                 bank.store_account(&other_token_account_pubkey, &token_account);
 
                 // Add another token account with the same owner and delegate but different mint
@@ -7564,7 +7564,7 @@ pub mod tests {
                 bank.store_account(&Pubkey::from_str(&mint.to_string()).unwrap(), &mint_account);
 
                 // Add another token account with the same owner, delegate, and mint
-                let other_token_account_pubkey = solana_sdk::pubkey::new_rand();
+                let other_token_account_pubkey = xandeum_sdk::pubkey::new_rand();
                 bank.store_account(&other_token_account_pubkey, &token_account);
 
                 // Add another token account with the same owner and delegate but different mint
@@ -7606,7 +7606,7 @@ pub mod tests {
             // Test non-existent token account
             let req = format!(
                 r#"{{"jsonrpc":"2.0","id":1,"method":"getTokenAccountBalance","params":["{}"]}}"#,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
             );
             let res = io.handle_request_sync(&req, meta.clone());
             let result: Value = serde_json::from_str(&res.expect("actual response"))
@@ -7631,7 +7631,7 @@ pub mod tests {
             // Test non-existent mint address
             let req = format!(
                 r#"{{"jsonrpc":"2.0","id":1,"method":"getTokenSupply","params":["{}"]}}"#,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
             );
             let res = io.handle_request_sync(&req, meta.clone());
             let result: Value = serde_json::from_str(&res.expect("actual response"))
@@ -7715,7 +7715,7 @@ pub mod tests {
                     "params":["{}", {{"programId": "{}"}}]
                 }}"#,
                 owner,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
             );
             let res = io.handle_request_sync(&req, meta.clone());
             let result: Value = serde_json::from_str(&res.expect("actual response"))
@@ -7729,7 +7729,7 @@ pub mod tests {
                     "params":["{}", {{"mint": "{}"}}]
                 }}"#,
                 owner,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
             );
             let res = io.handle_request_sync(&req, meta.clone());
             let result: Value = serde_json::from_str(&res.expect("actual response"))
@@ -7744,7 +7744,7 @@ pub mod tests {
                     "method":"getTokenAccountsByOwner",
                     "params":["{}", {{"programId": "{}"}}]
                 }}"#,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
                 program_id,
             );
             let res = io.handle_request_sync(&req, meta.clone());
@@ -7795,7 +7795,7 @@ pub mod tests {
                     "params":["{}", {{"programId": "{}"}}]
                 }}"#,
                 delegate,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
             );
             let res = io.handle_request_sync(&req, meta.clone());
             let result: Value = serde_json::from_str(&res.expect("actual response"))
@@ -7809,7 +7809,7 @@ pub mod tests {
                     "params":["{}", {{"mint": "{}"}}]
                 }}"#,
                 delegate,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
             );
             let res = io.handle_request_sync(&req, meta.clone());
             let result: Value = serde_json::from_str(&res.expect("actual response"))
@@ -7824,7 +7824,7 @@ pub mod tests {
                     "method":"getTokenAccountsByDelegate",
                     "params":["{}", {{"programId": "{}"}}]
                 }}"#,
-                solana_sdk::pubkey::new_rand(),
+                xandeum_sdk::pubkey::new_rand(),
                 program_id,
             );
             let res = io.handle_request_sync(&req, meta.clone());
@@ -7872,7 +7872,7 @@ pub mod tests {
                 owner: program_id,
                 ..Account::default()
             });
-            let token_with_smaller_balance = solana_sdk::pubkey::new_rand();
+            let token_with_smaller_balance = xandeum_sdk::pubkey::new_rand();
             bank.store_account(&token_with_smaller_balance, &token_account);
 
             // Test largest token accounts
@@ -7912,7 +7912,7 @@ pub mod tests {
 
     #[test]
     fn test_token_parsing() {
-        for program_id in solana_account_decoder::parse_token::spl_token_ids() {
+        for program_id in xandeum_account_decoder::parse_token::spl_token_ids() {
             let rpc = RpcHandler::start();
             let bank = rpc.working_bank();
             let RpcHandler { io, meta, .. } = rpc;
@@ -7920,7 +7920,7 @@ pub mod tests {
             let mint = SplTokenPubkey::new_from_array([2; 32]);
             let owner = SplTokenPubkey::new_from_array([3; 32]);
             let delegate = SplTokenPubkey::new_from_array([4; 32]);
-            let token_account_pubkey = solana_sdk::pubkey::new_rand();
+            let token_account_pubkey = xandeum_sdk::pubkey::new_rand();
             let (program_name, account_size, mint_size) = if program_id
                 == inline_spl_token_2022::id()
             {
@@ -8452,7 +8452,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx58, TransactionBinaryEncoding::Base58)
                 .unwrap_err(),
             Error::invalid_params(format!(
-                "base58 encoded solana_sdk::transaction::Transaction too large: {tx58_len} bytes (max: encoded/raw {MAX_BASE58_SIZE}/{PACKET_DATA_SIZE})",
+                "base58 encoded xandeum_sdk::transaction::Transaction too large: {tx58_len} bytes (max: encoded/raw {MAX_BASE58_SIZE}/{PACKET_DATA_SIZE})",
             )
         ));
 
@@ -8462,7 +8462,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx64, TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
             Error::invalid_params(format!(
-                "base64 encoded solana_sdk::transaction::Transaction too large: {tx64_len} bytes (max: encoded/raw {MAX_BASE64_SIZE}/{PACKET_DATA_SIZE})",
+                "base64 encoded xandeum_sdk::transaction::Transaction too large: {tx64_len} bytes (max: encoded/raw {MAX_BASE64_SIZE}/{PACKET_DATA_SIZE})",
             )
         ));
 
@@ -8473,7 +8473,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx58, TransactionBinaryEncoding::Base58)
                 .unwrap_err(),
             Error::invalid_params(format!(
-                "decoded solana_sdk::transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
+                "decoded xandeum_sdk::transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
             ))
         );
 
@@ -8482,7 +8482,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx64, TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
             Error::invalid_params(format!(
-                "decoded solana_sdk::transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
+                "decoded xandeum_sdk::transaction::Transaction too large: {too_big} bytes (max: {PACKET_DATA_SIZE} bytes)"
             ))
         );
 
@@ -8492,7 +8492,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx64.clone(), TransactionBinaryEncoding::Base64)
                 .unwrap_err(),
             Error::invalid_params(
-                "failed to deserialize solana_sdk::transaction::Transaction: invalid value: \
+                "failed to deserialize xandeum_sdk::transaction::Transaction: invalid value: \
                 continue signal on byte-three, expected a terminal signal on or before byte-three"
                     .to_string()
             )
@@ -8510,7 +8510,7 @@ pub mod tests {
             decode_and_deserialize::<Transaction>(tx58.clone(), TransactionBinaryEncoding::Base58)
                 .unwrap_err(),
             Error::invalid_params(
-                "failed to deserialize solana_sdk::transaction::Transaction: invalid value: \
+                "failed to deserialize xandeum_sdk::transaction::Transaction: invalid value: \
                 continue signal on byte-three, expected a terminal signal on or before byte-three"
                     .to_string()
             )
@@ -8579,7 +8579,7 @@ pub mod tests {
         let rpc = RpcHandler::start();
         let bank = rpc.working_bank();
         let expected_stake_minimum_delegation =
-            solana_stake_program::get_minimum_delegation(&bank.feature_set);
+            xandeum_stake_program::get_minimum_delegation(&bank.feature_set);
 
         let request = create_test_request("getStakeMinimumDelegation", None);
         let response: RpcResponse<u64> = parse_success_result(rpc.handle_request_sync(request));

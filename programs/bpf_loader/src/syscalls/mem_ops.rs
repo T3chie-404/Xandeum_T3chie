@@ -1,7 +1,7 @@
 use {
     super::*,
     crate::declare_syscall,
-    solana_rbpf::{error::EbpfError, memory_region::MemoryRegion},
+    xandeum_rbpf::{error::EbpfError, memory_region::MemoryRegion},
     std::slice,
 };
 
@@ -491,7 +491,7 @@ impl<'a> DoubleEndedIterator for MemoryChunkIterator<'a> {
 #[cfg(test)]
 #[allow(clippy::indexing_slicing)]
 mod tests {
-    use {super::*, solana_rbpf::ebpf::MM_PROGRAM_START};
+    use {super::*, xandeum_rbpf::ebpf::MM_PROGRAM_START};
 
     fn to_chunk_vec<'a>(
         iter: impl Iterator<Item = Result<(&'a MemoryRegion, u64, usize), Error>>,

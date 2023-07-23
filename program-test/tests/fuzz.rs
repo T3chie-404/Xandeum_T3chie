@@ -1,7 +1,7 @@
 use {
-    solana_banks_client::BanksClient,
-    solana_program_test::{processor, ProgramTest},
-    solana_sdk::{
+    xandeum_banks_client::BanksClient,
+    xandeum_program_test::{processor, ProgramTest},
+    xandeum_sdk::{
         account_info::AccountInfo,
         entrypoint::ProgramResult,
         hash::Hash,

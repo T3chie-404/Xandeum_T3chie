@@ -1,8 +1,8 @@
 use {
     clap::ArgMatches,
-    solana_clap_utils::keypair::{pubkey_from_path, signer_from_path},
-    solana_remote_wallet::remote_wallet::RemoteWalletManager,
-    solana_sdk::{
+    xandeum_clap_utils::keypair::{pubkey_from_path, signer_from_path},
+    xandeum_remote_wallet::remote_wallet::RemoteWalletManager,
+    xandeum_sdk::{
         clock::{Epoch, UnixTimestamp},
         pubkey::Pubkey,
         signature::Signer,

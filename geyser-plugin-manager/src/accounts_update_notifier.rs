@@ -2,16 +2,16 @@
 use {
     crate::geyser_plugin_manager::GeyserPluginManager,
     log::*,
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    xandeum_geyser_plugin_interface::geyser_plugin_interface::{
         ReplicaAccountInfoV3, ReplicaAccountInfoVersions,
     },
-    solana_measure::measure::Measure,
-    solana_metrics::*,
-    solana_runtime::{
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::*,
+    xandeum_runtime::{
         account_storage::meta::StoredAccountMeta,
         accounts_update_notifier_interface::AccountsUpdateNotifierInterface,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::Slot,
         pubkey::Pubkey,

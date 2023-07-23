@@ -1,8 +1,8 @@
 use {
-    solana_gossip::{cluster_info::ClusterInfo, contact_info::Protocol},
-    solana_poh::poh_recorder::PohRecorder,
-    solana_sdk::{clock::NUM_CONSECUTIVE_LEADER_SLOTS, pubkey::Pubkey},
-    solana_send_transaction_service::tpu_info::TpuInfo,
+    xandeum_gossip::{cluster_info::ClusterInfo, contact_info::Protocol},
+    xandeum_poh::poh_recorder::PohRecorder,
+    xandeum_sdk::{clock::NUM_CONSECUTIVE_LEADER_SLOTS, pubkey::Pubkey},
+    xandeum_send_transaction_service::tpu_info::TpuInfo,
     std::{
         collections::HashMap,
         net::SocketAddr,
@@ -70,23 +70,23 @@ impl TpuInfo for ClusterTpuInfo {
 mod test {
     use {
         super::*,
-        solana_gossip::contact_info::ContactInfo,
-        solana_ledger::{
+        xandeum_gossip::contact_info::ContactInfo,
+        xandeum_ledger::{
             blockstore::Blockstore, get_tmp_ledger_path, leader_schedule_cache::LeaderScheduleCache,
         },
-        solana_runtime::{
+        xandeum_runtime::{
             bank::Bank,
             genesis_utils::{
                 create_genesis_config_with_vote_accounts, GenesisConfigInfo, ValidatorVoteKeypairs,
             },
         },
-        solana_sdk::{
+        xandeum_sdk::{
             poh_config::PohConfig,
             quic::QUIC_PORT_OFFSET,
             signature::{Keypair, Signer},
             timing::timestamp,
         },
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_streamer::socket::SocketAddrSpace,
         std::{net::Ipv4Addr, sync::atomic::AtomicBool},
     };
 
@@ -168,13 +168,13 @@ mod test {
 
             let slot = bank.slot();
             let first_leader =
-                solana_ledger::leader_schedule_utils::slot_leader_at(slot, &bank).unwrap();
+                xandeum_ledger::leader_schedule_utils::slot_leader_at(slot, &bank).unwrap();
             assert_eq!(
                 leader_info.get_leader_tpus(1, Protocol::UDP),
                 vec![&recent_peers.get(&first_leader).unwrap().0]
             );
 
-            let second_leader = solana_ledger::leader_schedule_utils::slot_leader_at(
+            let second_leader = xandeum_ledger::leader_schedule_utils::slot_leader_at(
                 slot + NUM_CONSECUTIVE_LEADER_SLOTS,
                 &bank,
             )
@@ -189,7 +189,7 @@ mod test {
                 expected_leader_sockets
             );
 
-            let third_leader = solana_ledger::leader_schedule_utils::slot_leader_at(
+            let third_leader = xandeum_ledger::leader_schedule_utils::slot_leader_at(
                 slot + (2 * NUM_CONSECUTIVE_LEADER_SLOTS),
                 &bank,
             )

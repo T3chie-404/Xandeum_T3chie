@@ -47,7 +47,7 @@ else
         echo "~~~ Uploading test results to Datadog"
         cargo2junit >results.xml <sanitized-results.json || true
         if [[ -f "results.xml" ]]; then
-          datadog-ci junit upload --service solana results.xml
+          datadog-ci junit upload --service xandeum results.xml
         fi
       fi
 
@@ -70,7 +70,7 @@ else
         echo # add a break line for previous command
 
         echo "~~~ Uploading test results to Datadog"
-        datadog-ci junit upload --service solana target/nextest/ci/junit.xml
+        datadog-ci junit upload --service xandeum target/nextest/ci/junit.xml
       fi
     fi
   fi

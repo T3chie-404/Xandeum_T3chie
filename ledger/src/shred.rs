@@ -59,9 +59,9 @@ use {
     rayon::ThreadPool,
     reed_solomon_erasure::Error::TooFewShardsPresent,
     serde::{Deserialize, Serialize},
-    solana_entry::entry::{create_ticks, Entry},
-    solana_perf::packet::Packet,
-    solana_sdk::{
+    xandeum_entry::entry::{create_ticks, Entry},
+    xandeum_perf::packet::Packet,
+    xandeum_sdk::{
         clock::Slot,
         hash::{hashv, Hash},
         pubkey::Pubkey,
@@ -1051,7 +1051,7 @@ mod tests {
         matches::assert_matches,
         rand::Rng,
         rand_chacha::{rand_core::SeedableRng, ChaChaRng},
-        solana_sdk::{shred_version, signature::Signer},
+        xandeum_sdk::{shred_version, signature::Signer},
     };
 
     const SIZE_OF_SHRED_INDEX: usize = 4;
@@ -1165,7 +1165,7 @@ mod tests {
 
     #[test]
     fn test_should_discard_shred() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let mut packet = Packet::default();
         let root = 1;
         let shred_version = 798;

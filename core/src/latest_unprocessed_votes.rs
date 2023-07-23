@@ -5,14 +5,14 @@ use {
     },
     itertools::Itertools,
     rand::{thread_rng, Rng},
-    solana_perf::packet::Packet,
-    solana_runtime::bank::Bank,
-    solana_sdk::{
+    xandeum_perf::packet::Packet,
+    xandeum_runtime::bank::Bank,
+    xandeum_sdk::{
         clock::{Slot, UnixTimestamp},
         program_utils::limited_deserialize,
         pubkey::Pubkey,
     },
-    solana_vote_program::vote_instruction::VoteInstruction,
+    xandeum_vote_program::vote_instruction::VoteInstruction,
     std::{
         collections::HashMap,
         ops::DerefMut,
@@ -348,13 +348,13 @@ mod tests {
         super::*,
         itertools::Itertools,
         rand::{thread_rng, Rng},
-        solana_perf::packet::{Packet, PacketBatch, PacketFlags},
-        solana_runtime::{
+        xandeum_perf::packet::{Packet, PacketBatch, PacketFlags},
+        xandeum_runtime::{
             bank::Bank,
             genesis_utils::{self, ValidatorVoteKeypairs},
         },
-        solana_sdk::{hash::Hash, signature::Signer, system_transaction::transfer},
-        solana_vote_program::{
+        xandeum_sdk::{hash::Hash, signature::Signer, system_transaction::transfer},
+        xandeum_vote_program::{
             vote_state::VoteStateUpdate,
             vote_transaction::{new_vote_state_update_transaction, new_vote_transaction},
         },

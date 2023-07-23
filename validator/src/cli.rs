@@ -3,7 +3,7 @@ use {
         crate_description, crate_name, App, AppSettings, Arg, ArgGroup, ArgMatches, SubCommand,
     },
     log::warn,
-    solana_clap_utils::{
+    xandeum_clap_utils::{
         hidden_unless_forced,
         input_validators::{
             is_keypair, is_keypair_or_ask_keyword, is_niceness_adjustment_valid, is_parsable,
@@ -14,15 +14,15 @@ use {
         },
         keypair::SKIP_SEED_PHRASE_VALIDATION_ARG,
     },
-    solana_core::{
+    xandeum_core::{
         banking_trace::{DirByteLimit, BANKING_TRACE_DIR_DEFAULT_BYTE_LIMIT},
         validator::{BlockProductionMethod, BlockVerificationMethod},
     },
-    solana_faucet::faucet::{self, FAUCET_PORT},
-    solana_net_utils::{MINIMUM_VALIDATOR_PORT_RANGE_WIDTH, VALIDATOR_PORT_RANGE},
-    solana_rpc::{rpc::MAX_REQUEST_BODY_SIZE, rpc_pubsub_service::PubSubConfig},
-    solana_rpc_client_api::request::MAX_MULTIPLE_ACCOUNTS,
-    solana_runtime::{
+    xandeum_faucet::faucet::{self, FAUCET_PORT},
+    xandeum_net_utils::{MINIMUM_VALIDATOR_PORT_RANGE_WIDTH, VALIDATOR_PORT_RANGE},
+    xandeum_rpc::{rpc::MAX_REQUEST_BODY_SIZE, rpc_pubsub_service::PubSubConfig},
+    xandeum_rpc_client_api::request::MAX_MULTIPLE_ACCOUNTS,
+    xandeum_runtime::{
         accounts_db::{
             DEFAULT_ACCOUNTS_SHRINK_OPTIMIZE_TOTAL_SPACE, DEFAULT_ACCOUNTS_SHRINK_RATIO,
         },
@@ -35,14 +35,14 @@ use {
             DEFAULT_MAX_INCREMENTAL_SNAPSHOT_ARCHIVES_TO_RETAIN, SUPPORTED_ARCHIVE_COMPRESSION,
         },
     },
-    solana_sdk::{
+    xandeum_sdk::{
         clock::Slot, epoch_schedule::MINIMUM_SLOTS_PER_EPOCH, hash::Hash, quic::QUIC_PORT_OFFSET,
         rpc_port,
     },
-    solana_send_transaction_service::send_transaction_service::{
+    xandeum_send_transaction_service::send_transaction_service::{
         self, MAX_BATCH_SEND_RATE_MS, MAX_TRANSACTION_BATCH_SIZE,
     },
-    solana_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
+    xandeum_tpu_client::tpu_client::DEFAULT_TPU_CONNECTION_POOL_SIZE,
     std::{path::PathBuf, str::FromStr},
 };
 
@@ -124,7 +124,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .value_name("HOST:PORT")
                 .takes_value(true)
                 .multiple(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(xandeum_net_utils::is_host_port)
                 .help("Rendezvous with the cluster at this gossip entrypoint"),
         )
         .arg(
@@ -265,7 +265,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .long("rpc-faucet-address")
                 .value_name("HOST:PORT")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(xandeum_net_utils::is_host_port)
                 .help("Enable the JSON RPC 'requestAirdrop' API with this faucet address."),
         )
         .arg(
@@ -321,7 +321,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .value_name("HOST:PORT")
                 .takes_value(true)
                 .multiple(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(xandeum_net_utils::is_host_port)
                 .help("etcd gRPC endpoint to connect with")
         )
         .arg(
@@ -369,7 +369,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .long("gossip-host")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .help("Gossip DNS name or IP address for the validator to advertise in gossip \
                        [default: ask --entrypoint, or 127.0.0.1 when --entrypoint is not provided]"),
         )
@@ -379,7 +379,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .alias("tpu-host-addr")
                 .value_name("HOST:PORT")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(xandeum_net_utils::is_host_port)
                 .help("Specify TPU address to advertise in gossip [default: ask --entrypoint or localhost\
                     when --entrypoint is not provided]"),
         )
@@ -388,7 +388,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .long("public-tpu-forwards-address")
                 .value_name("HOST:PORT")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host_port)
+                .validator(xandeum_net_utils::is_host_port)
                 .help("Specify TPU Forwards address to advertise in gossip [default: ask --entrypoint or localhost\
                     when --entrypoint is not provided]"),
         )
@@ -398,7 +398,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .value_name("HOST:PORT")
                 .takes_value(true)
                 .conflicts_with("private_rpc")
-                .validator(solana_net_utils::is_host_port)
+                .validator(xandeum_net_utils::is_host_port)
                 .help("RPC address for the validator to advertise publicly in gossip. \
                       Useful for validators running behind a load balancer or proxy \
                       [default: use --rpc-bind-address / --rpc-port]"),
@@ -818,7 +818,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .long("bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .default_value(&default_args.bind_address)
                 .help("IP address to bind the validator ports"),
         )
@@ -827,7 +827,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .long("rpc-bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .help("IP address to bind the RPC port [default: 127.0.0.1 if --private-rpc is present, otherwise use --bind-address]"),
         )
         .arg(
@@ -1060,7 +1060,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                 .long("accountsdb-repl-bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .hidden(hidden_unless_forced())
                 .help("IP address to bind the AccountsDb Replication port [default: use --bind-address]"),
         )
@@ -1636,7 +1636,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                         .long("tpu")
                         .value_name("HOST:PORT")
                         .takes_value(true)
-                        .validator(solana_net_utils::is_host_port)
+                        .validator(xandeum_net_utils::is_host_port)
                         .help("TPU address to advertise in gossip")
                 )
                 .arg(
@@ -1644,7 +1644,7 @@ pub fn app<'a>(version: &'a str, default_args: &'a DefaultArgs) -> App<'a, 'a> {
                         .long("tpu-forwards")
                         .value_name("HOST:PORT")
                         .takes_value(true)
-                        .validator(solana_net_utils::is_host_port)
+                        .validator(xandeum_net_utils::is_host_port)
                         .help("TPU Forwards address to advertise in gossip")
                 )
                 .group(
@@ -1950,8 +1950,8 @@ impl DefaultArgs {
             rpc_threads: num_cpus::get().to_string(),
             rpc_niceness_adjustment: "0".to_string(),
             rpc_bigtable_timeout: "30".to_string(),
-            rpc_bigtable_instance_name: solana_storage_bigtable::DEFAULT_INSTANCE_NAME.to_string(),
-            rpc_bigtable_app_profile_id: solana_storage_bigtable::DEFAULT_APP_PROFILE_ID
+            rpc_bigtable_instance_name: xandeum_storage_bigtable::DEFAULT_INSTANCE_NAME.to_string(),
+            rpc_bigtable_app_profile_id: xandeum_storage_bigtable::DEFAULT_APP_PROFILE_ID
                 .to_string(),
             rpc_pubsub_worker_threads: "4".to_string(),
             accountsdb_repl_threads: num_cpus::get().to_string(),
@@ -2002,7 +2002,7 @@ pub fn port_validator(port: String) -> Result<(), String> {
 }
 
 pub fn port_range_validator(port_range: String) -> Result<(), String> {
-    if let Some((start, end)) = solana_net_utils::parse_port_range(&port_range) {
+    if let Some((start, end)) = xandeum_net_utils::parse_port_range(&port_range) {
         if end - start < MINIMUM_VALIDATOR_PORT_RANGE_WIDTH {
             Err(format!(
                 "Port range is too small.  Try --dynamic-port-range {}-{}",
@@ -2028,7 +2028,7 @@ fn hash_validator(hash: String) -> Result<(), String> {
 /// Test validator
 
 pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<'a, 'a> {
-    return App::new("solana-test-validator")
+    return App::new("xandeum-test-validator")
         .about("Test Validator")
         .version(version)
         .arg({
@@ -2038,7 +2038,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .value_name("PATH")
                 .takes_value(true)
                 .help("Configuration file to use");
-            if let Some(ref config_file) = *solana_cli_config::CONFIG_FILE {
+            if let Some(ref config_file) = *xandeum_cli_config::CONFIG_FILE {
                 arg.default_value(config_file)
             } else {
                 arg
@@ -2144,7 +2144,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .value_name("INSTANCE_NAME")
                 .takes_value(true)
                 .hidden(hidden_unless_forced())
-                .default_value("solana-ledger")
+                .default_value("xandeum-ledger")
                 .help("Name of BigTable instance to target"),
         )
         .arg(
@@ -2153,7 +2153,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .value_name("APP_PROFILE_ID")
                 .takes_value(true)
                 .hidden(hidden_unless_forced())
-                .default_value(solana_storage_bigtable::DEFAULT_APP_PROFILE_ID)
+                .default_value(xandeum_storage_bigtable::DEFAULT_APP_PROFILE_ID)
                 .help("Application profile id to use in Bigtable requests")
         )
         .arg(
@@ -2204,7 +2204,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .allow_hyphen_values(true)
                 .multiple(true)
                 .help(
-                    "Load an account from the provided JSON file (see `solana account --help` on how to dump \
+                    "Load an account from the provided JSON file (see `xandeum account --help` on how to dump \
                         an account to file). Files are searched for relatively to CWD and tests/fixtures. \
                         If ADDRESS is omitted via the `-` placeholder, the one in the file will be used. \
                         If the ledger already exists then this parameter is silently ignored",
@@ -2287,7 +2287,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .long("gossip-host")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .help(
                     "Gossip DNS name or IP address for the validator to advertise in gossip \
                        [default: 127.0.0.1]",
@@ -2309,7 +2309,7 @@ pub fn test_app<'a>(version: &'a str, default_args: &'a DefaultTestArgs) -> App<
                 .long("bind-address")
                 .value_name("HOST")
                 .takes_value(true)
-                .validator(solana_net_utils::is_host)
+                .validator(xandeum_net_utils::is_host)
                 .default_value("0.0.0.0")
                 .help("IP address to bind the validator ports [default: 0.0.0.0]"),
         )
@@ -2483,7 +2483,7 @@ impl DefaultTestArgs {
             faucet_port: FAUCET_PORT.to_string(),
             /* 10,000 was derived empirically by watching the size
              * of the rocksdb/ directory self-limit itself to the
-             * 40MB-150MB range when running `solana-test-validator`
+             * 40MB-150MB range when running `xandeum-test-validator`
              */
             limit_ledger_size: 10_000.to_string(),
             faucet_sol: (1_000_000.).to_string(),

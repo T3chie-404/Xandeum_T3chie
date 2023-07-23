@@ -1,19 +1,19 @@
-pub use solana_tpu_client::nonblocking::tpu_client::{LeaderTpuService, TpuSenderError};
+pub use xandeum_tpu_client::nonblocking::tpu_client::{LeaderTpuService, TpuSenderError};
 use {
     crate::{connection_cache::ConnectionCache, tpu_client::TpuClientConfig},
-    solana_connection_cache::connection_cache::{
+    xandeum_connection_cache::connection_cache::{
         ConnectionCache as BackendConnectionCache, ConnectionManager, ConnectionPool,
         NewConnectionConfig,
     },
-    solana_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
-    solana_rpc_client::nonblocking::rpc_client::RpcClient,
-    solana_sdk::{
+    xandeum_quic_client::{QuicConfig, QuicConnectionManager, QuicPool},
+    xandeum_rpc_client::nonblocking::rpc_client::RpcClient,
+    xandeum_sdk::{
         message::Message,
         signers::Signers,
         transaction::{Transaction, TransactionError},
         transport::Result as TransportResult,
     },
-    solana_tpu_client::nonblocking::tpu_client::{Result, TpuClient as BackendTpuClient},
+    xandeum_tpu_client::nonblocking::tpu_client::{Result, TpuClient as BackendTpuClient},
     std::sync::Arc,
 };
 

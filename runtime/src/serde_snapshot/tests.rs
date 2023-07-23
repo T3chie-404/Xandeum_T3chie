@@ -20,7 +20,7 @@ use {
     },
     bincode::serialize_into,
     rand::{thread_rng, Rng},
-    solana_sdk::{
+    xandeum_sdk::{
         account::{AccountSharedData, ReadableAccount},
         clock::Slot,
         feature_set,
@@ -172,7 +172,7 @@ where
 }
 
 fn test_accounts_serialize_style(serde_style: SerdeStyle) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let (_accounts_dir, paths) = get_temp_accounts_paths(4).unwrap();
     let accounts = Accounts::new_with_config_for_tests(
         paths,
@@ -234,7 +234,7 @@ fn test_bank_serialize_style(
     incremental_snapshot_persistence: bool,
     initial_epoch_accounts_hash: bool,
 ) {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let (mut genesis_config, _) = create_genesis_config(500);
     activate_feature(&mut genesis_config, feature_set::epoch_accounts_hash::id());
     genesis_config.epoch_schedule = EpochSchedule::custom(400, 400, false);
@@ -508,7 +508,7 @@ fn add_root_and_flush_write_cache(bank: &Bank) {
 
 #[test]
 fn test_extra_fields_eof() {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let (genesis_config, _) = create_genesis_config(500);
 
     let bank0 = Arc::new(Bank::new_for_tests_with_config(
@@ -582,7 +582,7 @@ fn test_extra_fields_eof() {
 
 #[test]
 fn test_extra_fields_full_snapshot_archive() {
-    solana_logger::setup();
+    xandeum_logger::setup();
 
     let (mut genesis_config, _) = create_genesis_config(500);
     activate_all_features(&mut genesis_config);
@@ -644,7 +644,7 @@ fn test_extra_fields_full_snapshot_archive() {
 
 #[test]
 fn test_blank_extra_fields() {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let (genesis_config, _) = create_genesis_config(500);
 
     let bank0 = Arc::new(Bank::new_for_tests_with_config(

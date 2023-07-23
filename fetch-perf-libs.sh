@@ -23,18 +23,18 @@ if [[ $VERSION != "$(cat target/perf-libs/.version 2> /dev/null)" ]]; then
     set -x
     cd target/perf-libs
 
-    if [[ -r ~/.cache/solana-perf-$PERF_LIBS_VERSION.tgz ]]; then
-      cp ~/.cache/solana-perf-$PERF_LIBS_VERSION.tgz solana-perf.tgz
+    if [[ -r ~/.cache/xandeum-perf-$PERF_LIBS_VERSION.tgz ]]; then
+      cp ~/.cache/xandeum-perf-$PERF_LIBS_VERSION.tgz xandeum-perf.tgz
     else
-      curl -L --retry 5 --retry-delay 2 --retry-connrefused -o solana-perf.tgz \
-        https://github.com/solana-labs/solana-perf-libs/releases/download/$PERF_LIBS_VERSION/solana-perf.tgz
+      curl -L --retry 5 --retry-delay 2 --retry-connrefused -o xandeum-perf.tgz \
+        https://github.com/xandeum-labs/xandeum-perf-libs/releases/download/$PERF_LIBS_VERSION/xandeum-perf.tgz
     fi
-    tar zxvf solana-perf.tgz
+    tar zxvf xandeum-perf.tgz
 
-    if [[ ! -r ~/.cache/solana-perf-$PERF_LIBS_VERSION.tgz ]]; then
+    if [[ ! -r ~/.cache/xandeum-perf-$PERF_LIBS_VERSION.tgz ]]; then
       # Save it for next time
       mkdir -p ~/.cache
-      mv solana-perf.tgz ~/.cache/solana-perf-$PERF_LIBS_VERSION.tgz
+      mv xandeum-perf.tgz ~/.cache/xandeum-perf-$PERF_LIBS_VERSION.tgz
     fi
     echo "$VERSION" > .version
   )

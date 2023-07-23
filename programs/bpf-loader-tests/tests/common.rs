@@ -1,9 +1,9 @@
 #![allow(dead_code)]
 
 use {
-    solana_bpf_loader_program::process_instruction,
-    solana_program_test::*,
-    solana_sdk::{
+    xandeum_bpf_loader_program::process_instruction,
+    xandeum_program_test::*,
+    xandeum_sdk::{
         account::AccountSharedData,
         account_utils::StateMut,
         bpf_loader_upgradeable::{id, UpgradeableLoaderState},

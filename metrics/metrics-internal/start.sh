@@ -6,7 +6,7 @@
 cd "$(dirname "$0")"
 
 if [[ -z $HOST ]]; then
-  HOST=internal-metrics.solana.com
+  HOST=internal-metrics.xandeum.com
 fi
 echo "HOST: $HOST"
 
@@ -84,8 +84,8 @@ sudo docker run \
   --env TLS_PRIVATE_KEY=/certs/privkey.pem \
   --env GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID_8889" \
   --env GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET_8889" \
-  --env GOOGLE_DOMAINS=solana.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets \
-  --env PUBLIC_URL=https://internal-metrics.solana.com:8889 \
+  --env GOOGLE_DOMAINS=xandeum.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets \
+  --env PUBLIC_URL=https://internal-metrics.xandeum.com:8889 \
   --env TOKEN_SECRET="$TOKEN_SECRET" \
   --env inactivity-duration=48h \
   --name=chronograf_8889_internal \
@@ -105,8 +105,8 @@ sudo docker run \
   --env TLS_PRIVATE_KEY=/certs/privkey.pem \
   --env GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID_8888" \
   --env GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET_8888" \
-  --env GOOGLE_DOMAINS=solana.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets \
-  --env PUBLIC_URL=https://internal-metrics.solana.com:8888 \
+  --env GOOGLE_DOMAINS=xandeum.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets \
+  --env PUBLIC_URL=https://internal-metrics.xandeum.com:8888 \
   --env TOKEN_SECRET="$TOKEN_SECRET" \
   --env inactivity-duration=48h \
   --name=chronograf_8888_internal \

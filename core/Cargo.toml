@@ -1,7 +1,7 @@
 [package]
-name = "solana-core"
+name = "xandeum-core"
 description = "Blockchain, Rebuilt for Scale"
-documentation = "https://docs.rs/solana-core"
+documentation = "https://docs.rs/xandeum-core"
 readme = "../README.md"
 version = { workspace = true }
 authors = { workspace = true }
@@ -11,7 +11,7 @@ license = { workspace = true }
 edition = { workspace = true }
 
 [badges]
-codecov = { repository = "solana-labs/solana", branch = "master", service = "github" }
+codecov = { repository = "xandeum-labs/xandeum", branch = "master", service = "github" }
 
 [dependencies]
 base64 = { workspace = true }
@@ -35,32 +35,32 @@ rayon = { workspace = true }
 rolling-file = { workspace = true }
 serde = { workspace = true }
 serde_derive = { workspace = true }
-solana-address-lookup-table-program = { workspace = true }
-solana-bloom = { workspace = true }
-solana-client = { workspace = true }
-solana-entry = { workspace = true }
-solana-frozen-abi = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
-solana-geyser-plugin-manager = { workspace = true }
-solana-gossip = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-perf = { workspace = true }
-solana-poh = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-rayon-threadlimit = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-send-transaction-service = { workspace = true }
-solana-streamer = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-transaction-status = { workspace = true }
-solana-version = { workspace = true }
-solana-vote-program = { workspace = true }
+xandeum-address-lookup-table-program = { workspace = true }
+xandeum-bloom = { workspace = true }
+xandeum-client = { workspace = true }
+xandeum-entry = { workspace = true }
+xandeum-frozen-abi = { workspace = true }
+xandeum-frozen-abi-macro = { workspace = true }
+xandeum-geyser-plugin-manager = { workspace = true }
+xandeum-gossip = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-perf = { workspace = true }
+xandeum-poh = { workspace = true }
+xandeum-program-runtime = { workspace = true }
+xandeum-rayon-threadlimit = { workspace = true }
+xandeum-rpc = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-send-transaction-service = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-tpu-client = { workspace = true }
+xandeum-transaction-status = { workspace = true }
+xandeum-version = { workspace = true }
+xandeum-vote-program = { workspace = true }
 strum = { workspace = true, features = ["derive"] }
 strum_macros = { workspace = true }
 sys-info = { workspace = true }
@@ -75,9 +75,9 @@ matches = { workspace = true }
 raptorq = { workspace = true }
 serde_json = { workspace = true }
 serial_test = { workspace = true }
-solana-logger = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-stake-program = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-program-runtime = { workspace = true }
+xandeum-stake-program = { workspace = true }
 static_assertions = { workspace = true }
 systemstat = { workspace = true }
 test-case = { workspace = true }

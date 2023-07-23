@@ -1,7 +1,7 @@
 [package]
-name = "solana-geyser-plugin-manager"
+name = "xandeum-geyser-plugin-manager"
 description = "The Solana Geyser plugin manager."
-documentation = "https://docs.rs/solana-geyser-plugin-manager"
+documentation = "https://docs.rs/xandeum-geyser-plugin-manager"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,15 +19,15 @@ jsonrpc-server-utils = { workspace = true }
 libloading = { workspace = true }
 log = { workspace = true }
 serde_json = { workspace = true }
-solana-entry = { workspace = true }
-solana-geyser-plugin-interface = { workspace = true }
-solana-ledger = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-rpc = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-transaction-status = { workspace = true }
+xandeum-entry = { workspace = true }
+xandeum-geyser-plugin-interface = { workspace = true }
+xandeum-ledger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-rpc = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-transaction-status = { workspace = true }
 thiserror = { workspace = true }
 
 [package.metadata.docs.rs]

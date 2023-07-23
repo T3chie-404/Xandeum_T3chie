@@ -1,6 +1,6 @@
 //! Instructions for the [secp256k1 native program][np].
 //!
-//! [np]: https://docs.solana.com/developing/runtime-facilities/programs#secp256k1-program
+//! [np]: https://docs.xandeum.com/developing/runtime-facilities/programs#secp256k1-program
 //!
 //! _This module provides low-level cryptographic building blocks that must be
 //! used carefully to ensure proper security. Read this documentation and
@@ -27,8 +27,8 @@
 //! syscall.
 //!
 //! [secp256k1]: https://en.bitcoin.it/wiki/Secp256k1
-//! [`secp256k1_program`]: solana_program::secp256k1_program
-//! [`secp256k1_recover`]: solana_program::secp256k1_recover
+//! [`secp256k1_program`]: xandeum_program::secp256k1_program
+//! [`secp256k1_recover`]: xandeum_program::secp256k1_recover
 //! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 //!
 //! Use cases for the secp256k1 instruction include:
@@ -93,11 +93,11 @@
 //! signature, message, and Ethereum address data. This is the technique used by
 //! `new_secp256k1_instruction` for simple signature verification.
 //!
-//! The `solana_sdk` crate provides few APIs for building the instructions and
+//! The `xandeum_sdk` crate provides few APIs for building the instructions and
 //! transactions necessary for properly using the secp256k1 native program.
 //! Many steps must be done manually.
 //!
-//! The `solana_program` crate provides no APIs to assist in interpreting
+//! The `xandeum_program` crate provides no APIs to assist in interpreting
 //! the the secp256k1 instruction data. It must be done manually.
 //!
 //! The secp256k1 program is implemented with the [`libsecp256k1`] crate,
@@ -146,7 +146,7 @@
 //! a unique representation this can be the source of bugs, potentially with
 //! security implications.
 //!
-//! **The solana `secp256k1_recover` function does not prevent signature
+//! **The xandeum `secp256k1_recover` function does not prevent signature
 //! malleability**. This is in contrast to the Bitcoin secp256k1 library, which
 //! does prevent malleability by default. Solana accepts signatures with `S`
 //! values that are either in the _high order_ or in the _low order_, and it
@@ -207,7 +207,7 @@
 //!
 //! ```no_run
 //! mod secp256k1_defs {
-//!     use solana_program::program_error::ProgramError;
+//!     use xandeum_program::program_error::ProgramError;
 //!     use std::iter::Iterator;
 //!
 //!     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -273,7 +273,7 @@
 //!
 //! ```no_run
 //! # mod secp256k1_defs {
-//! #     use solana_program::program_error::ProgramError;
+//! #     use xandeum_program::program_error::ProgramError;
 //! #     use std::iter::Iterator;
 //! #
 //! #     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -321,7 +321,7 @@
 //! #             }))
 //! #     }
 //! # }
-//! use solana_program::{
+//! use xandeum_program::{
 //!     account_info::{next_account_info, AccountInfo},
 //!     entrypoint::ProgramResult,
 //!     msg,
@@ -417,10 +417,10 @@
 //! The client program:
 //!
 //! ```no_run
-//! # use solana_sdk::example_mocks::solana_rpc_client;
+//! # use xandeum_sdk::example_mocks::xandeum_rpc_client;
 //! use anyhow::Result;
-//! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_sdk::{
+//! use xandeum_rpc_client::rpc_client::RpcClient;
+//! use xandeum_sdk::{
 //!     instruction::{AccountMeta, Instruction},
 //!     secp256k1_instruction,
 //!     signature::{Keypair, Signer},
@@ -486,7 +486,7 @@
 //!
 //! ```no_run
 //! # mod secp256k1_defs {
-//! #     use solana_program::program_error::ProgramError;
+//! #     use xandeum_program::program_error::ProgramError;
 //! #     use std::iter::Iterator;
 //! #
 //! #     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -534,7 +534,7 @@
 //! #             }))
 //! #     }
 //! # }
-//! use solana_program::{
+//! use xandeum_program::{
 //!     account_info::{next_account_info, AccountInfo},
 //!     entrypoint::ProgramResult,
 //!     msg,
@@ -633,10 +633,10 @@
 //! The client program:
 //!
 //! ```no_run
-//! # use solana_sdk::example_mocks::solana_rpc_client;
+//! # use xandeum_sdk::example_mocks::xandeum_rpc_client;
 //! use anyhow::Result;
-//! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_sdk::{
+//! use xandeum_rpc_client::rpc_client::RpcClient;
+//! use xandeum_sdk::{
 //!     instruction::{AccountMeta, Instruction},
 //!     keccak,
 //!     secp256k1_instruction::{
@@ -758,7 +758,7 @@
 //!
 //!     let secp256k1_instr_data = make_secp256k1_instruction_data(&signatures, 0)?;
 //!     let secp256k1_instr = Instruction::new_with_bytes(
-//!         solana_sdk::secp256k1_program::ID,
+//!         xandeum_sdk::secp256k1_program::ID,
 //!         &secp256k1_instr_data,
 //!         vec![],
 //!     );
@@ -900,7 +900,7 @@ pub fn new_secp256k1_instruction(
     bincode::serialize_into(writer, &offsets).unwrap();
 
     Instruction {
-        program_id: solana_sdk::secp256k1_program::id(),
+        program_id: xandeum_sdk::secp256k1_program::id(),
         accounts: vec![],
         data: instruction_data,
     }
@@ -1083,7 +1083,7 @@ pub mod test {
 
     #[test]
     fn test_invalid_offsets() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let mut instruction_data = vec![0u8; DATA_START];
         let offsets = SecpSignatureOffsets::default();
@@ -1219,7 +1219,7 @@ pub mod test {
 
     #[test]
     fn test_count_is_zero_but_sig_data_exists() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let mut instruction_data = vec![0u8; DATA_START];
         let offsets = SecpSignatureOffsets::default();
@@ -1242,7 +1242,7 @@ pub mod test {
 
     #[test]
     fn test_secp256k1() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let offsets = SecpSignatureOffsets::default();
         assert_eq!(
             bincode::serialized_size(&offsets).unwrap() as usize,
@@ -1285,7 +1285,7 @@ pub mod test {
     // Signatures are malleable.
     #[test]
     fn test_malleability() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         let secret_key = libsecp256k1::SecretKey::random(&mut thread_rng());
         let public_key = libsecp256k1::PublicKey::from_secret_key(&secret_key);

@@ -1,30 +1,30 @@
 #![allow(clippy::integer_arithmetic, dead_code)]
 use {
     log::*,
-    solana_core::{
+    xandeum_core::{
         broadcast_stage::BroadcastStageType,
         consensus::{Tower, SWITCH_FORK_THRESHOLD},
         tower_storage::{FileTowerStorage, SavedTower, SavedTowerVersions, TowerStorage},
         validator::ValidatorConfig,
     },
-    solana_gossip::gossip_service::discover_cluster,
-    solana_ledger::{
+    xandeum_gossip::gossip_service::discover_cluster,
+    xandeum_ledger::{
         ancestor_iterator::AncestorIterator,
         blockstore::{Blockstore, PurgeType},
         blockstore_options::{AccessType, BlockstoreOptions},
         leader_schedule::{FixedSchedule, LeaderSchedule},
     },
-    solana_local_cluster::{
+    xandeum_local_cluster::{
         cluster::{Cluster, ClusterValidatorInfo},
         cluster_tests,
         local_cluster::{ClusterConfig, LocalCluster},
         validator_configs::*,
     },
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_runtime::{
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_runtime::{
         snapshot_config::SnapshotConfig, snapshot_utils::create_accounts_run_and_snapshot_dirs,
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::AccountSharedData,
         clock::{self, Slot, DEFAULT_MS_PER_SLOT, DEFAULT_TICKS_PER_SLOT},
         hash::Hash,
@@ -32,7 +32,7 @@ use {
         pubkey::Pubkey,
         signature::{Keypair, Signer},
     },
-    solana_streamer::socket::SocketAddrSpace,
+    xandeum_streamer::socket::SocketAddrSpace,
     std::{
         collections::HashSet,
         fs, iter,
@@ -49,7 +49,7 @@ use {
 };
 
 pub const RUST_LOG_FILTER: &str =
-    "error,solana_core::replay_stage=warn,solana_local_cluster=info,local_cluster=info";
+    "error,xandeum_core::replay_stage=warn,xandeum_local_cluster=info,local_cluster=info";
 
 pub const DEFAULT_CLUSTER_LAMPORTS: u64 = 10_000_000 * LAMPORTS_PER_SOL;
 pub const DEFAULT_NODE_STAKE: u64 = 10 * LAMPORTS_PER_SOL;
@@ -273,7 +273,7 @@ pub fn run_cluster_partition<C>(
     ticks_per_slot: Option<u64>,
     additional_accounts: Vec<(Pubkey, AccountSharedData)>,
 ) {
-    solana_logger::setup_with_default(RUST_LOG_FILTER);
+    xandeum_logger::setup_with_default(RUST_LOG_FILTER);
     info!("PARTITION_TEST!");
     let num_nodes = partitions.len();
     let node_stakes: Vec<_> = partitions
@@ -394,7 +394,7 @@ pub fn test_faulty_node(
     faulty_node_type: BroadcastStageType,
     node_stakes: Vec<u64>,
 ) -> (LocalCluster, Vec<Arc<Keypair>>) {
-    solana_logger::setup_with_default("solana_local_cluster=info");
+    xandeum_logger::setup_with_default("xandeum_local_cluster=info");
     let num_nodes = node_stakes.len();
     let mut validator_keys = Vec::with_capacity(num_nodes);
     validator_keys.resize_with(num_nodes, || (Arc::new(Keypair::new()), true));
@@ -404,7 +404,7 @@ pub fn test_faulty_node(
     // Use a fixed leader schedule so that only the faulty node gets leader slots.
     let validator_to_slots = vec![(
         validator_keys[0].0.as_ref().pubkey(),
-        solana_sdk::clock::DEFAULT_DEV_SLOTS_PER_EPOCH as usize,
+        xandeum_sdk::clock::DEFAULT_DEV_SLOTS_PER_EPOCH as usize,
     )];
     let leader_schedule = create_custom_leader_schedule(validator_to_slots.into_iter());
     let fixed_leader_schedule = Some(FixedSchedule {

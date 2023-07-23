@@ -1,11 +1,11 @@
 use {
     crate::cluster_slots::ClusterSlots,
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_gossip::cluster_info::ClusterInfo,
-    solana_ledger::blockstore::Blockstore,
-    solana_measure::measure::Measure,
-    solana_runtime::bank_forks::BankForks,
-    solana_sdk::clock::Slot,
+    xandeum_gossip::cluster_info::ClusterInfo,
+    xandeum_ledger::blockstore::Blockstore,
+    xandeum_measure::measure::Measure,
+    xandeum_runtime::bank_forks::BankForks,
+    xandeum_sdk::clock::Slot,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -181,9 +181,9 @@ impl ClusterSlotsService {
 mod test {
     use {
         super::*,
-        solana_gossip::{cluster_info::Node, crds_value::LowestSlot},
-        solana_sdk::signature::{Keypair, Signer},
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_gossip::{cluster_info::Node, crds_value::LowestSlot},
+        xandeum_sdk::signature::{Keypair, Signer},
+        xandeum_streamer::socket::SocketAddrSpace,
     };
 
     #[test]

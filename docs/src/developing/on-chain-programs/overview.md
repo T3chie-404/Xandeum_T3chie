@@ -15,7 +15,7 @@ Developers can write and deploy their own programs to the Solana blockchain. Whi
 
 ### 1. Setup your development environment
 
-The most robust way of getting started with Solana development, is [installing the Solana CLI](./../../cli/install-solana-cli-tools.md) tools on your local computer. This will allow you to have the most powerful development environment.
+The most robust way of getting started with Solana development, is [installing the Solana CLI](./../../cli/install-xandeum-cli-tools.md) tools on your local computer. This will allow you to have the most powerful development environment.
 
 Some developers may also opt for using [Solana Playground](https://beta.solpg.io/), a browser based IDE. It will let you write, build, and deploy on-chain programs. All from your browser. No installation needed.
 
@@ -31,7 +31,7 @@ Once the program is written, it must be complied down to [Berkley Packet Filter]
 
 ### 4. Generate the program's public address
 
-Using the [Solana CLI](./../../cli/install-solana-cli-tools.md), the developer will generate a new unique [Keypair](./../../terminology.md#keypair) for the new program. The public address (aka [Pubkey](./../../terminology.md#public-key-pubkey)) from this Keypair will be used on-chain as the program's public address (aka [`programId`](./../../terminology.md#program-id)).
+Using the [Solana CLI](./../../cli/install-xandeum-cli-tools.md), the developer will generate a new unique [Keypair](./../../terminology.md#keypair) for the new program. The public address (aka [Pubkey](./../../terminology.md#public-key-pubkey)) from this Keypair will be used on-chain as the program's public address (aka [`programId`](./../../terminology.md#program-id)).
 
 ### 5. Deploying the program
 

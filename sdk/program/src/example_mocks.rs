@@ -13,12 +13,12 @@
 #![doc(hidden)]
 #![allow(clippy::new_without_default)]
 
-pub mod solana_rpc_client {
+pub mod xandeum_rpc_client {
     pub mod rpc_client {
         use {
             super::super::{
-                solana_rpc_client_api::client_error::Result as ClientResult,
-                solana_sdk::{
+                xandeum_rpc_client_api::client_error::Result as ClientResult,
+                xandeum_sdk::{
                     account::Account, hash::Hash, pubkey::Pubkey, signature::Signature,
                     transaction::Transaction,
                 },
@@ -76,7 +76,7 @@ pub mod solana_rpc_client {
     }
 }
 
-pub mod solana_rpc_client_api {
+pub mod xandeum_rpc_client_api {
     pub mod client_error {
         #[derive(thiserror::Error, Debug)]
         #[error("mock-error")]
@@ -85,9 +85,9 @@ pub mod solana_rpc_client_api {
     }
 }
 
-pub mod solana_rpc_client_nonce_utils {
+pub mod xandeum_rpc_client_nonce_utils {
     use {
-        super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
+        super::xandeum_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
         crate::nonce::state::{Data, DurableNonce, Versions},
     };
 
@@ -106,12 +106,12 @@ pub mod solana_rpc_client_nonce_utils {
     }
 }
 
-/// Re-exports and mocks of solana-program modules that mirror those from
-/// solana-program.
+/// Re-exports and mocks of xandeum-program modules that mirror those from
+/// xandeum-program.
 ///
-/// This lets examples in solana-program appear to be written as client
+/// This lets examples in xandeum-program appear to be written as client
 /// programs.
-pub mod solana_sdk {
+pub mod xandeum_sdk {
     pub use crate::{
         address_lookup_table_account, hash, instruction, keccak, message, nonce,
         pubkey::{self, Pubkey},
@@ -275,7 +275,7 @@ pub mod solana_sdk {
     }
 }
 
-pub mod solana_address_lookup_table_program {
+pub mod xandeum_address_lookup_table_program {
     crate::declare_id!("AddressLookupTab1e1111111111111111111111111");
 
     pub mod state {

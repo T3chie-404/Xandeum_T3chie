@@ -1,16 +1,16 @@
 #![allow(clippy::integer_arithmetic)]
 #![feature(test)]
-extern crate solana_ledger;
+extern crate xandeum_ledger;
 extern crate test;
 
 use {
     rand::Rng,
-    solana_entry::entry::{create_ticks, Entry},
-    solana_ledger::{
+    xandeum_entry::entry::{create_ticks, Entry},
+    xandeum_ledger::{
         blockstore::{entries_to_test_shreds, Blockstore},
         get_tmp_ledger_path,
     },
-    solana_sdk::{clock::Slot, hash::Hash},
+    xandeum_sdk::{clock::Slot, hash::Hash},
     std::path::Path,
     test::Bencher,
 };

@@ -2,29 +2,29 @@
 use {
     clap::value_t,
     log::*,
-    solana_bench_tps::{
+    xandeum_bench_tps::{
         bench::{do_bench_tps, max_lamports_for_prioritization},
         bench_tps_client::BenchTpsClient,
         cli::{self, ExternalClientType},
         keypairs::get_keypairs,
         send_batch::{generate_durable_nonce_accounts, generate_keypairs},
     },
-    solana_client::{
+    xandeum_client::{
         connection_cache::ConnectionCache,
         thin_client::ThinClient,
         tpu_client::{TpuClient, TpuClientConfig},
     },
-    solana_genesis::Base64Account,
-    solana_gossip::gossip_service::{discover_cluster, get_client, get_multi_client},
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::{
+    xandeum_genesis::Base64Account,
+    xandeum_gossip::gossip_service::{discover_cluster, get_client, get_multi_client},
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_sdk::{
         commitment_config::CommitmentConfig,
         fee_calculator::FeeRateGovernor,
         pubkey::Pubkey,
         signature::{Keypair, Signer},
         system_program,
     },
-    solana_streamer::{socket::SocketAddrSpace, streamer::StakedNodes},
+    xandeum_streamer::{socket::SocketAddrSpace, streamer::StakedNodes},
     std::{
         collections::HashMap,
         fs::File,
@@ -221,10 +221,10 @@ fn create_client(
 }
 
 fn main() {
-    solana_logger::setup_with_default("solana=info");
-    solana_metrics::set_panic_hook("bench-tps", /*version:*/ None);
+    xandeum_logger::setup_with_default("xandeum=info");
+    xandeum_metrics::set_panic_hook("bench-tps", /*version:*/ None);
 
-    let matches = cli::build_args(solana_version::version!()).get_matches();
+    let matches = cli::build_args(xandeum_version::version!()).get_matches();
     let cli_config = match cli::parse_args(&matches) {
         Ok(config) => config,
         Err(error) => {
@@ -338,7 +338,7 @@ fn main() {
         );
         client
             .get_account(&instruction_padding_config.program_id)
-            .expect("Instruction padding program must be deployed to this cluster. Deploy the program using `solana program deploy ./bench-tps/tests/fixtures/spl_instruction_padding.so` and pass the resulting program id with `--instruction-padding-program-id`");
+            .expect("Instruction padding program must be deployed to this cluster. Deploy the program using `xandeum program deploy ./bench-tps/tests/fixtures/spl_instruction_padding.so` and pass the resulting program id with `--instruction-padding-program-id`");
     }
     let keypairs = get_keypairs(
         client.clone(),

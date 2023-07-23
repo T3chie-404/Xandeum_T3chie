@@ -1,7 +1,7 @@
 use {
     bip39::{Mnemonic, MnemonicType, Seed},
     clap::{crate_description, crate_name, Arg, ArgMatches, Command},
-    solana_clap_v3_utils::{
+    xandeum_clap_v3_utils::{
         input_parsers::{value_of, STDOUT_OUTFILE_TOKEN},
         input_validators::is_prompt_signer_source,
         keygen::{
@@ -15,8 +15,8 @@ use {
         },
         DisplayError,
     },
-    solana_sdk::signer::{EncodableKey, SeedDerivable},
-    solana_zk_token_sdk::encryption::{auth_encryption::AeKey, elgamal::ElGamalKeypair},
+    xandeum_sdk::signer::{EncodableKey, SeedDerivable},
+    xandeum_zk_token_sdk::encryption::{auth_encryption::AeKey, elgamal::ElGamalKeypair},
     std::{error, str::FromStr},
     thiserror::Error,
 };
@@ -145,7 +145,7 @@ fn app(crate_version: &str) -> Command {
 }
 
 fn main() -> Result<(), Box<dyn error::Error>> {
-    let matches = app(solana_version::version!())
+    let matches = app(xandeum_version::version!())
         .try_get_matches()
         .unwrap_or_else(|e| e.exit());
     do_main(&matches).map_err(|err| DisplayError::new_as_boxed(err).into())
@@ -163,7 +163,7 @@ fn do_main(matches: &ArgMatches) -> Result<(), Box<dyn error::Error>> {
             } else if matches.is_present(NO_OUTFILE_ARG.name) {
                 None
             } else {
-                path.extend([".config", "solana", key_type.default_file_name()]);
+                path.extend([".config", "xandeum", key_type.default_file_name()]);
                 Some(path.to_str().unwrap())
             };
 
@@ -233,7 +233,7 @@ fn do_main(matches: &ArgMatches) -> Result<(), Box<dyn error::Error>> {
             let path = if matches.is_present("keypair") {
                 matches.value_of("keypair").unwrap()
             } else {
-                path.extend([".config", "solana", key_type.default_file_name()]);
+                path.extend([".config", "xandeum", key_type.default_file_name()]);
                 path.to_str().unwrap()
             };
 
@@ -255,7 +255,7 @@ fn do_main(matches: &ArgMatches) -> Result<(), Box<dyn error::Error>> {
             let outfile = if matches.is_present("outfile") {
                 matches.value_of("outfile").unwrap()
             } else {
-                path.extend([".config", "solana", key_type.default_file_name()]);
+                path.extend([".config", "xandeum", key_type.default_file_name()]);
                 path.to_str().unwrap()
             };
 
@@ -327,13 +327,13 @@ impl FromStr for KeyType {
 mod tests {
     use {
         super::*,
-        solana_sdk::pubkey::Pubkey,
+        xandeum_sdk::pubkey::Pubkey,
         tempfile::{tempdir, TempDir},
     };
 
     fn process_test_command(args: &[&str]) -> Result<(), Box<dyn error::Error>> {
-        let solana_version = solana_version::version!();
-        let app_matches = app(solana_version).get_matches_from(args);
+        let xandeum_version = xandeum_version::version!();
+        let app_matches = app(xandeum_version).get_matches_from(args);
         do_main(&app_matches)
     }
 
@@ -344,10 +344,10 @@ mod tests {
 
     #[test]
     fn test_arguments() {
-        let solana_version = solana_version::version!();
+        let xandeum_version = xandeum_version::version!();
 
         // run clap internal assert statements
-        app(solana_version).debug_assert();
+        app(xandeum_version).debug_assert();
     }
 
     #[test]
@@ -358,7 +358,7 @@ mod tests {
 
         // general success case
         process_test_command(&[
-            "solana-zk-keygen",
+            "xandeum-zk-keygen",
             "new",
             "elgamal",
             "--outfile",
@@ -369,7 +369,7 @@ mod tests {
 
         // refuse to overwrite file
         let result = process_test_command(&[
-            "solana-zk-keygen",
+            "xandeum-zk-keygen",
             "new",
             "elgamal",
             "--outfile",
@@ -384,7 +384,7 @@ mod tests {
 
         // no outfile
         process_test_command(&[
-            "solana-keygen",
+            "xandeum-keygen",
             "new",
             "elgamal",
             "--no-bip39-passphrase",
@@ -401,7 +401,7 @@ mod tests {
 
         // general success case
         process_test_command(&[
-            "solana-zk-keygen",
+            "xandeum-zk-keygen",
             "new",
             "aes128",
             "--outfile",
@@ -412,7 +412,7 @@ mod tests {
 
         // refuse to overwrite file
         let result = process_test_command(&[
-            "solana-zk-keygen",
+            "xandeum-zk-keygen",
             "new",
             "aes128",
             "--outfile",
@@ -427,7 +427,7 @@ mod tests {
 
         // no outfile
         process_test_command(&[
-            "solana-keygen",
+            "xandeum-keygen",
             "new",
             "aes128",
             "--no-bip39-passphrase",
@@ -445,6 +445,6 @@ mod tests {
         let keypair = ElGamalKeypair::new_rand();
         keypair.write_to_file(&keypair_path).unwrap();
 
-        process_test_command(&["solana-keygen", "pubkey", "elgamal", &keypair_path]).unwrap();
+        process_test_command(&["xandeum-keygen", "pubkey", "elgamal", &keypair_path]).unwrap();
     }
 }

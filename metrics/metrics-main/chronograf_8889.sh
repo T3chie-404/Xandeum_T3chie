@@ -6,7 +6,7 @@
 cd "$(dirname "$0")"
 
 if [[ -z $HOST ]]; then
-  HOST=metrics.solana.com
+  HOST=metrics.xandeum.com
 fi
 echo "HOST: $HOST"
 
@@ -41,8 +41,8 @@ sudo docker run \
   --env AUTH_DURATION=24h \
   --env GOOGLE_CLIENT_ID="$GOOGLE_CLIENT_ID_8889" \
   --env GOOGLE_CLIENT_SECRET="$GOOGLE_CLIENT_SECRET_8889" \
-  --env PUBLIC_URL=https://metrics.solana.com:8889 \
-  --env GOOGLE_DOMAINS=solana.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets,influxdata.com,solana.org \
+  --env PUBLIC_URL=https://metrics.xandeum.com:8889 \
+  --env GOOGLE_DOMAINS=xandeum.com,jito.wtf,jumpcrypto.com,certus.one,mango.markets,influxdata.com,xandeum.org \
   --env TOKEN_SECRET="$TOKEN_SECRET" \
   --env TLS_PRIVATE_KEY=/certs/privkey.pem \
   --env TLS_CERTIFICATE=/certs/fullchain.pem \

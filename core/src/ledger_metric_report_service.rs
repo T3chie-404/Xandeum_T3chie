@@ -1,7 +1,7 @@
 //! The `ledger_metric_report_service` periodically reports ledger store metrics.
 
 use {
-    solana_ledger::blockstore::Blockstore,
+    xandeum_ledger::blockstore::Blockstore,
     std::{
         string::ToString,
         sync::{

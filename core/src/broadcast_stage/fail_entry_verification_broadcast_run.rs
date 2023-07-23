@@ -1,8 +1,8 @@
 use {
     super::*,
     crate::cluster_nodes::ClusterNodesCache,
-    solana_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
-    solana_sdk::{hash::Hash, signature::Keypair},
+    xandeum_ledger::shred::{ProcessShredsStats, ReedSolomonCache, Shredder},
+    xandeum_sdk::{hash::Hash, signature::Keypair},
     std::{thread::sleep, time::Duration},
 };
 

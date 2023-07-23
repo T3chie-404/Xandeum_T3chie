@@ -1,7 +1,7 @@
 use {
     rand::Rng,
-    solana_measure::measure::Measure,
-    solana_program_runtime::{
+    xandeum_measure::measure::Measure,
+    xandeum_program_runtime::{
         compute_budget::ComputeBudget,
         ic_logger_msg,
         invoke_context::InvokeContext,
@@ -9,7 +9,7 @@ use {
         log_collector::LogCollector,
         stable_log,
     },
-    solana_rbpf::{
+    xandeum_rbpf::{
         aligned_memory::AlignedMemory,
         ebpf,
         elf::Executable,
@@ -20,7 +20,7 @@ use {
             PROGRAM_ENVIRONMENT_KEY_SHIFT,
         },
     },
-    solana_sdk::{
+    xandeum_sdk::{
         entrypoint::{HEAP_LENGTH, SUCCESS},
         feature_set::{self, FeatureSet},
         instruction::InstructionError,
@@ -626,8 +626,8 @@ pub fn process_instruction_inner(
 mod tests {
     use {
         super::*,
-        solana_program_runtime::invoke_context::mock_process_instruction,
-        solana_sdk::{
+        xandeum_program_runtime::invoke_context::mock_process_instruction,
+        xandeum_sdk::{
             account::{
                 create_account_shared_data_for_test, AccountSharedData, ReadableAccount,
                 WritableAccount,

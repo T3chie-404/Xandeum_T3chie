@@ -2,14 +2,14 @@
 use {
     crate::geyser_plugin_manager::GeyserPluginManager,
     log::*,
-    solana_entry::entry::EntrySummary,
-    solana_geyser_plugin_interface::geyser_plugin_interface::{
+    xandeum_entry::entry::EntrySummary,
+    xandeum_geyser_plugin_interface::geyser_plugin_interface::{
         ReplicaEntryInfo, ReplicaEntryInfoVersions,
     },
-    solana_ledger::entry_notifier_interface::EntryNotifier,
-    solana_measure::measure::Measure,
-    solana_metrics::*,
-    solana_sdk::clock::Slot,
+    xandeum_ledger::entry_notifier_interface::EntryNotifier,
+    xandeum_measure::measure::Measure,
+    xandeum_metrics::*,
+    xandeum_sdk::clock::Slot,
     std::sync::{Arc, RwLock},
 };
 

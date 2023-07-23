@@ -5,8 +5,8 @@ pub mod serialization;
 pub mod syscalls;
 
 use {
-    solana_measure::measure::Measure,
-    solana_program_runtime::{
+    xandeum_measure::measure::Measure,
+    xandeum_program_runtime::{
         ic_logger_msg, ic_msg,
         invoke_context::{BpfAllocator, InvokeContext, SyscallContext},
         loaded_programs::{
@@ -16,7 +16,7 @@ use {
         stable_log,
         sysvar_cache::get_sysvar_with_account_check,
     },
-    solana_rbpf::{
+    xandeum_rbpf::{
         aligned_memory::AlignedMemory,
         ebpf::{self, HOST_ALIGN, MM_HEAP_START},
         elf::Executable,
@@ -25,7 +25,7 @@ use {
         verifier::RequisiteVerifier,
         vm::{BuiltinProgram, ContextObject, EbpfVm, ProgramResult},
     },
-    solana_sdk::{
+    xandeum_sdk::{
         account::WritableAccount,
         bpf_loader, bpf_loader_deprecated,
         bpf_loader_upgradeable::{self, UpgradeableLoaderState},
@@ -321,10 +321,10 @@ macro_rules! create_vm {
         let heap_size = invoke_context
             .get_compute_budget()
             .heap_size
-            .unwrap_or(solana_sdk::entrypoint::HEAP_LENGTH);
+            .unwrap_or(xandeum_sdk::entrypoint::HEAP_LENGTH);
         let round_up_heap_size = invoke_context
             .feature_set
-            .is_active(&solana_sdk::feature_set::round_up_heap_size::id());
+            .is_active(&xandeum_sdk::feature_set::round_up_heap_size::id());
         let mut heap_cost_result = invoke_context.consume_checked($crate::calculate_heap_cost(
             heap_size as u64,
             invoke_context.get_compute_budget().heap_cost,
@@ -335,11 +335,11 @@ macro_rules! create_vm {
         }
         let mut allocations = None;
         let $vm = heap_cost_result.and_then(|_| {
-            let mut stack = solana_rbpf::aligned_memory::AlignedMemory::<
-                { solana_rbpf::ebpf::HOST_ALIGN },
+            let mut stack = xandeum_rbpf::aligned_memory::AlignedMemory::<
+                { xandeum_rbpf::ebpf::HOST_ALIGN },
             >::zero_filled(stack_size);
-            let mut heap = solana_rbpf::aligned_memory::AlignedMemory::<
-                { solana_rbpf::ebpf::HOST_ALIGN },
+            let mut heap = xandeum_rbpf::aligned_memory::AlignedMemory::<
+                { xandeum_rbpf::ebpf::HOST_ALIGN },
             >::zero_filled(heap_size);
             let vm = $crate::create_vm(
                 $program,
@@ -359,17 +359,17 @@ macro_rules! create_vm {
 macro_rules! mock_create_vm {
     ($vm:ident, $additional_regions:expr, $orig_account_lengths:expr, $invoke_context:expr $(,)?) => {
         let loader = std::sync::Arc::new(BuiltinProgram::new_loader(
-            solana_rbpf::vm::Config::default(),
+            xandeum_rbpf::vm::Config::default(),
         ));
-        let function_registry = solana_rbpf::vm::FunctionRegistry::default();
-        let executable = solana_rbpf::elf::Executable::<
-            solana_rbpf::verifier::TautologyVerifier,
+        let function_registry = xandeum_rbpf::vm::FunctionRegistry::default();
+        let executable = xandeum_rbpf::elf::Executable::<
+            xandeum_rbpf::verifier::TautologyVerifier,
             InvokeContext,
         >::from_text_bytes(
             &[0x95, 0, 0, 0, 0, 0, 0, 0], loader, function_registry
         )
         .unwrap();
-        let verified_executable = solana_rbpf::elf::Executable::verified(executable).unwrap();
+        let verified_executable = xandeum_rbpf::elf::Executable::verified(executable).unwrap();
         $crate::create_vm!(
             $vm,
             &verified_executable,
@@ -753,7 +753,7 @@ fn process_loader_upgradeable_instruction(
             let signers = [[new_program_id.as_ref(), &[bump_seed]]]
                 .iter()
                 .map(|seeds| Pubkey::create_program_address(seeds, caller_program_id))
-                .collect::<Result<Vec<Pubkey>, solana_sdk::pubkey::PubkeyError>>()?;
+                .collect::<Result<Vec<Pubkey>, xandeum_sdk::pubkey::PubkeyError>>()?;
             invoke_context.native_invoke(instruction.into(), signers.as_slice())?;
 
             // Load and verify the program bits
@@ -1698,8 +1698,8 @@ fn execute<'a, 'b: 'a>(
 
 pub mod test_utils {
     use {
-        super::*, solana_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
-        solana_sdk::account::ReadableAccount,
+        super::*, xandeum_program_runtime::loaded_programs::DELAY_VISIBILITY_SLOT_OFFSET,
+        xandeum_sdk::account::ReadableAccount,
     };
 
     pub fn load_all_invoked_programs(invoke_context: &mut InvokeContext) {
@@ -1753,14 +1753,14 @@ mod tests {
     use {
         super::*,
         rand::Rng,
-        solana_program_runtime::{
+        xandeum_program_runtime::{
             invoke_context::mock_process_instruction, with_mock_invoke_context,
         },
-        solana_rbpf::{
+        xandeum_rbpf::{
             verifier::Verifier,
             vm::{Config, ContextObject, FunctionRegistry},
         },
-        solana_sdk::{
+        xandeum_sdk::{
             account::{
                 create_account_shared_data_for_test as create_account_for_test, AccountSharedData,
                 ReadableAccount, WritableAccount,

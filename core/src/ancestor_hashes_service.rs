@@ -16,21 +16,21 @@ use {
     bincode::serialize,
     crossbeam_channel::{unbounded, Receiver, Sender},
     dashmap::{mapref::entry::Entry::Occupied, DashMap},
-    solana_gossip::{cluster_info::ClusterInfo, ping_pong::Pong},
-    solana_ledger::blockstore::Blockstore,
-    solana_perf::{
+    xandeum_gossip::{cluster_info::ClusterInfo, ping_pong::Pong},
+    xandeum_ledger::blockstore::Blockstore,
+    xandeum_perf::{
         packet::{deserialize_from_with_limit, Packet, PacketBatch},
         recycler::Recycler,
     },
-    solana_runtime::bank::Bank,
-    solana_sdk::{
+    xandeum_runtime::bank::Bank,
+    xandeum_sdk::{
         clock::{Slot, DEFAULT_MS_PER_SLOT},
         pubkey::Pubkey,
         signature::Signable,
         signer::keypair::Keypair,
         timing::timestamp,
     },
-    solana_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
+    xandeum_streamer::streamer::{self, PacketBatchReceiver, StreamerReceiveStats},
     std::{
         collections::HashSet,
         io::{Cursor, Read},
@@ -872,17 +872,17 @@ mod test {
             serve_repair::MAX_ANCESTOR_RESPONSES,
             vote_simulator::VoteSimulator,
         },
-        solana_gossip::{
+        xandeum_gossip::{
             cluster_info::{ClusterInfo, Node},
             contact_info::ContactInfo,
         },
-        solana_ledger::{blockstore::make_many_slot_entries, get_tmp_ledger_path, shred::Nonce},
-        solana_runtime::{accounts_background_service::AbsRequestSender, bank_forks::BankForks},
-        solana_sdk::{
+        xandeum_ledger::{blockstore::make_many_slot_entries, get_tmp_ledger_path, shred::Nonce},
+        xandeum_runtime::{accounts_background_service::AbsRequestSender, bank_forks::BankForks},
+        xandeum_sdk::{
             hash::Hash,
             signature::{Keypair, Signer},
         },
-        solana_streamer::socket::SocketAddrSpace,
+        xandeum_streamer::socket::SocketAddrSpace,
         std::collections::HashMap,
         trees::tr,
     };

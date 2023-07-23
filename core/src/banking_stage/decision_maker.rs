@@ -1,6 +1,6 @@
 use {
-    solana_poh::poh_recorder::{BankStart, PohRecorder},
-    solana_sdk::{
+    xandeum_poh::poh_recorder::{BankStart, PohRecorder},
+    xandeum_sdk::{
         clock::{
             DEFAULT_TICKS_PER_SLOT, FORWARD_TRANSACTIONS_TO_LEADER_AT_SLOT_OFFSET,
             HOLD_TRANSACTIONS_SLOT_OFFSET,
@@ -106,7 +106,7 @@ mod tests {
     use {
         super::*,
         core::panic,
-        solana_runtime::bank::Bank,
+        xandeum_runtime::bank::Bank,
         std::{sync::Arc, time::Instant},
     };
 
@@ -129,8 +129,8 @@ mod tests {
 
     #[test]
     fn test_should_process_or_forward_packets() {
-        let my_pubkey = solana_sdk::pubkey::new_rand();
-        let my_pubkey1 = solana_sdk::pubkey::new_rand();
+        let my_pubkey = xandeum_sdk::pubkey::new_rand();
+        let my_pubkey1 = xandeum_sdk::pubkey::new_rand();
         let bank = Arc::new(Bank::default_for_tests());
         let bank_start = Some(BankStart {
             working_bank: bank,

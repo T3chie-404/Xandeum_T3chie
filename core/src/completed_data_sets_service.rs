@@ -6,10 +6,10 @@
 
 use {
     crossbeam_channel::{Receiver, RecvTimeoutError, Sender},
-    solana_entry::entry::Entry,
-    solana_ledger::blockstore::{Blockstore, CompletedDataSetInfo},
-    solana_rpc::{max_slots::MaxSlots, rpc_subscriptions::RpcSubscriptions},
-    solana_sdk::signature::Signature,
+    xandeum_entry::entry::Entry,
+    xandeum_ledger::blockstore::{Blockstore, CompletedDataSetInfo},
+    xandeum_rpc::{max_slots::MaxSlots, rpc_subscriptions::RpcSubscriptions},
+    xandeum_sdk::signature::Signature,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -110,7 +110,7 @@ impl CompletedDataSetsService {
 pub mod test {
     use {
         super::*,
-        solana_sdk::{
+        xandeum_sdk::{
             hash::Hash,
             signature::{Keypair, Signer},
             transaction::Transaction,

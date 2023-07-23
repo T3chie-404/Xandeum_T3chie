@@ -40,8 +40,8 @@ use {
     log::*,
     rayon::prelude::*,
     regex::Regex,
-    solana_measure::{measure, measure::Measure},
-    solana_sdk::{
+    xandeum_measure::{measure, measure::Measure},
+    xandeum_sdk::{
         clock::Slot,
         feature_set,
         genesis_config::GenesisConfig,
@@ -3439,7 +3439,7 @@ mod tests {
         },
         assert_matches::assert_matches,
         bincode::{deserialize_from, serialize_into},
-        solana_sdk::{
+        xandeum_sdk::{
             genesis_config::create_genesis_config,
             native_token::{sol_to_lamports, LAMPORTS_PER_SOL},
             signature::{Keypair, Signer},

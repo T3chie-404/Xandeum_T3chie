@@ -4,9 +4,9 @@ use {
     crate::poh_recorder::{PohRecorder, Record},
     crossbeam_channel::Receiver,
     log::*,
-    solana_entry::poh::Poh,
-    solana_measure::{measure, measure::Measure},
-    solana_sdk::poh_config::PohConfig,
+    xandeum_entry::poh::Poh,
+    xandeum_measure::{measure, measure::Measure},
+    xandeum_sdk::poh_config::PohConfig,
     std::{
         sync::{
             atomic::{AtomicBool, Ordering},
@@ -383,16 +383,16 @@ mod tests {
     use {
         super::*,
         rand::{thread_rng, Rng},
-        solana_ledger::{
+        xandeum_ledger::{
             blockstore::Blockstore,
             genesis_utils::{create_genesis_config, GenesisConfigInfo},
             get_tmp_ledger_path,
             leader_schedule_cache::LeaderScheduleCache,
         },
-        solana_measure::measure::Measure,
-        solana_perf::test_tx::test_tx,
-        solana_runtime::bank::Bank,
-        solana_sdk::{
+        xandeum_measure::measure::Measure,
+        xandeum_perf::test_tx::test_tx,
+        xandeum_runtime::bank::Bank,
+        xandeum_sdk::{
             clock, hash::hash, pubkey::Pubkey, timing, transaction::VersionedTransaction,
         },
         std::{thread::sleep, time::Duration},
@@ -401,7 +401,7 @@ mod tests {
     #[test]
     #[ignore]
     fn test_poh_service() {
-        solana_logger::setup();
+        xandeum_logger::setup();
         let GenesisConfigInfo { genesis_config, .. } = create_genesis_config(2);
         let bank = Arc::new(Bank::new_no_wallclock_throttle_for_tests(&genesis_config));
         let prev_hash = bank.last_blockhash();

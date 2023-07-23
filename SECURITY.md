@@ -9,7 +9,7 @@
 
 **DO NOT CREATE A GITHUB ISSUE** to report a security problem.
 
-Instead please use this [Report a Vulnerability](https://github.com/solana-labs/solana/security/advisories/new) link.
+Instead please use this [Report a Vulnerability](https://github.com/xandeum-labs/xandeum/security/advisories/new) link.
 Provide a helpful title, detailed description of the vulnerability and an exploit
 proof-of-concept. Speculative submissions without proof-of-concept will be closed
 with no further consideration.
@@ -21,13 +21,13 @@ Expect a response as fast as possible in the advisory, typically within 72 hours
 --
 
 If you do not receive a response in the advisory, send an email to
-security@solanalabs.com with the full URL of the advisory you have created.  DO NOT
+security@xandeumlabs.com with the full URL of the advisory you have created.  DO NOT
 include attachments or provide detail sufficient for exploitation regarding the
 security issue in this email. **Only provide such details in the advisory**.
 
-If you do not receive a response from security@solanalabs.com please followup with
+If you do not receive a response from security@xandeumlabs.com please followup with
 the team directly. You can do this in the `#core-technology` channel of the
-[Solana Tech discord server](https://solana.com/discord), by pinging the `Solana Labs`
+[Solana Tech discord server](https://xandeum.com/discord), by pinging the `Solana Labs`
 role in the channel and referencing the fact that you submitted a security problem.
 
 <a name="process"></a>
@@ -38,18 +38,18 @@ followed to contain, respond and remediate:
 
 ### 1. Accept the new report
 In response a newly reported security problem, a member of the
-`solana-labs/admins` group will accept the report to turn it into a draft
-advisory.  The `solana-labs/security-incident-response` group should be added to
+`xandeum-labs/admins` group will accept the report to turn it into a draft
+advisory.  The `xandeum-labs/security-incident-response` group should be added to
 the draft security advisory, and create a private fork of the repository (grey
 button towards the bottom of the page) if necessary.
 
 If the advisory is the result of an audit finding, follow the same process as above but add the auditor's github user(s) and begin the title with "[Audit]".
 
-If the report is out of scope, a member of the `solana-labs/admins` group will
+If the report is out of scope, a member of the `xandeum-labs/admins` group will
 comment as such and then close the report.
 
 ### 2. Triage
-Within the draft security advisory, discuss and determine the severity of the issue. If necessary, members of the solana-labs/security-incident-response group may add other github users to the advisory to assist.
+Within the draft security advisory, discuss and determine the severity of the issue. If necessary, members of the xandeum-labs/security-incident-response group may add other github users to the advisory to assist.
 If it is determined that this not a critical network issue then the advisory should be closed and if more follow-up is required a normal Solana public github issue should be created.
 
 ### 3. Prepare Fixes
@@ -58,16 +58,16 @@ There is no CI available in the private repository so you must build from source
 Code review from the reporter is ideal, as well as from multiple members of the core development team.
 
 ### 4. Notify Security Group Validators
-Once an ETA is available for the fix, a member of the solana-labs/security-incident-response group should notify the validators so they can prepare for an update using the "Solana Red Alert" notification system.
+Once an ETA is available for the fix, a member of the xandeum-labs/security-incident-response group should notify the validators so they can prepare for an update using the "Solana Red Alert" notification system.
 The teams are all over the world and it's critical to provide actionable information at the right time. Don't be the person that wakes everybody up at 2am when a fix won't be available for hours.
 
 ### 5. Ship the patch
-Once the fix is accepted, a member of the solana-labs/security-incident-response group should prepare a single patch file for each affected branch. The commit title for the patch should only contain the advisory id, and not disclose any further details about the incident.
-Copy the patches to https://release.solana.com/ under a subdirectory named after the advisory id (example: https://release.solana.com/GHSA-hx59-f5g4-jghh/v1.4.patch). Contact a member of the solana-labs/admins group if you require access to release.solana.com
+Once the fix is accepted, a member of the xandeum-labs/security-incident-response group should prepare a single patch file for each affected branch. The commit title for the patch should only contain the advisory id, and not disclose any further details about the incident.
+Copy the patches to https://release.xandeum.com/ under a subdirectory named after the advisory id (example: https://release.xandeum.com/GHSA-hx59-f5g4-jghh/v1.4.patch). Contact a member of the xandeum-labs/admins group if you require access to release.xandeum.com
 Using the "Solana Red Alert" channel:
     a) Notify validators that there's an issue and a patch will be provided in X minutes
     b) If X minutes expires and there's no patch, notify of the delay and provide a new ETA
-    c) Provide links to patches of https://release.solana.com/ for each affected branch
+    c) Provide links to patches of https://release.xandeum.com/ for each affected branch
 Validators can be expected to build the patch from source against the latest release for the affected branch.
 Since the software version will not change after the patch is applied, request that each validator notify in the existing channel once they've updated. Manually monitor the roll out until a sufficient amount of stake has updated - typically at least 33.3% or 66.6% depending on the issue.
 
@@ -126,7 +126,7 @@ $5,000 USD in locked SOL tokens (locked for 12 months)
 
 ### Out of Scope:
 The following components are out of scope for the bounty program
-* Metrics: `/metrics` in the monorepo as well as https://metrics.solana.com
+* Metrics: `/metrics` in the monorepo as well as https://metrics.xandeum.com
 * Any encrypted credentials, auth tokens, etc. checked into the repo
 * Bugs in dependencies. Please take them upstream!
 * Attacks that require social engineering
@@ -139,7 +139,7 @@ to, any and all web properties not explicitly listed on this page)
 * The participant submitting the bug report shall follow the process outlined within this document
 * Valid exploits can be eligible even if they are not successfully executed on a public cluster
 * Multiple submissions for the same class of exploit are still eligible for compensation, though may be compensated at a lower rate, however these will be assessed on a case-by-case basis
-* Participants must complete KYC and sign the participation agreement here when the registrations are open https://solana.foundation/kyc. Security exploits will still be assessed and open for submission at all times. This needs only be done prior to distribution of tokens.
+* Participants must complete KYC and sign the participation agreement here when the registrations are open https://xandeum.foundation/kyc. Security exploits will still be assessed and open for submission at all times. This needs only be done prior to distribution of tokens.
 
 ### Duplicate Reports
 Compensation for duplicative reports will be split among reporters with first to report taking priority using the following equation
@@ -163,5 +163,5 @@ bi = 2 ^ (R - ri) / ((2^R) - 1)
 ### Payment of Bug Bounties:
 * Bounties are currently awarded on a rolling/weekly basis and paid out within 30 days upon receipt of an invoice.
 * The SOL/USD conversion rate used for payments is the market price of SOL (denominated in USD) at the end of the day the invoice is submitted by the researcher.
-* The reference for this price is the Closing Price given by Coingecko.com on that date given here: https://www.coingecko.com/en/coins/solana/historical_data/usd#panel
+* The reference for this price is the Closing Price given by Coingecko.com on that date given here: https://www.coingecko.com/en/coins/xandeum/historical_data/usd#panel
 * Bug bounties that are paid out in SOL are paid to stake accounts with a lockup expiring 12 months from the date of delivery of SOL.

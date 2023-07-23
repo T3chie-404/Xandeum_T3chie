@@ -1,5 +1,5 @@
 [package]
-name = "solana-bench-tps"
+name = "xandeum-bench-tps"
 publish = false
 version = { workspace = true }
 authors = { workspace = true }
@@ -16,35 +16,35 @@ rand = { workspace = true }
 rayon = { workspace = true }
 serde_json = { workspace = true }
 serde_yaml = { workspace = true }
-solana-clap-utils = { workspace = true }
-solana-cli-config = { workspace = true }
-solana-client = { workspace = true }
-solana-connection-cache = { workspace = true }
-solana-core = { workspace = true }
-solana-faucet = { workspace = true }
-solana-genesis = { workspace = true }
-solana-gossip = { workspace = true }
-solana-logger = { workspace = true }
-solana-measure = { workspace = true }
-solana-metrics = { workspace = true }
-solana-net-utils = { workspace = true }
-solana-rpc = { workspace = true }
-solana-rpc-client = { workspace = true }
-solana-rpc-client-api = { workspace = true }
-solana-rpc-client-nonce-utils = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-streamer = { workspace = true }
-solana-thin-client = { workspace = true }
-solana-tpu-client = { workspace = true }
-solana-version = { workspace = true }
+xandeum-clap-utils = { workspace = true }
+xandeum-cli-config = { workspace = true }
+xandeum-client = { workspace = true }
+xandeum-connection-cache = { workspace = true }
+xandeum-core = { workspace = true }
+xandeum-faucet = { workspace = true }
+xandeum-genesis = { workspace = true }
+xandeum-gossip = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-metrics = { workspace = true }
+xandeum-net-utils = { workspace = true }
+xandeum-rpc = { workspace = true }
+xandeum-rpc-client = { workspace = true }
+xandeum-rpc-client-api = { workspace = true }
+xandeum-rpc-client-nonce-utils = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-streamer = { workspace = true }
+xandeum-thin-client = { workspace = true }
+xandeum-tpu-client = { workspace = true }
+xandeum-version = { workspace = true }
 spl-instruction-padding = { workspace = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
 serial_test = { workspace = true }
-solana-local-cluster = { workspace = true }
-solana-test-validator = { workspace = true }
+xandeum-local-cluster = { workspace = true }
+xandeum-test-validator = { workspace = true }
 tempfile = "3.5.0"
 
 [package.metadata.docs.rs]

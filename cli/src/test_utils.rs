@@ -1,6 +1,6 @@
 use {
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_sdk::{
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_sdk::{
         clock::{Epoch, DEFAULT_MS_PER_SLOT},
         commitment_config::CommitmentConfig,
     },

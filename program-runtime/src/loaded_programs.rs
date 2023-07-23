@@ -1,5 +1,5 @@
 #[cfg(all(not(target_os = "windows"), target_arch = "x86_64"))]
-use solana_rbpf::error::EbpfError;
+use xandeum_rbpf::error::EbpfError;
 use {
     crate::{
         invoke_context::{InvokeContext, ProcessInstructionWithContext},
@@ -8,9 +8,9 @@ use {
     itertools::Itertools,
     log::{debug, log_enabled, trace},
     percentage::PercentageInteger,
-    solana_measure::measure::Measure,
-    solana_rbpf::{elf::Executable, verifier::RequisiteVerifier, vm::BuiltinProgram},
-    solana_sdk::{
+    xandeum_measure::measure::Measure,
+    xandeum_rbpf::{elf::Executable, verifier::RequisiteVerifier, vm::BuiltinProgram},
+    xandeum_sdk::{
         bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, clock::Slot, loader_v4,
         pubkey::Pubkey, saturating_add_assign,
     },
@@ -765,7 +765,7 @@ impl LoadedPrograms {
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl solana_frozen_abi::abi_example::AbiExample for LoadedProgram {
+impl xandeum_frozen_abi::abi_example::AbiExample for LoadedProgram {
     fn example() -> Self {
         // LoadedProgram isn't serializable by definition.
         Self::default()
@@ -773,7 +773,7 @@ impl solana_frozen_abi::abi_example::AbiExample for LoadedProgram {
 }
 
 #[cfg(RUSTC_WITH_SPECIALIZATION)]
-impl solana_frozen_abi::abi_example::AbiExample for LoadedPrograms {
+impl xandeum_frozen_abi::abi_example::AbiExample for LoadedPrograms {
     fn example() -> Self {
         // LoadedPrograms isn't serializable by definition.
         Self::default()
@@ -788,8 +788,8 @@ mod tests {
             LoadedPrograms, LoadedProgramsForTxBatch, WorkingSlot, DELAY_VISIBILITY_SLOT_OFFSET,
         },
         percentage::Percentage,
-        solana_rbpf::vm::{BuiltinProgram, Config},
-        solana_sdk::{clock::Slot, pubkey::Pubkey},
+        xandeum_rbpf::vm::{BuiltinProgram, Config},
+        xandeum_sdk::{clock::Slot, pubkey::Pubkey},
         std::{
             ops::ControlFlow,
             sync::{

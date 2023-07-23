@@ -3,8 +3,8 @@ use {
     clap::{crate_description, crate_name, crate_version, Arg},
     log::*,
     regex::Regex,
-    solana_download_utils::download_file,
-    solana_sdk::signature::{write_keypair_file, Keypair},
+    xandeum_download_utils::download_file,
+    xandeum_sdk::signature::{write_keypair_file, Keypair},
     std::{
         borrow::Cow,
         collections::{HashMap, HashSet},
@@ -137,9 +137,9 @@ fn find_installed_platform_tools() -> Vec<String> {
         error!("Can't get home directory path: {}", err);
         exit(1);
     }));
-    let solana = home_dir.join(".cache").join("solana");
+    let xandeum = home_dir.join(".cache").join("xandeum");
     let package = "platform-tools";
-    std::fs::read_dir(solana)
+    std::fs::read_dir(xandeum)
         .unwrap()
         .filter_map(|e| match e {
             Err(_) => None,
@@ -155,7 +155,7 @@ fn find_installed_platform_tools() -> Vec<String> {
 }
 
 fn get_latest_platform_tools_version() -> Result<String, String> {
-    let url = "https://github.com/solana-labs/platform-tools/releases/latest";
+    let url = "https://github.com/xandeum-labs/platform-tools/releases/latest";
     let resp = reqwest::blocking::get(url).map_err(|err| format!("Failed to GET {url}: {err}"))?;
     let path = std::path::Path::new(resp.url().path());
     let version = path.file_name().unwrap().to_string_lossy().to_string();
@@ -210,7 +210,7 @@ fn make_platform_tools_path_for_version(package: &str, version: &str) -> PathBuf
     }));
     home_dir
         .join(".cache")
-        .join("solana")
+        .join("xandeum")
         .join(version)
         .join(package)
 }
@@ -250,7 +250,7 @@ fn install_if_missing(
         fs::remove_dir(target_path).map_err(|err| err.to_string())?;
     }
 
-    // Check whether the package is already in ~/.cache/solana.
+    // Check whether the package is already in ~/.cache/xandeum.
     // Download it and place in the proper location if not found.
     if !target_path.is_dir()
         && !target_path
@@ -458,8 +458,8 @@ fn check_undefined_symbols(config: &Config, program: &Path) {
     }
 }
 
-// check whether custom solana toolchain is linked, and link it if it is not.
-fn link_solana_toolchain(config: &Config) {
+// check whether custom xandeum toolchain is linked, and link it if it is not.
+fn link_xandeum_toolchain(config: &Config) {
     let toolchain_path = config
         .sbf_sdk
         .join("dependencies")
@@ -477,12 +477,12 @@ fn link_solana_toolchain(config: &Config) {
     }
     let mut do_link = true;
     for line in rustup_output.lines() {
-        if line.starts_with("solana") {
+        if line.starts_with("xandeum") {
             let mut it = line.split_whitespace();
             let _ = it.next();
             let path = it.next();
             if path.unwrap() != toolchain_path.to_str().unwrap() {
-                let rustup_args = vec!["toolchain", "uninstall", "solana"];
+                let rustup_args = vec!["toolchain", "uninstall", "xandeum"];
                 let output = spawn(
                     &rustup,
                     rustup_args,
@@ -501,7 +501,7 @@ fn link_solana_toolchain(config: &Config) {
         let rustup_args = vec![
             "toolchain",
             "link",
-            "solana",
+            "xandeum",
             toolchain_path.to_str().unwrap(),
         ];
         let output = spawn(
@@ -515,7 +515,7 @@ fn link_solana_toolchain(config: &Config) {
     }
 }
 
-fn build_solana_package(
+fn build_xandeum_package(
     config: &Config,
     target_directory: &Path,
     package: &cargo_metadata::Package,
@@ -552,7 +552,7 @@ fn build_solana_package(
         }
     };
 
-    let legacy_program_feature_present = package.name == "solana-sdk";
+    let legacy_program_feature_present = package.name == "xandeum-sdk";
     let root_package_dir = &package.manifest_path.parent().unwrap_or_else(|| {
         error!("Unable to get directory of {}", package.manifest_path);
         exit(1);
@@ -564,7 +564,7 @@ fn build_solana_package(
         .cloned()
         .unwrap_or_else(|| target_directory.join("deploy"));
 
-    let target_build_directory = target_directory.join("sbf-solana-solana").join("release");
+    let target_build_directory = target_directory.join("sbf-xandeum-xandeum").join("release");
 
     env::set_current_dir(root_package_dir).unwrap_or_else(|err| {
         error!(
@@ -601,7 +601,7 @@ fn build_solana_package(
     install_if_missing(
         config,
         package,
-        "https://github.com/solana-labs/platform-tools/releases/download",
+        "https://github.com/xandeum-labs/platform-tools/releases/download",
         platform_tools_download_file_name.as_str(),
         &target_path,
     )
@@ -620,7 +620,7 @@ fn build_solana_package(
         error!("Failed to install platform-tools: {}", err);
         exit(1);
     });
-    link_solana_toolchain(config);
+    link_xandeum_toolchain(config);
 
     let llvm_bin = config
         .sbf_sdk
@@ -639,7 +639,7 @@ fn build_solana_package(
     // this by removing RUSTC from the child process environment.
     if env::var("RUSTC").is_ok() {
         warn!(
-            "Removed RUSTC from cargo environment, because it overrides +solana cargo command line option."
+            "Removed RUSTC from cargo environment, because it overrides +xandeum cargo command line option."
         );
         env::remove_var("RUSTC")
     }
@@ -678,11 +678,11 @@ fn build_solana_package(
 
     let cargo_build = PathBuf::from("cargo");
     let mut cargo_build_args = vec![
-        "+solana",
+        "+xandeum",
         "build",
         "--release",
         "--target",
-        "sbf-solana-solana",
+        "sbf-xandeum-xandeum",
     ];
     if config.arch == "sbfv2" {
         cargo_build_args.push("-Zbuild-std=std,panic_abort");
@@ -828,7 +828,7 @@ fn build_solana_package(
         check_undefined_symbols(config, &program_so);
 
         info!("To deploy this program:");
-        info!("  $ solana program deploy {}", program_so.display());
+        info!("  $ xandeum program deploy {}", program_so.display());
         info!("The program address will default to this keypair (override with --program-id):");
         info!("  {}", program_keypair.display());
     } else if config.dump {
@@ -836,7 +836,7 @@ fn build_solana_package(
     }
 }
 
-fn build_solana(config: Config, manifest_path: Option<PathBuf>) {
+fn build_xandeum(config: Config, manifest_path: Option<PathBuf>) {
     let mut metadata_command = cargo_metadata::MetadataCommand::new();
     if let Some(manifest_path) = manifest_path {
         metadata_command.manifest_path(manifest_path);
@@ -852,7 +852,7 @@ fn build_solana(config: Config, manifest_path: Option<PathBuf>) {
 
     if let Some(root_package) = metadata.root_package() {
         if !config.workspace {
-            build_solana_package(&config, metadata.target_directory.as_ref(), root_package);
+            build_xandeum_package(&config, metadata.target_directory.as_ref(), root_package);
             return;
         }
     }
@@ -873,12 +873,12 @@ fn build_solana(config: Config, manifest_path: Option<PathBuf>) {
         .collect::<Vec<_>>();
 
     for package in all_sbf_packages {
-        build_solana_package(&config, metadata.target_directory.as_ref(), package);
+        build_xandeum_package(&config, metadata.target_directory.as_ref(), package);
     }
 }
 
 fn main() {
-    solana_logger::setup();
+    xandeum_logger::setup();
     let default_config = Config::default();
     let default_sbf_sdk = format!("{}", default_config.sbf_sdk.display());
 
@@ -1074,5 +1074,5 @@ fn main() {
         debug!("{:?}", config);
         debug!("manifest_path: {:?}", manifest_path);
     }
-    build_solana(config, manifest_path);
+    build_xandeum(config, manifest_path);
 }

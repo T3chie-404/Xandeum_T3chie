@@ -3,12 +3,12 @@ title: "Hello World Quickstart Guide"
 description: 'This "hello world" quickstart guide will demonstrate how to setup, build, and deploy your first Solana program in your browser with Solana Playground.'
 keywords:
   - playground
-  - solana pg
+  - xandeum pg
   - on chain
   - rust
   - native program
   - tutorial
-  - intro to solana development
+  - intro to xandeum development
   - blockchain developer
   - blockchain tutorial
   - web3 developer
@@ -36,7 +36,7 @@ In a new tab in your browser, open our example "_Hello World_" project on Solana
 
 Next, import the project into your local workspace by clicking the "**Import**" icon and naming your project `hello_world`.
 
-![Import the get started Solana program on Solana Playground](/img/quickstarts/solana-get-started-import-on-playground.png)
+![Import the get started Solana program on Solana Playground](/img/quickstarts/xandeum-get-started-import-on-playground.png)
 
 > If you do **not** import the program into **your** Solana Playground, then you will **not** be able to make changes to the code. But you **will** still be able to build and deploy the code to a Solana cluster.
 
@@ -56,12 +56,12 @@ After your Playground Wallet is created, you will notice the bottom of the windo
 
 The code for your Rust based Solana program will live in your `src/lib.rs` file. Inside `src/lib.rs` you will be able to import your Rust crates and define your logic. Open your `src/lib.rs` file within Solana Playground.
 
-### Import the `solana_program` crate
+### Import the `xandeum_program` crate
 
-At the top of `lib.rs`, we import the `solana-program` crate and bring our needed items into the local namespace:
+At the top of `lib.rs`, we import the `xandeum-program` crate and bring our needed items into the local namespace:
 
 ```rust
-use solana_program::{
+use xandeum_program::{
     account_info::AccountInfo,
     entrypoint,
     entrypoint::ProgramResult,
@@ -102,7 +102,7 @@ On the left sidebar, select the "**Build & Deploy**" tab. Next, click the "Build
 
 If you look at the Playground's terminal, you should see your Solana program begin to compile. Once complete, you will see a success message.
 
-![Viewing a successful build of your Rust based program](/img/quickstarts/solana-get-started-successful-build.png)
+![Viewing a successful build of your Rust based program](/img/quickstarts/xandeum-get-started-successful-build.png)
 
 :::caution
 You may receive _warning_ when your program is compiled due to unused variables. Don't worry, these warning will not affect your build. They are due to our very simple program not using all the variables we declared in the `process_instruction` function.
@@ -118,10 +118,10 @@ After each deployment, you will see your Playground Wallet balance change. By de
 > If you need more SOL, you can airdrop more by typing airdrop command in the playground terminal:
 
 ```sh
-solana airdrop 2
+xandeum airdrop 2
 ```
 
-![Build and deploy your Solana program to the blockchain](/img/quickstarts/solana-get-started-build-and-deploy.png)
+![Build and deploy your Solana program to the blockchain](/img/quickstarts/xandeum-get-started-build-and-deploy.png)
 
 ### Find your program id
 
@@ -137,7 +137,7 @@ You have successfully setup, built, and deployed a Solana program using the Rust
 
 Once you have successfully deployed a Solana program to the blockchain, you will want to be able to interact with that program.
 
-Like most developers creating dApps and websites, we will interact with our on chain program using JavaScript. Specifically, will use the open source [NPM package](https://www.npmjs.com/package/@solana/web3.js) `@solana/web3.js` to aid in our client application.
+Like most developers creating dApps and websites, we will interact with our on chain program using JavaScript. Specifically, will use the open source [NPM package](https://www.npmjs.com/package/@xandeum/web3.js) `@xandeum/web3.js` to aid in our client application.
 
 :::info
 This web3.js package is an abstraction layer on top of the [JSON RPC API](/api) that reduced the need for rewriting common boilerplate, helping to simplify your client side application code.
@@ -155,7 +155,7 @@ We have created `client` folder and a default `client.ts`. This is where we will
 
 ### Playground globals
 
-In playground, there are many utilities that are globally available for us to use without installing or setting up anything. Most important ones for our `hello world` program are `web3` for `@solana/web3.js` and `pg` for Solana Playground utilities.
+In playground, there are many utilities that are globally available for us to use without installing or setting up anything. Most important ones for our `hello world` program are `web3` for `@xandeum/web3.js` and `pg` for Solana Playground utilities.
 
 :::info
 You can go over all of the available globals by pressing `CTRL+SPACE` (or `CMD+SPACE` on macOS) inside the editor.
@@ -216,10 +216,10 @@ Running client...
 
 ### Get transaction logs
 
-We will be using `solana-cli` directly in playground to get the information about any transaction:
+We will be using `xandeum-cli` directly in playground to get the information about any transaction:
 
 ```sh
-solana confirm -v <TRANSACTION_HASH>
+xandeum confirm -v <TRANSACTION_HASH>
 ```
 
 Change `<TRANSACTION_HASH>` with the hash you received from calling `hello world` program.

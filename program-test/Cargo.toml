@@ -1,6 +1,6 @@
 [package]
 description = "Solana Program Test Framework"
-name = "solana-program-test"
+name = "xandeum-program-test"
 version = { workspace = true }
 authors = { workspace = true }
 repository = { workspace = true }
@@ -17,17 +17,17 @@ chrono-humanize = { workspace = true }
 crossbeam-channel = { workspace = true }
 log = { workspace = true }
 serde = { workspace = true }
-solana-banks-client = { workspace = true }
-solana-banks-interface = { workspace = true }
-solana-banks-server = { workspace = true }
-solana-bpf-loader-program = { workspace = true }
-solana-logger = { workspace = true }
-solana-program-runtime = { workspace = true }
-solana-runtime = { workspace = true }
-solana-sdk = { workspace = true }
-solana-vote-program = { workspace = true }
+xandeum-banks-client = { workspace = true }
+xandeum-banks-interface = { workspace = true }
+xandeum-banks-server = { workspace = true }
+xandeum-bpf-loader-program = { workspace = true }
+xandeum-logger = { workspace = true }
+xandeum-program-runtime = { workspace = true }
+xandeum-runtime = { workspace = true }
+xandeum-sdk = { workspace = true }
+xandeum-vote-program = { workspace = true }
 thiserror = { workspace = true }
 tokio = { workspace = true, features = ["full"] }
 
 [dev-dependencies]
-solana-stake-program = { workspace = true }
+xandeum-stake-program = { workspace = true }

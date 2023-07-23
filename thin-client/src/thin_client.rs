@@ -6,15 +6,15 @@
 use {
     log::*,
     rayon::iter::{IntoParallelIterator, ParallelIterator},
-    solana_connection_cache::{
+    xandeum_connection_cache::{
         client_connection::ClientConnection,
         connection_cache::{
             ConnectionCache, ConnectionManager, ConnectionPool, NewConnectionConfig,
         },
     },
-    solana_rpc_client::rpc_client::RpcClient,
-    solana_rpc_client_api::{config::RpcProgramAccountsConfig, response::Response},
-    solana_sdk::{
+    xandeum_rpc_client::rpc_client::RpcClient,
+    xandeum_rpc_client_api::{config::RpcProgramAccountsConfig, response::Response},
+    xandeum_sdk::{
         account::Account,
         client::{AsyncClient, Client, SyncClient},
         clock::{Slot, MAX_PROCESSING_AGE},
@@ -668,7 +668,7 @@ mod tests {
 
     #[test]
     fn test_client_optimizer() {
-        solana_logger::setup();
+        xandeum_logger::setup();
 
         const NUM_CLIENTS: usize = 5;
         let optimizer = ClientOptimizer::new(NUM_CLIENTS);

@@ -1,7 +1,7 @@
 [package]
-name = "solana-bucket-map"
-description = "solana-bucket-map"
-documentation = "https://docs.rs/solana-bucket-map"
+name = "xandeum-bucket-map"
+description = "xandeum-bucket-map"
+documentation = "https://docs.rs/xandeum-bucket-map"
 readme = "../README.md"
 version = { workspace = true }
 authors = { workspace = true }
@@ -17,18 +17,18 @@ memmap2 = { workspace = true }
 modular-bitfield = { workspace = true }
 num_enum = { workspace = true }
 rand = { workspace = true }
-solana-measure = { workspace = true }
-solana-sdk = { workspace = true }
+xandeum-measure = { workspace = true }
+xandeum-sdk = { workspace = true }
 tempfile = { workspace = true }
 
 [dev-dependencies]
 fs_extra = { workspace = true }
 rayon = { workspace = true }
-solana-logger = { workspace = true }
+xandeum-logger = { workspace = true }
 
 [lib]
 crate-type = ["lib"]
-name = "solana_bucket_map"
+name = "xandeum_bucket_map"
 
 [[bench]]
 name = "bucket_map"

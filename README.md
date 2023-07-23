@@ -1,13 +1,13 @@
 <p align="center">
-  <a href="https://solana.com">
+  <a href="https://xandeum.com">
     <img alt="Solana" src="https://i.imgur.com/IKyzQ6T.png" width="250" />
   </a>
 </p>
 
-[![Solana crate](https://img.shields.io/crates/v/solana-core.svg)](https://crates.io/crates/solana-core)
-[![Solana documentation](https://docs.rs/solana-core/badge.svg)](https://docs.rs/solana-core)
-[![Build status](https://badge.buildkite.com/8cc350de251d61483db98bdfc895b9ea0ac8ffa4a32ee850ed.svg?branch=master)](https://buildkite.com/solana-labs/solana/builds?branch=master)
-[![codecov](https://codecov.io/gh/solana-labs/solana/branch/master/graph/badge.svg)](https://codecov.io/gh/solana-labs/solana)
+[![Solana crate](https://img.shields.io/crates/v/xandeum-core.svg)](https://crates.io/crates/xandeum-core)
+[![Solana documentation](https://docs.rs/xandeum-core/badge.svg)](https://docs.rs/xandeum-core)
+[![Build status](https://badge.buildkite.com/8cc350de251d61483db98bdfc895b9ea0ac8ffa4a32ee850ed.svg?branch=master)](https://buildkite.com/xandeum-labs/xandeum/builds?branch=master)
+[![codecov](https://codecov.io/gh/xandeum-labs/xandeum/branch/master/graph/badge.svg)](https://codecov.io/gh/xandeum-labs/xandeum)
 
 # Building
 
@@ -47,8 +47,8 @@ $ sudo dnf install openssl-devel systemd-devel pkg-config zlib-devel llvm clang 
 ## **2. Download the source code.**
 
 ```bash
-$ git clone https://github.com/solana-labs/solana.git
-$ cd solana
+$ git clone https://github.com/xandeum-labs/xandeum.git
+$ cd xandeum
 ```
 
 ## **3. Build.**
@@ -66,11 +66,11 @@ $ ./cargo test
 ```
 
 ### Starting a local testnet
-Start your own testnet locally, instructions are in the [online docs](https://docs.solana.com/cluster/bench-tps).
+Start your own testnet locally, instructions are in the [online docs](https://docs.xandeum.com/cluster/bench-tps).
 
 ### Accessing the remote development cluster
 * `devnet` - stable public cluster for development accessible via
-devnet.solana.com. Runs 24/7. Learn more about the [public clusters](https://docs.solana.com/clusters)
+devnet.xandeum.com. Runs 24/7. Learn more about the [public clusters](https://docs.xandeum.com/clusters)
 
 # Benchmarking
 

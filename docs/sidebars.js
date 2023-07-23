@@ -384,7 +384,7 @@ module.exports = {
   ],
   cliSidebar: [
     "cli",
-    "cli/install-solana-cli-tools",
+    "cli/install-xandeum-cli-tools",
     {
       type: "category",
       label: "Command-line Wallets",
